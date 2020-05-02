@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6CD4FD52-F26E-452C-B1C4-763D1FAE84CC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>QuemPegouOVeiculo</RootNamespace>
+    <AssemblyName>QuemPegouOVeiculo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmAtuControleVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAtuControleVeiculo.Designer.cs">
+      <DependentUpon>FrmAtuControleVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCadContVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCadContVeiculo.Designer.cs">
+      <DependentUpon>FrmCadContVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCadMotorista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCadMotorista.Designer.cs">
+      <DependentUpon>FrmCadMotorista.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCadStatusVeic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCadStatusVeic.Designer.cs">
+      <DependentUpon>FrmCadStatusVeic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCadVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCadVeiculo.Designer.cs">
+      <DependentUpon>FrmCadVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCadVencCNH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCadVencCNH.Designer.cs">
+      <DependentUpon>FrmCadVencCNH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmContCombustivel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContCombustivel.Designer.cs">
+      <DependentUpon>FrmContCombustivel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmContManutencao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContManutencao.Designer.cs">
+      <DependentUpon>FrmContManutencao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmContMulta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContMulta.Designer.cs">
+      <DependentUpon>FrmContMulta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPrincipal.Designer.cs">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelContCombustivel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelContCombustivel.Designer.cs">
+      <DependentUpon>FrmRelContCombustivel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelContManutencao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelContManutencao.Designer.cs">
+      <DependentUpon>FrmRelContManutencao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelContMulta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelContMulta.Designer.cs">
+      <DependentUpon>FrmRelContMulta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelContVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelContVeiculo.Designer.cs">
+      <DependentUpon>FrmRelContVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelMotorista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelMotorista.Designer.cs">
+      <DependentUpon>FrmRelMotorista.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelStatusVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelStatusVeiculo.Designer.cs">
+      <DependentUpon>FrmRelStatusVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRelVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRelVeiculo.Designer.cs">
+      <DependentUpon>FrmRelVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVisualizarRelatorio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVisualizarRelatorio.Designer.cs">
+      <DependentUpon>FrmVisualizarRelatorio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="UCDescricao.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCDescricao.Designer.cs">
+      <DependentUpon>UCDescricao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCMotorista.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCMotorista.Designer.cs">
+      <DependentUpon>UCMotorista.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCValor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCValor.Designer.cs">
+      <DependentUpon>UCValor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCVeiculo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCVeiculo.Designer.cs">
+      <DependentUpon>UCVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="USVeiculoMotorista.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="USVeiculoMotorista.Designer.cs">
+      <DependentUpon>USVeiculoMotorista.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="FrmAtuControleVeiculo.resx">
+      <DependentUpon>FrmAtuControleVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCadContVeiculo.resx">
+      <DependentUpon>FrmCadContVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCadMotorista.resx">
+      <DependentUpon>FrmCadMotorista.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCadStatusVeic.resx">
+      <DependentUpon>FrmCadStatusVeic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCadVeiculo.resx">
+      <DependentUpon>FrmCadVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCadVencCNH.resx">
+      <DependentUpon>FrmCadVencCNH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmContCombustivel.resx">
+      <DependentUpon>FrmContCombustivel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmContManutencao.resx">
+      <DependentUpon>FrmContManutencao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmContMulta.resx">
+      <DependentUpon>FrmContMulta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPrincipal.resx">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelContCombustivel.resx">
+      <DependentUpon>FrmRelContCombustivel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelContManutencao.resx">
+      <DependentUpon>FrmRelContManutencao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelContMulta.resx">
+      <DependentUpon>FrmRelContMulta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelContVeiculo.resx">
+      <DependentUpon>FrmRelContVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelMotorista.resx">
+      <DependentUpon>FrmRelMotorista.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelStatusVeiculo.resx">
+      <DependentUpon>FrmRelStatusVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRelVeiculo.resx">
+      <DependentUpon>FrmRelVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVisualizarRelatorio.resx">
+      <DependentUpon>FrmVisualizarRelatorio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Relatorios\RelControleCombustivel.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\RelControleManutencao.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\RelControleMulta.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\RelControleVeiculo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\RelMotorista.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\RelStatusVeiculo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\RelVeiculo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCDescricao.resx">
+      <DependentUpon>UCDescricao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCMotorista.resx">
+      <DependentUpon>UCMotorista.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCValor.resx">
+      <DependentUpon>UCValor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCVeiculo.resx">
+      <DependentUpon>UCVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="USVeiculoMotorista.resx">
+      <DependentUpon>USVeiculoMotorista.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Objeto.ControleAbastecimentoObj.datasource" />
+    <None Include="Properties\DataSources\Objeto.ControleVeiculoObj.datasource" />
+    <None Include="Properties\DataSources\Objeto.MotoristaObj.datasource" />
+    <None Include="Properties\DataSources\Objeto.Relatorios.ControleAbastecimentoObjRel.datasource" />
+    <None Include="Properties\DataSources\Objeto.Relatorios.ControleManutencaoObjRel.datasource" />
+    <None Include="Properties\DataSources\Objeto.Relatorios.ControleMultaObjRel.datasource" />
+    <None Include="Properties\DataSources\Objeto.Relatorios.ControleVeiculoObjRel.datasource" />
+    <None Include="Properties\DataSources\Objeto.Relatorios.StatusVeiculoObjRel.datasource" />
+    <None Include="Properties\DataSources\Objeto.StatusVeiculoObj.datasource" />
+    <None Include="Properties\DataSources\Objeto.VeiculoObj.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Negocio\Negocio.csproj">
+      <Project>{e7293482-6453-4aa3-9b77-0ab8ecdb6093}</Project>
+      <Name>Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Objeto\Objeto.csproj">
+      <Project>{e52b9635-dd0b-4ef1-b0de-95032c0996dc}</Project>
+      <Name>Objeto</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
