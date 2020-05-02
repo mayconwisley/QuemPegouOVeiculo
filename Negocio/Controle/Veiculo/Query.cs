@@ -54,6 +54,28 @@ namespace Negocio.Controle.Veiculo
                 throw new Exception(ex.Message);
             }
         }
+        public static DataTable RegisterArrivalNull()
+        {
+            crud = new CRUD();
+            strSQL = new StringBuilder();
+            dataTable = new DataTable();
+
+            strSQL.Append("SELECT CV.ID, CV.ID_VEICULO, CV.MODELO, CV.ID_MOTORISTA, CV.NOME, CV.DATAHORASAIDA, CV.DATAHORACHEGADA, ");
+            strSQL.Append("CV.DIAS, CV.HORAS, CV.DESCRICAO, CV.KMINICIAL, CV.KMFINAL, CV.KMTOTAL, CV.STATUS ");
+            strSQL.Append("FROM VW_CTRLVEICULO CV ");
+            strSQL.Append("WHERE CV.DATAHORACHEGADA IS NULL ");
+            strSQL.Append("ORDER BY CV.DataHoraSaida DESC, CV.Nome ASC");
+
+            try
+            {
+                crud.ClearParameter();
+                return dataTable = crud.Query(CommandType.Text, strSQL.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public static DataTable RegisterVehicle(int idVeiculo)
         {
             crud = new CRUD();

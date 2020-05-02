@@ -53,6 +53,8 @@
             this.MenuSair = new System.Windows.Forms.ToolStripMenuItem();
             this.SstPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.MenuChegada = new System.Windows.Forms.ToolStripMenuItem();
+            this.SubMenuCheControle = new System.Windows.Forms.ToolStripMenuItem();
             this.MstPrincipal.SuspendLayout();
             this.SstPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -64,13 +66,14 @@
             this.MstPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuCadastro,
             this.MenuControle,
+            this.MenuChegada,
             this.MenuRelatorio,
             this.MenuSair});
             this.MstPrincipal.Location = new System.Drawing.Point(0, 0);
             this.MstPrincipal.Name = "MstPrincipal";
             this.MstPrincipal.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.MstPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MstPrincipal.Size = new System.Drawing.Size(1054, 24);
+            this.MstPrincipal.Size = new System.Drawing.Size(1173, 24);
             this.MstPrincipal.TabIndex = 0;
             // 
             // MenuCadastro
@@ -127,28 +130,28 @@
             // SubMenuConVeiculo
             // 
             this.SubMenuConVeiculo.Name = "SubMenuConVeiculo";
-            this.SubMenuConVeiculo.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuConVeiculo.Size = new System.Drawing.Size(180, 22);
             this.SubMenuConVeiculo.Text = "Veículo";
             this.SubMenuConVeiculo.Click += new System.EventHandler(this.SubMenuConVeiculo_Click);
             // 
             // SubMenuConAbastecimento
             // 
             this.SubMenuConAbastecimento.Name = "SubMenuConAbastecimento";
-            this.SubMenuConAbastecimento.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuConAbastecimento.Size = new System.Drawing.Size(180, 22);
             this.SubMenuConAbastecimento.Text = "Abastecimento";
             this.SubMenuConAbastecimento.Click += new System.EventHandler(this.SubMenuConAbastecimento_Click);
             // 
             // SubMenuConMulta
             // 
             this.SubMenuConMulta.Name = "SubMenuConMulta";
-            this.SubMenuConMulta.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuConMulta.Size = new System.Drawing.Size(180, 22);
             this.SubMenuConMulta.Text = "Multa";
             this.SubMenuConMulta.Click += new System.EventHandler(this.SubMenuConMulta_Click);
             // 
             // SubMenuConManutencao
             // 
             this.SubMenuConManutencao.Name = "SubMenuConManutencao";
-            this.SubMenuConManutencao.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuConManutencao.Size = new System.Drawing.Size(180, 22);
             this.SubMenuConManutencao.Text = "Manutenção";
             this.SubMenuConManutencao.Click += new System.EventHandler(this.SubMenuConManutencao_Click);
             // 
@@ -251,10 +254,10 @@
             this.SstPrincipal.Font = new System.Drawing.Font("Verdana", 9F);
             this.SstPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.SstPrincipal.Location = new System.Drawing.Point(0, 614);
+            this.SstPrincipal.Location = new System.Drawing.Point(0, 657);
             this.SstPrincipal.Name = "SstPrincipal";
             this.SstPrincipal.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.SstPrincipal.Size = new System.Drawing.Size(1054, 22);
+            this.SstPrincipal.Size = new System.Drawing.Size(1173, 22);
             this.SstPrincipal.TabIndex = 1;
             this.SstPrincipal.Text = "statusStrip1";
             // 
@@ -264,11 +267,26 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(217, 17);
             this.toolStripStatusLabel1.Text = "Desenvolvido por: Maycon Wisley";
             // 
+            // MenuChegada
+            // 
+            this.MenuChegada.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SubMenuCheControle});
+            this.MenuChegada.Name = "MenuChegada";
+            this.MenuChegada.Size = new System.Drawing.Size(76, 20);
+            this.MenuChegada.Text = "Chegada";
+            // 
+            // SubMenuCheControle
+            // 
+            this.SubMenuCheControle.Name = "SubMenuCheControle";
+            this.SubMenuCheControle.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuCheControle.Text = "Controle";
+            this.SubMenuCheControle.Click += new System.EventHandler(this.SubMenuCheControle_Click);
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1054, 636);
+            this.ClientSize = new System.Drawing.Size(1173, 679);
             this.Controls.Add(this.SstPrincipal);
             this.Controls.Add(this.MstPrincipal);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -314,6 +332,8 @@
         private System.Windows.Forms.ToolStripMenuItem MenuSair;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripMenuItem SubMenuRelConMulta;
+        private System.Windows.Forms.ToolStripMenuItem MenuChegada;
+        private System.Windows.Forms.ToolStripMenuItem SubMenuCheControle;
     }
 }
 

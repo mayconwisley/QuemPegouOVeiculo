@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -294,6 +295,24 @@ namespace QuemPegouOVeiculo
             if (abrir)
             {
                 relContMulta.Show();
+            }
+        }
+
+        private void SubMenuCheControle_Click(object sender, EventArgs e)
+        {
+            FrmAtuControleVeiculo atuControleVeiculo = new FrmAtuControleVeiculo();
+            atuControleVeiculo.MdiParent = this;
+            foreach (Form item in Application.OpenForms)
+            {
+                if (item is FrmAtuControleVeiculo)
+                {
+                    item.Focus();
+                    abrir = false;
+                }
+            }
+            if (abrir)
+            {
+                atuControleVeiculo.Show();
             }
         }
     }

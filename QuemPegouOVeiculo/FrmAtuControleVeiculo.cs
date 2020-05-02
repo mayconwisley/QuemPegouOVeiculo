@@ -16,5 +16,22 @@ namespace QuemPegouOVeiculo
         {
             InitializeComponent();
         }
+        private void ListRegister()
+        {
+            try
+            {
+                DgvControleVeiculo.DataSource = Negocio.Controle.Veiculo.Query.RegisterArrivalNull();
+                lblInfo.Text = "Controle Veiculo - " + DgvControleVeiculo.Rows.Count.ToString("000");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void FrmAtuControleVeiculo_Load(object sender, EventArgs e)
+        {
+            ListRegister();
+        }
     }
 }
