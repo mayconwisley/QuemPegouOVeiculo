@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
             this.DgvControleVeiculo = new System.Windows.Forms.DataGridView();
@@ -100,6 +100,7 @@
             this.DgvControleVeiculo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvControleVeiculo.Size = new System.Drawing.Size(805, 356);
             this.DgvControleVeiculo.TabIndex = 12;
+            this.DgvControleVeiculo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvControleVeiculo_CellDoubleClick);
             // 
             // Id
             // 
@@ -164,8 +165,8 @@
             // Dias
             // 
             this.Dias.DataPropertyName = "Dias";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dias.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dias.DefaultCellStyle = dataGridViewCellStyle1;
             this.Dias.HeaderText = "Dias";
             this.Dias.Name = "Dias";
             this.Dias.ReadOnly = true;
@@ -190,8 +191,8 @@
             // KmInicial
             // 
             this.KmInicial.DataPropertyName = "KmInicial";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.KmInicial.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KmInicial.DefaultCellStyle = dataGridViewCellStyle2;
             this.KmInicial.HeaderText = "KmInicial";
             this.KmInicial.Name = "KmInicial";
             this.KmInicial.ReadOnly = true;
@@ -200,8 +201,8 @@
             // KmFinal
             // 
             this.KmFinal.DataPropertyName = "KmFinal";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.KmFinal.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KmFinal.DefaultCellStyle = dataGridViewCellStyle3;
             this.KmFinal.HeaderText = "KmFinal";
             this.KmFinal.Name = "KmFinal";
             this.KmFinal.ReadOnly = true;
@@ -210,8 +211,8 @@
             // KmTotal
             // 
             this.KmTotal.DataPropertyName = "KmTotal";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.KmTotal.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KmTotal.DefaultCellStyle = dataGridViewCellStyle4;
             this.KmTotal.HeaderText = "KmTotal";
             this.KmTotal.Name = "KmTotal";
             this.KmTotal.ReadOnly = true;

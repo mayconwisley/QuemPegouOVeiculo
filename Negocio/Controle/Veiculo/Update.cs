@@ -44,5 +44,29 @@ namespace Negocio.Controle.Veiculo
                 throw new Exception(ex.Message);
             }
         }
+
+        public static bool RegisterControl(ControleVeiculoObj controleVeiculo)
+        {
+            crud = new CRUD();
+            strSQL = new StringBuilder();
+            strSQL.Append("UPDATE ControleVeiculo ");
+            strSQL.Append("SET DataHoraChegada = @DataHoraChegada, KmFinal =@KmFinal, Status = 'C' ");
+            strSQL.Append("WHERE Id = @Id");
+
+            try
+            {
+                crud.ClearParameter();
+                crud.AddParameter("DataHoraChegada", controleVeiculo.DataHoraChegada);
+                crud.AddParameter("KmFinal", controleVeiculo.KmFinal);
+                crud.AddParameter("Id", controleVeiculo.Id);
+                crud.Run(CommandType.Text, strSQL.ToString());
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -78,6 +78,12 @@
     <Compile Include="FrmAtuControleVeiculo.Designer.cs">
       <DependentUpon>FrmAtuControleVeiculo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmAtuControleVeiculo_0.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAtuControleVeiculo_0.Designer.cs">
+      <DependentUpon>FrmAtuControleVeiculo_0.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmCadContVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +221,9 @@
     </Compile>
     <EmbeddedResource Include="FrmAtuControleVeiculo.resx">
       <DependentUpon>FrmAtuControleVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAtuControleVeiculo_0.resx">
+      <DependentUpon>FrmAtuControleVeiculo_0.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCadContVeiculo.resx">
       <DependentUpon>FrmCadContVeiculo.cs</DependentUpon>

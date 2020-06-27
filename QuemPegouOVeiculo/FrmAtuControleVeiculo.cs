@@ -12,11 +12,13 @@ namespace QuemPegouOVeiculo
 {
     public partial class FrmAtuControleVeiculo : Form
     {
+        int idCont;
+        bool abrir = true;
         public FrmAtuControleVeiculo()
         {
             InitializeComponent();
         }
-        private void ListRegister()
+        public void ListRegister()
         {
             try
             {
@@ -32,6 +34,29 @@ namespace QuemPegouOVeiculo
         private void FrmAtuControleVeiculo_Load(object sender, EventArgs e)
         {
             ListRegister();
+        }
+
+        private void DgvControleVeiculo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            idCont = int.Parse(DgvControleVeiculo.Rows[e.RowIndex].Cells["Id"].Value.ToString());
+
+
+
+            FrmAtuControleVeiculo_0 controleVeiculo_0 = new FrmAtuControleVeiculo_0(idCont, this);
+            controleVeiculo_0.MdiParent = FrmPrincipal.ActiveForm;
+            foreach (Form item in Application.OpenForms)
+            {
+                if (item is FrmAtuControleVeiculo_0)
+                {
+                    item.Focus();
+                    abrir = false;
+                }
+            }
+            if (abrir)
+            {
+                controleVeiculo_0.Show();
+            }
         }
     }
 }
