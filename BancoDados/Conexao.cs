@@ -9,7 +9,7 @@ namespace BancoDados
         protected FbConnection fbConnection;
         static string strWay = AppDomain.CurrentDomain.BaseDirectory.ToString();
 
-        private string strConnection = "User=sysdba; Password=masterkey; DataBase=" + strWay + @"\Banco\Pegou.fdb";
+        private string strConnection = "User=sysdba; Password=masterkey; ServerType=1; DataBase=" + strWay + @"Banco\Pegou.fdb";
 
         protected bool Connecrion()
         {

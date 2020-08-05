@@ -10,6 +10,7 @@ namespace Negocio.Controle.Veiculo
         static CRUD crud = null;
         static StringBuilder strSQL = null;
         static DataTable dataTable = null;
+      
         public static DataTable Register(string search)
         {
             crud = new CRUD();

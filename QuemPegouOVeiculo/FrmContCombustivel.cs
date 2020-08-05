@@ -98,7 +98,7 @@ namespace QuemPegouOVeiculo
 
         private void UCVeiculoMotorista_KmFinal(string kmfinal)
         {
-            TxtKmInicial.Text = kmfinal;
+            //TxtKmInicial.Text = kmfinal;
         }
 
         private void Manipulate(char opc)
