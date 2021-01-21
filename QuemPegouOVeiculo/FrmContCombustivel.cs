@@ -101,6 +101,26 @@ namespace QuemPegouOVeiculo
             //TxtKmInicial.Text = kmfinal;
         }
 
+        private void TxtLitros_TextChanged(object sender, EventArgs e)
+        {
+            TxtLitros.Text = Negocio.Utilitario.FormatarValor.Valor(TxtLitros.Text.Trim());
+            TxtLitros.Select(TxtLitros.Text.Length, 0);
+        }
+
+        private void TxtLitros_Leave(object sender, EventArgs e)
+        {
+            TxtLitros.Text = Negocio.Utilitario.FormatarValor.Zero(TxtLitros.Text.Trim());
+            TxtLitros.Text = Negocio.Utilitario.FormatarValor.ParaValor(TxtLitros.Text.Trim());
+        }
+
+        private void TxtLitros_Enter(object sender, EventArgs e)
+        {
+            if (TxtLitros.Text == "0,00")
+            {
+                TxtLitros.Clear();
+            }
+        }
+
         private void Manipulate(char opc)
         {
             controleAbastecimento = new ControleAbastecimentoObj();
