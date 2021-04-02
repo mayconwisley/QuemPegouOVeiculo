@@ -18,8 +18,8 @@ namespace Negocio.Controle.Combustivel
         {
             crud = new CRUD();
             strSQL = new StringBuilder();
-            strSQL.Append("INSERT INTO ControleAbastecimento(Id_Veiculo, Id_Motorista, KmInicial, Data, Valor, Descricao) ");
-            strSQL.Append("VALUES(@Id_Veiculo, @Id_Motorista, @KmInicial, @Data, @Valor, @Descricao)");
+            strSQL.Append("INSERT INTO ControleAbastecimento(Id_Veiculo, Id_Motorista, KmInicial, Data, Valor, Litros, Descricao) ");
+            strSQL.Append("VALUES(@Id_Veiculo, @Id_Motorista, @KmInicial, @Data, @Valor, @Litros, @Descricao)");
 
             try
             {
@@ -29,6 +29,7 @@ namespace Negocio.Controle.Combustivel
                 crud.AddParameter("KmInicial", controleAbastecimento.KmInicio);
                 crud.AddParameter("Data", controleAbastecimento.Data);
                 crud.AddParameter("Valor", controleAbastecimento.Valor);
+                crud.AddParameter("Litros", controleAbastecimento.Litros);
                 crud.AddParameter("Descricao", controleAbastecimento.Descricao);
                 crud.Run(CommandType.Text, strSQL.ToString());
 

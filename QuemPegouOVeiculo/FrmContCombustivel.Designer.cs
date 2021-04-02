@@ -28,20 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label3 = new System.Windows.Forms.Label();
             this.TxtKmInicial = new System.Windows.Forms.TextBox();
             this.DgvAbastecimento = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id_Motorista = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KmInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LblAbastecimento = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.TxtPesquisa = new System.Windows.Forms.TextBox();
@@ -55,6 +47,16 @@
             this.UCValor = new QuemPegouOVeiculo.UCValor();
             this.TxtLitros = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id_Motorista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Litros = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KmInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvAbastecimento)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,6 +90,7 @@
             this.Id_Motorista,
             this.Data,
             this.Valor,
+            this.Litros,
             this.Nome,
             this.Modelo,
             this.KmInicial,
@@ -100,79 +103,6 @@
             this.DgvAbastecimento.Size = new System.Drawing.Size(408, 150);
             this.DgvAbastecimento.TabIndex = 10;
             this.DgvAbastecimento.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAbastecimento_CellDoubleClick);
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // Id_Veiculo
-            // 
-            this.Id_Veiculo.DataPropertyName = "Id_Veiculo";
-            this.Id_Veiculo.HeaderText = "Id_Veiculo";
-            this.Id_Veiculo.Name = "Id_Veiculo";
-            this.Id_Veiculo.ReadOnly = true;
-            this.Id_Veiculo.Visible = false;
-            // 
-            // Id_Motorista
-            // 
-            this.Id_Motorista.DataPropertyName = "Id_Motorista";
-            this.Id_Motorista.HeaderText = "Id_Motorista";
-            this.Id_Motorista.Name = "Id_Motorista";
-            this.Id_Motorista.ReadOnly = true;
-            this.Id_Motorista.Visible = false;
-            // 
-            // Data
-            // 
-            this.Data.DataPropertyName = "Data";
-            dataGridViewCellStyle11.Format = "d";
-            dataGridViewCellStyle11.NullValue = null;
-            this.Data.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Data.HeaderText = "Data";
-            this.Data.Name = "Data";
-            this.Data.ReadOnly = true;
-            // 
-            // Valor
-            // 
-            this.Valor.DataPropertyName = "Valor";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = null;
-            this.Valor.DefaultCellStyle = dataGridViewCellStyle12;
-            this.Valor.HeaderText = "Valor";
-            this.Valor.Name = "Valor";
-            this.Valor.ReadOnly = true;
-            // 
-            // Nome
-            // 
-            this.Nome.DataPropertyName = "Nome";
-            this.Nome.HeaderText = "Nome";
-            this.Nome.Name = "Nome";
-            this.Nome.ReadOnly = true;
-            // 
-            // Modelo
-            // 
-            this.Modelo.DataPropertyName = "Modelo";
-            this.Modelo.HeaderText = "Modelo";
-            this.Modelo.Name = "Modelo";
-            this.Modelo.ReadOnly = true;
-            // 
-            // KmInicial
-            // 
-            this.KmInicial.DataPropertyName = "KmInicial";
-            this.KmInicial.HeaderText = "KmInicial";
-            this.KmInicial.Name = "KmInicial";
-            this.KmInicial.ReadOnly = true;
-            // 
-            // Descricao
-            // 
-            this.Descricao.DataPropertyName = "Descricao";
-            this.Descricao.HeaderText = "Descricao";
-            this.Descricao.Name = "Descricao";
-            this.Descricao.ReadOnly = true;
             // 
             // LblAbastecimento
             // 
@@ -293,6 +223,90 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "Litros";
             // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // Id_Veiculo
+            // 
+            this.Id_Veiculo.DataPropertyName = "Id_Veiculo";
+            this.Id_Veiculo.HeaderText = "Id_Veiculo";
+            this.Id_Veiculo.Name = "Id_Veiculo";
+            this.Id_Veiculo.ReadOnly = true;
+            this.Id_Veiculo.Visible = false;
+            // 
+            // Id_Motorista
+            // 
+            this.Id_Motorista.DataPropertyName = "Id_Motorista";
+            this.Id_Motorista.HeaderText = "Id_Motorista";
+            this.Id_Motorista.Name = "Id_Motorista";
+            this.Id_Motorista.ReadOnly = true;
+            this.Id_Motorista.Visible = false;
+            // 
+            // Data
+            // 
+            this.Data.DataPropertyName = "Data";
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.Data.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Data.HeaderText = "Data";
+            this.Data.Name = "Data";
+            this.Data.ReadOnly = true;
+            // 
+            // Valor
+            // 
+            this.Valor.DataPropertyName = "Valor";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Valor.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Valor.HeaderText = "Valor";
+            this.Valor.Name = "Valor";
+            this.Valor.ReadOnly = true;
+            // 
+            // Litros
+            // 
+            this.Litros.DataPropertyName = "Litros";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Litros.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Litros.HeaderText = "Litros";
+            this.Litros.Name = "Litros";
+            this.Litros.ReadOnly = true;
+            // 
+            // Nome
+            // 
+            this.Nome.DataPropertyName = "Nome";
+            this.Nome.HeaderText = "Nome";
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            // 
+            // Modelo
+            // 
+            this.Modelo.DataPropertyName = "Modelo";
+            this.Modelo.HeaderText = "Modelo";
+            this.Modelo.Name = "Modelo";
+            this.Modelo.ReadOnly = true;
+            // 
+            // KmInicial
+            // 
+            this.KmInicial.DataPropertyName = "KmInicial";
+            this.KmInicial.HeaderText = "KmInicial";
+            this.KmInicial.Name = "KmInicial";
+            this.KmInicial.ReadOnly = true;
+            // 
+            // Descricao
+            // 
+            this.Descricao.DataPropertyName = "Descricao";
+            this.Descricao.HeaderText = "Descricao";
+            this.Descricao.Name = "Descricao";
+            this.Descricao.ReadOnly = true;
+            // 
             // FrmContCombustivel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -345,16 +359,17 @@
         private USVeiculoMotorista UCVeiculoMotorista;
         private UCDescricao UCDescricao;
         private UCValor UCValor;
+        private System.Windows.Forms.TextBox TxtLitros;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id_Veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id_Motorista;
         private System.Windows.Forms.DataGridViewTextBoxColumn Data;
         private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Litros;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn Modelo;
         private System.Windows.Forms.DataGridViewTextBoxColumn KmInicial;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descricao;
-        private System.Windows.Forms.TextBox TxtLitros;
-        private System.Windows.Forms.Label label1;
     }
 }

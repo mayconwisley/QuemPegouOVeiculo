@@ -41,6 +41,10 @@
           <DataField>KmInicial</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Litros">
+          <DataField>Litros</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="Modelo">
           <DataField>Modelo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -72,10 +76,10 @@
                   <Width>2.05021cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.18792cm</Width>
+                  <Width>2.8175cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.70333cm</Width>
+                  <Width>4.51271cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.91792cm</Width>
@@ -85,6 +89,9 @@
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.23542cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.56103cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -275,6 +282,39 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Turquoise</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox4">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Litros</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox4</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -484,12 +524,47 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Litros">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Litros.Value</Value>
+                                  <Style>
+                                    <Format>#,0.00;(#,0.00)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Litros</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -511,7 +586,7 @@
             <DataSetName>ControleCombustivelDataSet</DataSetName>
             <Top>0.17639cm</Top>
             <Height>1.2cm</Height>
-            <Width>19.68501cm</Width>
+            <Width>19.685cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -541,7 +616,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Total</Value>
+                                  <Value>Valor Total</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>

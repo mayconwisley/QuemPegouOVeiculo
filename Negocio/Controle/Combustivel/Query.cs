@@ -19,7 +19,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -43,7 +43,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -65,7 +65,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -89,7 +89,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -114,7 +114,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -140,7 +140,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -165,7 +165,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");
@@ -192,7 +192,7 @@ namespace Negocio.Controle.Combustivel
             strSQL = new StringBuilder();
             dataTable = new DataTable();
 
-            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Descricao  ");
+            strSQL.Append("SELECT CA.Id, CA.Id_Veiculo, V.Modelo, CA.Id_Motorista, M.Nome, CA.KmInicial, CA.Data, CA.Valor, CA.Litros, CA.Descricao  ");
             strSQL.Append("FROM ControleAbastecimento CA ");
             strSQL.Append("INNER JOIN Veiculo V ON CA.Id_Veiculo = V.Id ");
             strSQL.Append("INNER JOIN Motorista M ON CA.Id_Motorista = M.Id ");

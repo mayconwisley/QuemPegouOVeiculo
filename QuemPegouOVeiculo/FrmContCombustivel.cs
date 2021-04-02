@@ -75,7 +75,7 @@ namespace QuemPegouOVeiculo
 
             UCDescricao.TxtDescricao.Text = DgvAbastecimento.Rows[e.RowIndex].Cells["Descricao"].Value.ToString();
             UCValor.TxtValor.Text = decimal.Parse(DgvAbastecimento.Rows[e.RowIndex].Cells["Valor"].Value.ToString()).ToString("#,##0.00");
-
+            TxtLitros.Text = decimal.Parse(DgvAbastecimento.Rows[e.RowIndex].Cells["Litros"].Value.ToString()).ToString("#,##0.00");
             MktData.Text = DgvAbastecimento.Rows[e.RowIndex].Cells["Data"].Value.ToString();
             TxtKmInicial.Text = DgvAbastecimento.Rows[e.RowIndex].Cells["KmInicial"].Value.ToString();
             Negocio.Utilitario.HabilitarBotoes.AlterarExcluir(true, BtnAlterar, BtnExcluir, BtnGravar);
@@ -134,6 +134,7 @@ namespace QuemPegouOVeiculo
                 controleAbastecimento.KmInicio = TxtKmInicial.Text.Trim();
                 controleAbastecimento.Data = DateTime.Parse(MktData.Text.Trim());
                 controleAbastecimento.Valor = UCValor.Valor;
+                controleAbastecimento.Litros = decimal.Parse(TxtLitros.Text.Trim());
                 controleAbastecimento.Descricao = UCDescricao.Descricao;
 
                 switch (opc)
@@ -158,6 +159,7 @@ namespace QuemPegouOVeiculo
                 Negocio.Utilitario.LimparCampos.LimparMaskedTextBox(this.Controls);
                 UCDescricao.TxtDescricao.Clear();
                 UCValor.TxtValor.Text = "0,00";
+                TxtLitros.Text = "0,00";
                 Negocio.Utilitario.HabilitarBotoes.AlterarExcluir(false, BtnAlterar, BtnExcluir, BtnGravar);
 
             }

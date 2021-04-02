@@ -16,6 +16,7 @@ namespace Objeto.Relatorios
         public string KmInicial { get; set; }
         public DateTime Data { get; set; }
         public decimal Valor { get; set; }
+        public decimal Litros { get; set; }
         public string Descricao { get; set; }
     }
 }

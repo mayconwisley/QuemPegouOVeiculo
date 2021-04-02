@@ -53,6 +53,8 @@ namespace QuemPegouOVeiculo
             dateTime = dtDateTime;
             dateTime1 = dtDateTime1;
         }
+
+   
         public FrmVisualizarRelatorio(string search, int iOpc, DateTime dtDateTime, DateTime dtDateTime1, int iVeiculoMotorista)
         {
             InitializeComponent();

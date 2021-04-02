@@ -19,7 +19,7 @@ namespace Negocio.Controle.Combustivel
             crud = new CRUD();
             strSQL = new StringBuilder();
             strSQL.Append("UPDATE ControleAbastecimento ");
-            strSQL.Append("SET Id_Veiculo = @Id_Veiculo, Id_Motorista = @Id_Motorista, KmInicial = @KmInicial, Data = @Data, Valor = @Valor, Descricao = @Descricao ");
+            strSQL.Append("SET Id_Veiculo = @Id_Veiculo, Id_Motorista = @Id_Motorista, KmInicial = @KmInicial, Data = @Data, Valor = @Valor, Litros = @Litros, Descricao = @Descricao ");
             strSQL.Append("WHERE Id = @Id");
 
             try
@@ -30,6 +30,7 @@ namespace Negocio.Controle.Combustivel
                 crud.AddParameter("KmInicial", controleAbastecimento.KmInicio);
                 crud.AddParameter("Data", controleAbastecimento.Data);
                 crud.AddParameter("Valor", controleAbastecimento.Valor);
+                crud.AddParameter("Litros", controleAbastecimento.Litros);
                 crud.AddParameter("Descricao", controleAbastecimento.Descricao);
                 crud.AddParameter("Id", controleAbastecimento.Id);
                 crud.Run(CommandType.Text, strSQL.ToString());
