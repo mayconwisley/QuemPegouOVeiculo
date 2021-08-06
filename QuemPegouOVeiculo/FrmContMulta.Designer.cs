@@ -38,11 +38,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.LblMultas = new System.Windows.Forms.Label();
             this.DgvMultas = new System.Windows.Forms.DataGridView();
-            this.TxtPontos = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.UCValor = new QuemPegouOVeiculo.UCValor();
-            this.UCDescricao = new QuemPegouOVeiculo.UCDescricao();
-            this.UCVeiculoMotorista = new QuemPegouOVeiculo.USVeiculoMotorista();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id_Motorista = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +47,11 @@
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TxtPontos = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.UCValor = new QuemPegouOVeiculo.UCValor();
+            this.UCDescricao = new QuemPegouOVeiculo.UCDescricao();
+            this.UCVeiculoMotorista = new QuemPegouOVeiculo.USVeiculoMotorista();
             ((System.ComponentModel.ISupportInitialize)(this.DgvMultas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,7 +70,7 @@
             this.MktData.Mask = "00/00/0000";
             this.MktData.Name = "MktData";
             this.MktData.Size = new System.Drawing.Size(89, 21);
-            this.MktData.TabIndex = 4;
+            this.MktData.TabIndex = 3;
             this.MktData.ValidatingType = typeof(System.DateTime);
             // 
             // BtnExcluir
@@ -79,7 +79,7 @@
             this.BtnExcluir.Location = new System.Drawing.Point(339, 72);
             this.BtnExcluir.Name = "BtnExcluir";
             this.BtnExcluir.Size = new System.Drawing.Size(87, 23);
-            this.BtnExcluir.TabIndex = 8;
+            this.BtnExcluir.TabIndex = 7;
             this.BtnExcluir.Text = "&Excluir";
             this.BtnExcluir.UseVisualStyleBackColor = true;
             this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
@@ -90,7 +90,7 @@
             this.BtnAlterar.Location = new System.Drawing.Point(339, 43);
             this.BtnAlterar.Name = "BtnAlterar";
             this.BtnAlterar.Size = new System.Drawing.Size(87, 23);
-            this.BtnAlterar.TabIndex = 7;
+            this.BtnAlterar.TabIndex = 6;
             this.BtnAlterar.Text = "&Alterar";
             this.BtnAlterar.UseVisualStyleBackColor = true;
             this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
@@ -100,7 +100,7 @@
             this.BtnGravar.Location = new System.Drawing.Point(339, 14);
             this.BtnGravar.Name = "BtnGravar";
             this.BtnGravar.Size = new System.Drawing.Size(87, 23);
-            this.BtnGravar.TabIndex = 6;
+            this.BtnGravar.TabIndex = 5;
             this.BtnGravar.Text = "&Gravar";
             this.BtnGravar.UseVisualStyleBackColor = true;
             this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
@@ -110,7 +110,7 @@
             this.TxtPesquisa.Location = new System.Drawing.Point(13, 239);
             this.TxtPesquisa.Name = "TxtPesquisa";
             this.TxtPesquisa.Size = new System.Drawing.Size(408, 21);
-            this.TxtPesquisa.TabIndex = 9;
+            this.TxtPesquisa.TabIndex = 8;
             this.TxtPesquisa.TextChanged += new System.EventHandler(this.TxtPesquisa_TextChanged);
             // 
             // label7
@@ -155,45 +155,8 @@
             this.DgvMultas.ReadOnly = true;
             this.DgvMultas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvMultas.Size = new System.Drawing.Size(408, 150);
-            this.DgvMultas.TabIndex = 10;
+            this.DgvMultas.TabIndex = 9;
             this.DgvMultas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvMultas_CellDoubleClick);
-            // 
-            // TxtPontos
-            // 
-            this.TxtPontos.Location = new System.Drawing.Point(13, 124);
-            this.TxtPontos.Name = "TxtPontos";
-            this.TxtPontos.Size = new System.Drawing.Size(100, 21);
-            this.TxtPontos.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 108);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 13);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "Pontos";
-            // 
-            // UCValor
-            // 
-            this.UCValor.Location = new System.Drawing.Point(119, 107);
-            this.UCValor.Name = "UCValor";
-            this.UCValor.Size = new System.Drawing.Size(95, 40);
-            this.UCValor.TabIndex = 3;
-            // 
-            // UCDescricao
-            // 
-            this.UCDescricao.Location = new System.Drawing.Point(13, 151);
-            this.UCDescricao.Name = "UCDescricao";
-            this.UCDescricao.Size = new System.Drawing.Size(419, 69);
-            this.UCDescricao.TabIndex = 5;
-            // 
-            // UCVeiculoMotorista
-            // 
-            this.UCVeiculoMotorista.Location = new System.Drawing.Point(13, 12);
-            this.UCVeiculoMotorista.Name = "UCVeiculoMotorista";
-            this.UCVeiculoMotorista.Size = new System.Drawing.Size(318, 88);
-            this.UCVeiculoMotorista.TabIndex = 1;
             // 
             // Id
             // 
@@ -273,6 +236,43 @@
             this.Descricao.Name = "Descricao";
             this.Descricao.ReadOnly = true;
             this.Descricao.Width = 88;
+            // 
+            // TxtPontos
+            // 
+            this.TxtPontos.Location = new System.Drawing.Point(13, 124);
+            this.TxtPontos.Name = "TxtPontos";
+            this.TxtPontos.Size = new System.Drawing.Size(100, 21);
+            this.TxtPontos.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(11, 108);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "Pontos";
+            // 
+            // UCValor
+            // 
+            this.UCValor.Location = new System.Drawing.Point(119, 107);
+            this.UCValor.Name = "UCValor";
+            this.UCValor.Size = new System.Drawing.Size(95, 40);
+            this.UCValor.TabIndex = 2;
+            // 
+            // UCDescricao
+            // 
+            this.UCDescricao.Location = new System.Drawing.Point(13, 151);
+            this.UCDescricao.Name = "UCDescricao";
+            this.UCDescricao.Size = new System.Drawing.Size(419, 69);
+            this.UCDescricao.TabIndex = 4;
+            // 
+            // UCVeiculoMotorista
+            // 
+            this.UCVeiculoMotorista.Location = new System.Drawing.Point(13, 12);
+            this.UCVeiculoMotorista.Name = "UCVeiculoMotorista";
+            this.UCVeiculoMotorista.Size = new System.Drawing.Size(318, 88);
+            this.UCVeiculoMotorista.TabIndex = 0;
             // 
             // FrmContMulta
             // 

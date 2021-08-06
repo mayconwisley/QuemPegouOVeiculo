@@ -36,7 +36,9 @@
             this.RbGeral = new System.Windows.Forms.RadioButton();
             this.BtnListar = new System.Windows.Forms.Button();
             this.GbVeiculo = new System.Windows.Forms.GroupBox();
+            this.UCVeiculo = new QuemPegouOVeiculo.UCVeiculo();
             this.GbMotorista = new System.Windows.Forms.GroupBox();
+            this.UCMotorista = new QuemPegouOVeiculo.UCMotorista();
             this.GbPeriodo = new System.Windows.Forms.GroupBox();
             this.CbMotorista = new System.Windows.Forms.CheckBox();
             this.CbVeiculo = new System.Windows.Forms.CheckBox();
@@ -46,8 +48,6 @@
             this.MktDataIncial = new System.Windows.Forms.MaskedTextBox();
             this.RbDtChegada = new System.Windows.Forms.RadioButton();
             this.RbDtSaida = new System.Windows.Forms.RadioButton();
-            this.UCMotorista = new QuemPegouOVeiculo.UCMotorista();
-            this.UCVeiculo = new QuemPegouOVeiculo.UCVeiculo();
             this.GbOpcoes.SuspendLayout();
             this.GbVeiculo.SuspendLayout();
             this.GbMotorista.SuspendLayout();
@@ -120,6 +120,7 @@
             this.RbGeral.Name = "RbGeral";
             this.RbGeral.Size = new System.Drawing.Size(50, 17);
             this.RbGeral.TabIndex = 1;
+            this.RbGeral.TabStop = true;
             this.RbGeral.Text = "Geral";
             this.RbGeral.UseVisualStyleBackColor = true;
             this.RbGeral.CheckedChanged += new System.EventHandler(this.RbGeral_CheckedChanged);
@@ -129,7 +130,7 @@
             this.BtnListar.Location = new System.Drawing.Point(360, 14);
             this.BtnListar.Name = "BtnListar";
             this.BtnListar.Size = new System.Drawing.Size(75, 23);
-            this.BtnListar.TabIndex = 18;
+            this.BtnListar.TabIndex = 4;
             this.BtnListar.Text = "Listar";
             this.BtnListar.UseVisualStyleBackColor = true;
             this.BtnListar.Click += new System.EventHandler(this.BtnListar_Click);
@@ -141,8 +142,15 @@
             this.GbVeiculo.Location = new System.Drawing.Point(11, 193);
             this.GbVeiculo.Name = "GbVeiculo";
             this.GbVeiculo.Size = new System.Drawing.Size(343, 65);
-            this.GbVeiculo.TabIndex = 14;
+            this.GbVeiculo.TabIndex = 2;
             this.GbVeiculo.TabStop = false;
+            // 
+            // UCVeiculo
+            // 
+            this.UCVeiculo.Location = new System.Drawing.Point(6, 10);
+            this.UCVeiculo.Name = "UCVeiculo";
+            this.UCVeiculo.Size = new System.Drawing.Size(268, 38);
+            this.UCVeiculo.TabIndex = 0;
             // 
             // GbMotorista
             // 
@@ -151,8 +159,16 @@
             this.GbMotorista.Location = new System.Drawing.Point(11, 257);
             this.GbMotorista.Name = "GbMotorista";
             this.GbMotorista.Size = new System.Drawing.Size(343, 59);
-            this.GbMotorista.TabIndex = 16;
+            this.GbMotorista.TabIndex = 3;
             this.GbMotorista.TabStop = false;
+            // 
+            // UCMotorista
+            // 
+            this.UCMotorista.AutoSize = true;
+            this.UCMotorista.Location = new System.Drawing.Point(6, 10);
+            this.UCMotorista.Name = "UCMotorista";
+            this.UCMotorista.Size = new System.Drawing.Size(272, 41);
+            this.UCMotorista.TabIndex = 0;
             // 
             // GbPeriodo
             // 
@@ -168,7 +184,7 @@
             this.GbPeriodo.Location = new System.Drawing.Point(11, 75);
             this.GbPeriodo.Name = "GbPeriodo";
             this.GbPeriodo.Size = new System.Drawing.Size(343, 112);
-            this.GbPeriodo.TabIndex = 6;
+            this.GbPeriodo.TabIndex = 1;
             this.GbPeriodo.TabStop = false;
             this.GbPeriodo.Text = "Período";
             // 
@@ -178,7 +194,7 @@
             this.CbMotorista.Location = new System.Drawing.Point(257, 16);
             this.CbMotorista.Name = "CbMotorista";
             this.CbMotorista.Size = new System.Drawing.Size(69, 17);
-            this.CbMotorista.TabIndex = 10;
+            this.CbMotorista.TabIndex = 3;
             this.CbMotorista.Text = "Motorista";
             this.CbMotorista.UseVisualStyleBackColor = true;
             this.CbMotorista.CheckedChanged += new System.EventHandler(this.CbMotorista_CheckedChanged);
@@ -189,7 +205,7 @@
             this.CbVeiculo.Location = new System.Drawing.Point(188, 16);
             this.CbVeiculo.Name = "CbVeiculo";
             this.CbVeiculo.Size = new System.Drawing.Size(63, 17);
-            this.CbVeiculo.TabIndex = 9;
+            this.CbVeiculo.TabIndex = 2;
             this.CbVeiculo.Text = "Veículo";
             this.CbVeiculo.UseVisualStyleBackColor = true;
             this.CbVeiculo.CheckedChanged += new System.EventHandler(this.CbVeiculo_CheckedChanged);
@@ -200,7 +216,7 @@
             this.CbListaDataNull.Location = new System.Drawing.Point(6, 89);
             this.CbListaDataNull.Name = "CbListaDataNull";
             this.CbListaDataNull.Size = new System.Drawing.Size(124, 17);
-            this.CbListaDataNull.TabIndex = 13;
+            this.CbListaDataNull.TabIndex = 6;
             this.CbListaDataNull.Text = "Data Chegada Vazia";
             this.CbListaDataNull.UseVisualStyleBackColor = true;
             // 
@@ -219,7 +235,7 @@
             this.MktDataFinal.Mask = "00/00/0000";
             this.MktDataFinal.Name = "MktDataFinal";
             this.MktDataFinal.Size = new System.Drawing.Size(100, 20);
-            this.MktDataFinal.TabIndex = 12;
+            this.MktDataFinal.TabIndex = 5;
             this.MktDataFinal.ValidatingType = typeof(System.DateTime);
             // 
             // MktDataIncial
@@ -228,7 +244,7 @@
             this.MktDataIncial.Mask = "00/00/0000";
             this.MktDataIncial.Name = "MktDataIncial";
             this.MktDataIncial.Size = new System.Drawing.Size(100, 20);
-            this.MktDataIncial.TabIndex = 11;
+            this.MktDataIncial.TabIndex = 4;
             this.MktDataIncial.ValidatingType = typeof(System.DateTime);
             // 
             // RbDtChegada
@@ -237,7 +253,7 @@
             this.RbDtChegada.Location = new System.Drawing.Point(88, 15);
             this.RbDtChegada.Name = "RbDtChegada";
             this.RbDtChegada.Size = new System.Drawing.Size(94, 17);
-            this.RbDtChegada.TabIndex = 8;
+            this.RbDtChegada.TabIndex = 1;
             this.RbDtChegada.Text = "Data Chegada";
             this.RbDtChegada.UseVisualStyleBackColor = true;
             // 
@@ -248,25 +264,10 @@
             this.RbDtSaida.Location = new System.Drawing.Point(4, 15);
             this.RbDtSaida.Name = "RbDtSaida";
             this.RbDtSaida.Size = new System.Drawing.Size(80, 17);
-            this.RbDtSaida.TabIndex = 7;
+            this.RbDtSaida.TabIndex = 0;
             this.RbDtSaida.TabStop = true;
             this.RbDtSaida.Text = "Data Saída";
             this.RbDtSaida.UseVisualStyleBackColor = true;
-            // 
-            // UCMotorista
-            // 
-            this.UCMotorista.AutoSize = true;
-            this.UCMotorista.Location = new System.Drawing.Point(6, 10);
-            this.UCMotorista.Name = "UCMotorista";
-            this.UCMotorista.Size = new System.Drawing.Size(272, 41);
-            this.UCMotorista.TabIndex = 0;
-            // 
-            // UCVeiculo
-            // 
-            this.UCVeiculo.Location = new System.Drawing.Point(6, 10);
-            this.UCVeiculo.Name = "UCVeiculo";
-            this.UCVeiculo.Size = new System.Drawing.Size(268, 38);
-            this.UCVeiculo.TabIndex = 17;
             // 
             // FrmRelContVeiculo
             // 

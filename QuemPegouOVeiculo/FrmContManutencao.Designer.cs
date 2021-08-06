@@ -41,13 +41,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.TxtPesquisar = new System.Windows.Forms.TextBox();
             this.DgvManutencao = new System.Windows.Forms.DataGridView();
-            this.LblManutencao = new System.Windows.Forms.Label();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LblManutencao = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DgvManutencao)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +56,7 @@
             this.UCVeiculo.Location = new System.Drawing.Point(14, 12);
             this.UCVeiculo.Name = "UCVeiculo";
             this.UCVeiculo.Size = new System.Drawing.Size(314, 45);
-            this.UCVeiculo.TabIndex = 1;
+            this.UCVeiculo.TabIndex = 0;
             // 
             // label1
             // 
@@ -73,7 +73,7 @@
             this.MktData.Mask = "00/00/0000";
             this.MktData.Name = "MktData";
             this.MktData.Size = new System.Drawing.Size(100, 21);
-            this.MktData.TabIndex = 2;
+            this.MktData.TabIndex = 1;
             this.MktData.ValidatingType = typeof(System.DateTime);
             // 
             // UCValor
@@ -81,21 +81,21 @@
             this.UCValor.Location = new System.Drawing.Point(141, 58);
             this.UCValor.Name = "UCValor";
             this.UCValor.Size = new System.Drawing.Size(120, 40);
-            this.UCValor.TabIndex = 3;
+            this.UCValor.TabIndex = 2;
             // 
             // UCDescricao
             // 
             this.UCDescricao.Location = new System.Drawing.Point(14, 118);
             this.UCDescricao.Name = "UCDescricao";
             this.UCDescricao.Size = new System.Drawing.Size(420, 69);
-            this.UCDescricao.TabIndex = 4;
+            this.UCDescricao.TabIndex = 3;
             // 
             // BtnGravar
             // 
             this.BtnGravar.Location = new System.Drawing.Point(348, 12);
             this.BtnGravar.Name = "BtnGravar";
             this.BtnGravar.Size = new System.Drawing.Size(87, 23);
-            this.BtnGravar.TabIndex = 5;
+            this.BtnGravar.TabIndex = 4;
             this.BtnGravar.Text = "&Gravar";
             this.BtnGravar.UseVisualStyleBackColor = true;
             this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
@@ -106,7 +106,7 @@
             this.BtnAlterar.Location = new System.Drawing.Point(348, 41);
             this.BtnAlterar.Name = "BtnAlterar";
             this.BtnAlterar.Size = new System.Drawing.Size(87, 23);
-            this.BtnAlterar.TabIndex = 6;
+            this.BtnAlterar.TabIndex = 5;
             this.BtnAlterar.Text = "&Alterar";
             this.BtnAlterar.UseVisualStyleBackColor = true;
             this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
@@ -117,7 +117,7 @@
             this.BtnExcluir.Location = new System.Drawing.Point(348, 70);
             this.BtnExcluir.Name = "BtnExcluir";
             this.BtnExcluir.Size = new System.Drawing.Size(87, 23);
-            this.BtnExcluir.TabIndex = 7;
+            this.BtnExcluir.TabIndex = 6;
             this.BtnExcluir.Text = "&Excluir";
             this.BtnExcluir.UseVisualStyleBackColor = true;
             this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
@@ -136,7 +136,7 @@
             this.TxtPesquisar.Location = new System.Drawing.Point(14, 206);
             this.TxtPesquisar.Name = "TxtPesquisar";
             this.TxtPesquisar.Size = new System.Drawing.Size(420, 21);
-            this.TxtPesquisar.TabIndex = 8;
+            this.TxtPesquisar.TabIndex = 7;
             this.TxtPesquisar.TextChanged += new System.EventHandler(this.TxtPesquisar_TextChanged);
             // 
             // DgvManutencao
@@ -160,17 +160,8 @@
             this.DgvManutencao.ReadOnly = true;
             this.DgvManutencao.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvManutencao.Size = new System.Drawing.Size(421, 150);
-            this.DgvManutencao.TabIndex = 9;
+            this.DgvManutencao.TabIndex = 8;
             this.DgvManutencao.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvManutencao_CellDoubleClick);
-            // 
-            // LblManutencao
-            // 
-            this.LblManutencao.AutoSize = true;
-            this.LblManutencao.Location = new System.Drawing.Point(14, 240);
-            this.LblManutencao.Name = "LblManutencao";
-            this.LblManutencao.Size = new System.Drawing.Size(109, 13);
-            this.LblManutencao.TabIndex = 9;
-            this.LblManutencao.Text = "Manutenção - 000";
             // 
             // Id
             // 
@@ -228,6 +219,15 @@
             this.Modelo.Name = "Modelo";
             this.Modelo.ReadOnly = true;
             this.Modelo.Width = 72;
+            // 
+            // LblManutencao
+            // 
+            this.LblManutencao.AutoSize = true;
+            this.LblManutencao.Location = new System.Drawing.Point(14, 240);
+            this.LblManutencao.Name = "LblManutencao";
+            this.LblManutencao.Size = new System.Drawing.Size(109, 13);
+            this.LblManutencao.TabIndex = 9;
+            this.LblManutencao.Text = "Manutenção - 000";
             // 
             // FrmContManutencao
             // 

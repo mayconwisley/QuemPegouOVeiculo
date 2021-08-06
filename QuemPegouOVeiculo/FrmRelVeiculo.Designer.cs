@@ -52,7 +52,7 @@
             this.CbxListVeiculo.Location = new System.Drawing.Point(15, 36);
             this.CbxListVeiculo.Name = "CbxListVeiculo";
             this.CbxListVeiculo.Size = new System.Drawing.Size(137, 21);
-            this.CbxListVeiculo.TabIndex = 1;
+            this.CbxListVeiculo.TabIndex = 0;
             this.CbxListVeiculo.SelectedIndexChanged += new System.EventHandler(this.CbxListVeiculo_SelectedIndexChanged);
             // 
             // BtnListar
@@ -60,7 +60,7 @@
             this.BtnListar.Location = new System.Drawing.Point(181, 36);
             this.BtnListar.Name = "BtnListar";
             this.BtnListar.Size = new System.Drawing.Size(75, 23);
-            this.BtnListar.TabIndex = 2;
+            this.BtnListar.TabIndex = 1;
             this.BtnListar.Text = "Listar";
             this.BtnListar.UseVisualStyleBackColor = true;
             this.BtnListar.Click += new System.EventHandler(this.BtnListar_Click);

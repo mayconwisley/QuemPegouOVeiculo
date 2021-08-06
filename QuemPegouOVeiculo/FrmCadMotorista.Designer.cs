@@ -74,7 +74,7 @@
             this.TxtNome.MaxLength = 200;
             this.TxtNome.Name = "TxtNome";
             this.TxtNome.Size = new System.Drawing.Size(248, 21);
-            this.TxtNome.TabIndex = 1;
+            this.TxtNome.TabIndex = 0;
             // 
             // label2
             // 
@@ -91,7 +91,7 @@
             this.TxtCNH.MaxLength = 11;
             this.TxtCNH.Name = "TxtCNH";
             this.TxtCNH.Size = new System.Drawing.Size(142, 21);
-            this.TxtCNH.TabIndex = 3;
+            this.TxtCNH.TabIndex = 1;
             // 
             // label3
             // 
@@ -108,7 +108,7 @@
             this.MktVencCNH.Mask = "00/00/0000";
             this.MktVencCNH.Name = "MktVencCNH";
             this.MktVencCNH.Size = new System.Drawing.Size(100, 21);
-            this.MktVencCNH.TabIndex = 5;
+            this.MktVencCNH.TabIndex = 2;
             this.MktVencCNH.ValidatingType = typeof(System.DateTime);
             // 
             // label4
@@ -126,7 +126,7 @@
             this.TxtCategCNH.MaxLength = 2;
             this.TxtCategCNH.Name = "TxtCategCNH";
             this.TxtCategCNH.Size = new System.Drawing.Size(41, 21);
-            this.TxtCategCNH.TabIndex = 7;
+            this.TxtCategCNH.TabIndex = 3;
             // 
             // label5
             // 
@@ -152,7 +152,7 @@
             this.TxtRG.MaxLength = 20;
             this.TxtRG.Name = "TxtRG";
             this.TxtRG.Size = new System.Drawing.Size(120, 21);
-            this.TxtRG.TabIndex = 11;
+            this.TxtRG.TabIndex = 6;
             // 
             // CbAtivo
             // 
@@ -162,7 +162,7 @@
             this.CbAtivo.Location = new System.Drawing.Point(90, 107);
             this.CbAtivo.Name = "CbAtivo";
             this.CbAtivo.Size = new System.Drawing.Size(55, 17);
-            this.CbAtivo.TabIndex = 12;
+            this.CbAtivo.TabIndex = 4;
             this.CbAtivo.Text = "Ativo";
             this.CbAtivo.UseVisualStyleBackColor = true;
             // 
@@ -171,7 +171,7 @@
             this.BtnGravar.Location = new System.Drawing.Point(294, 23);
             this.BtnGravar.Name = "BtnGravar";
             this.BtnGravar.Size = new System.Drawing.Size(75, 23);
-            this.BtnGravar.TabIndex = 13;
+            this.BtnGravar.TabIndex = 7;
             this.BtnGravar.Text = "&Gravar";
             this.BtnGravar.UseVisualStyleBackColor = true;
             this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
@@ -182,7 +182,7 @@
             this.BtnAlterar.Location = new System.Drawing.Point(294, 52);
             this.BtnAlterar.Name = "BtnAlterar";
             this.BtnAlterar.Size = new System.Drawing.Size(75, 23);
-            this.BtnAlterar.TabIndex = 14;
+            this.BtnAlterar.TabIndex = 8;
             this.BtnAlterar.Text = "&Alterar";
             this.BtnAlterar.UseVisualStyleBackColor = true;
             this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
@@ -193,7 +193,7 @@
             this.BtnExcluir.Location = new System.Drawing.Point(294, 81);
             this.BtnExcluir.Name = "BtnExcluir";
             this.BtnExcluir.Size = new System.Drawing.Size(75, 23);
-            this.BtnExcluir.TabIndex = 15;
+            this.BtnExcluir.TabIndex = 9;
             this.BtnExcluir.Text = "&Excluir";
             this.BtnExcluir.UseVisualStyleBackColor = true;
             this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
@@ -212,7 +212,7 @@
             this.TxtPesquisa.Location = new System.Drawing.Point(12, 211);
             this.TxtPesquisa.Name = "TxtPesquisa";
             this.TxtPesquisa.Size = new System.Drawing.Size(357, 21);
-            this.TxtPesquisa.TabIndex = 17;
+            this.TxtPesquisa.TabIndex = 10;
             this.TxtPesquisa.TextChanged += new System.EventHandler(this.TxtPesquisa_TextChanged);
             // 
             // DgvMotoristas
@@ -238,7 +238,7 @@
             this.DgvMotoristas.ReadOnly = true;
             this.DgvMotoristas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvMotoristas.Size = new System.Drawing.Size(357, 150);
-            this.DgvMotoristas.TabIndex = 18;
+            this.DgvMotoristas.TabIndex = 11;
             this.DgvMotoristas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvMotoristas_CellDoubleClick);
             // 
             // Id
@@ -320,7 +320,7 @@
             this.MktCPF.Mask = "000\\.000\\.000-00";
             this.MktCPF.Name = "MktCPF";
             this.MktCPF.Size = new System.Drawing.Size(122, 21);
-            this.MktCPF.TabIndex = 9;
+            this.MktCPF.TabIndex = 5;
             // 
             // FrmCadMotorista
             // 

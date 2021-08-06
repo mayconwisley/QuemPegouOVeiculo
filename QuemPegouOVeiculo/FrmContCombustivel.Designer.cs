@@ -34,6 +34,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.TxtKmInicial = new System.Windows.Forms.TextBox();
             this.DgvAbastecimento = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id_Motorista = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Litros = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.KmInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LblAbastecimento = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.TxtPesquisa = new System.Windows.Forms.TextBox();
@@ -47,16 +57,6 @@
             this.UCValor = new QuemPegouOVeiculo.UCValor();
             this.TxtLitros = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id_Motorista = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Litros = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KmInicial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Descricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvAbastecimento)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,7 +74,7 @@
             this.TxtKmInicial.Location = new System.Drawing.Point(19, 128);
             this.TxtKmInicial.Name = "TxtKmInicial";
             this.TxtKmInicial.Size = new System.Drawing.Size(100, 21);
-            this.TxtKmInicial.TabIndex = 2;
+            this.TxtKmInicial.TabIndex = 1;
             // 
             // DgvAbastecimento
             // 
@@ -103,125 +103,6 @@
             this.DgvAbastecimento.Size = new System.Drawing.Size(408, 150);
             this.DgvAbastecimento.TabIndex = 10;
             this.DgvAbastecimento.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAbastecimento_CellDoubleClick);
-            // 
-            // LblAbastecimento
-            // 
-            this.LblAbastecimento.AutoSize = true;
-            this.LblAbastecimento.Location = new System.Drawing.Point(19, 269);
-            this.LblAbastecimento.Name = "LblAbastecimento";
-            this.LblAbastecimento.Size = new System.Drawing.Size(125, 13);
-            this.LblAbastecimento.TabIndex = 11;
-            this.LblAbastecimento.Text = "Abastecimento - 000";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 227);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(57, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Pesquisa";
-            // 
-            // TxtPesquisa
-            // 
-            this.TxtPesquisa.Location = new System.Drawing.Point(19, 243);
-            this.TxtPesquisa.Name = "TxtPesquisa";
-            this.TxtPesquisa.Size = new System.Drawing.Size(408, 21);
-            this.TxtPesquisa.TabIndex = 9;
-            this.TxtPesquisa.TextChanged += new System.EventHandler(this.TxtPesquisa_TextChanged);
-            // 
-            // BtnGravar
-            // 
-            this.BtnGravar.Location = new System.Drawing.Point(346, 13);
-            this.BtnGravar.Name = "BtnGravar";
-            this.BtnGravar.Size = new System.Drawing.Size(87, 23);
-            this.BtnGravar.TabIndex = 6;
-            this.BtnGravar.Text = "&Gravar";
-            this.BtnGravar.UseVisualStyleBackColor = true;
-            this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
-            // 
-            // BtnAlterar
-            // 
-            this.BtnAlterar.Enabled = false;
-            this.BtnAlterar.Location = new System.Drawing.Point(346, 42);
-            this.BtnAlterar.Name = "BtnAlterar";
-            this.BtnAlterar.Size = new System.Drawing.Size(87, 23);
-            this.BtnAlterar.TabIndex = 7;
-            this.BtnAlterar.Text = "&Alterar";
-            this.BtnAlterar.UseVisualStyleBackColor = true;
-            this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
-            // 
-            // BtnExcluir
-            // 
-            this.BtnExcluir.Enabled = false;
-            this.BtnExcluir.Location = new System.Drawing.Point(346, 71);
-            this.BtnExcluir.Name = "BtnExcluir";
-            this.BtnExcluir.Size = new System.Drawing.Size(87, 23);
-            this.BtnExcluir.TabIndex = 8;
-            this.BtnExcluir.Text = "&Excluir";
-            this.BtnExcluir.UseVisualStyleBackColor = true;
-            this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
-            // 
-            // MktData
-            // 
-            this.MktData.Location = new System.Drawing.Point(236, 128);
-            this.MktData.Mask = "00/00/0000";
-            this.MktData.Name = "MktData";
-            this.MktData.Size = new System.Drawing.Size(101, 21);
-            this.MktData.TabIndex = 4;
-            this.MktData.ValidatingType = typeof(System.DateTime);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(236, 112);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(34, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Data";
-            // 
-            // UCVeiculoMotorista
-            // 
-            this.UCVeiculoMotorista.Location = new System.Drawing.Point(19, 13);
-            this.UCVeiculoMotorista.Name = "UCVeiculoMotorista";
-            this.UCVeiculoMotorista.Size = new System.Drawing.Size(320, 88);
-            this.UCVeiculoMotorista.TabIndex = 1;
-            this.UCVeiculoMotorista.KmFinal += new QuemPegouOVeiculo.USVeiculoMotorista.KmFimVeiculo(this.UCVeiculoMotorista_KmFinal);
-            // 
-            // UCDescricao
-            // 
-            this.UCDescricao.Location = new System.Drawing.Point(19, 155);
-            this.UCDescricao.Name = "UCDescricao";
-            this.UCDescricao.Size = new System.Drawing.Size(408, 69);
-            this.UCDescricao.TabIndex = 5;
-            // 
-            // UCValor
-            // 
-            this.UCValor.Location = new System.Drawing.Point(127, 111);
-            this.UCValor.Name = "UCValor";
-            this.UCValor.Size = new System.Drawing.Size(103, 40);
-            this.UCValor.TabIndex = 3;
-            // 
-            // TxtLitros
-            // 
-            this.TxtLitros.Location = new System.Drawing.Point(346, 128);
-            this.TxtLitros.Name = "TxtLitros";
-            this.TxtLitros.Size = new System.Drawing.Size(81, 21);
-            this.TxtLitros.TabIndex = 17;
-            this.TxtLitros.Text = "0,00";
-            this.TxtLitros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TxtLitros.TextChanged += new System.EventHandler(this.TxtLitros_TextChanged);
-            this.TxtLitros.Enter += new System.EventHandler(this.TxtLitros_Enter);
-            this.TxtLitros.Leave += new System.EventHandler(this.TxtLitros_Leave);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(343, 112);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Litros";
             // 
             // Id
             // 
@@ -306,6 +187,125 @@
             this.Descricao.HeaderText = "Descricao";
             this.Descricao.Name = "Descricao";
             this.Descricao.ReadOnly = true;
+            // 
+            // LblAbastecimento
+            // 
+            this.LblAbastecimento.AutoSize = true;
+            this.LblAbastecimento.Location = new System.Drawing.Point(19, 269);
+            this.LblAbastecimento.Name = "LblAbastecimento";
+            this.LblAbastecimento.Size = new System.Drawing.Size(125, 13);
+            this.LblAbastecimento.TabIndex = 11;
+            this.LblAbastecimento.Text = "Abastecimento - 000";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(19, 227);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(57, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Pesquisa";
+            // 
+            // TxtPesquisa
+            // 
+            this.TxtPesquisa.Location = new System.Drawing.Point(19, 243);
+            this.TxtPesquisa.Name = "TxtPesquisa";
+            this.TxtPesquisa.Size = new System.Drawing.Size(408, 21);
+            this.TxtPesquisa.TabIndex = 9;
+            this.TxtPesquisa.TextChanged += new System.EventHandler(this.TxtPesquisa_TextChanged);
+            // 
+            // BtnGravar
+            // 
+            this.BtnGravar.Location = new System.Drawing.Point(346, 13);
+            this.BtnGravar.Name = "BtnGravar";
+            this.BtnGravar.Size = new System.Drawing.Size(87, 23);
+            this.BtnGravar.TabIndex = 6;
+            this.BtnGravar.Text = "&Gravar";
+            this.BtnGravar.UseVisualStyleBackColor = true;
+            this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
+            // 
+            // BtnAlterar
+            // 
+            this.BtnAlterar.Enabled = false;
+            this.BtnAlterar.Location = new System.Drawing.Point(346, 42);
+            this.BtnAlterar.Name = "BtnAlterar";
+            this.BtnAlterar.Size = new System.Drawing.Size(87, 23);
+            this.BtnAlterar.TabIndex = 7;
+            this.BtnAlterar.Text = "&Alterar";
+            this.BtnAlterar.UseVisualStyleBackColor = true;
+            this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
+            // 
+            // BtnExcluir
+            // 
+            this.BtnExcluir.Enabled = false;
+            this.BtnExcluir.Location = new System.Drawing.Point(346, 71);
+            this.BtnExcluir.Name = "BtnExcluir";
+            this.BtnExcluir.Size = new System.Drawing.Size(87, 23);
+            this.BtnExcluir.TabIndex = 8;
+            this.BtnExcluir.Text = "&Excluir";
+            this.BtnExcluir.UseVisualStyleBackColor = true;
+            this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
+            // 
+            // MktData
+            // 
+            this.MktData.Location = new System.Drawing.Point(236, 128);
+            this.MktData.Mask = "00/00/0000";
+            this.MktData.Name = "MktData";
+            this.MktData.Size = new System.Drawing.Size(101, 21);
+            this.MktData.TabIndex = 3;
+            this.MktData.ValidatingType = typeof(System.DateTime);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(236, 112);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Data";
+            // 
+            // UCVeiculoMotorista
+            // 
+            this.UCVeiculoMotorista.Location = new System.Drawing.Point(19, 13);
+            this.UCVeiculoMotorista.Name = "UCVeiculoMotorista";
+            this.UCVeiculoMotorista.Size = new System.Drawing.Size(320, 88);
+            this.UCVeiculoMotorista.TabIndex = 0;
+            this.UCVeiculoMotorista.KmFinal += new QuemPegouOVeiculo.USVeiculoMotorista.KmFimVeiculo(this.UCVeiculoMotorista_KmFinal);
+            // 
+            // UCDescricao
+            // 
+            this.UCDescricao.Location = new System.Drawing.Point(19, 155);
+            this.UCDescricao.Name = "UCDescricao";
+            this.UCDescricao.Size = new System.Drawing.Size(408, 69);
+            this.UCDescricao.TabIndex = 5;
+            // 
+            // UCValor
+            // 
+            this.UCValor.Location = new System.Drawing.Point(127, 111);
+            this.UCValor.Name = "UCValor";
+            this.UCValor.Size = new System.Drawing.Size(103, 40);
+            this.UCValor.TabIndex = 2;
+            // 
+            // TxtLitros
+            // 
+            this.TxtLitros.Location = new System.Drawing.Point(346, 128);
+            this.TxtLitros.Name = "TxtLitros";
+            this.TxtLitros.Size = new System.Drawing.Size(81, 21);
+            this.TxtLitros.TabIndex = 4;
+            this.TxtLitros.Text = "0,00";
+            this.TxtLitros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.TxtLitros.TextChanged += new System.EventHandler(this.TxtLitros_TextChanged);
+            this.TxtLitros.Enter += new System.EventHandler(this.TxtLitros_Enter);
+            this.TxtLitros.Leave += new System.EventHandler(this.TxtLitros_Leave);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(343, 112);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Litros";
             // 
             // FrmContCombustivel
             // 

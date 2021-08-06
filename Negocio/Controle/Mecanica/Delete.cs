@@ -1,15 +1,12 @@
 ﻿using BancoDados;
 using Objeto;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Negocio.Controle.Mecanica
 {
-   public static class Delete
+    public static class Delete
     {
         static CRUD crud = null;
         static StringBuilder strSQL = null;

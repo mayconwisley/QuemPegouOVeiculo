@@ -65,7 +65,7 @@
             this.RbPeriodo.Location = new System.Drawing.Point(133, 19);
             this.RbPeriodo.Name = "RbPeriodo";
             this.RbPeriodo.Size = new System.Drawing.Size(63, 17);
-            this.RbPeriodo.TabIndex = 3;
+            this.RbPeriodo.TabIndex = 2;
             this.RbPeriodo.Text = "Período";
             this.RbPeriodo.UseVisualStyleBackColor = true;
             this.RbPeriodo.CheckedChanged += new System.EventHandler(this.RbPeriodo_CheckedChanged);
@@ -76,7 +76,7 @@
             this.RbVeiculo.Location = new System.Drawing.Point(67, 19);
             this.RbVeiculo.Name = "RbVeiculo";
             this.RbVeiculo.Size = new System.Drawing.Size(62, 17);
-            this.RbVeiculo.TabIndex = 2;
+            this.RbVeiculo.TabIndex = 1;
             this.RbVeiculo.Text = "Veículo";
             this.RbVeiculo.UseVisualStyleBackColor = true;
             this.RbVeiculo.CheckedChanged += new System.EventHandler(this.RbVeiculo_CheckedChanged);
@@ -88,7 +88,8 @@
             this.RbTodos.Location = new System.Drawing.Point(6, 19);
             this.RbTodos.Name = "RbTodos";
             this.RbTodos.Size = new System.Drawing.Size(55, 17);
-            this.RbTodos.TabIndex = 1;
+            this.RbTodos.TabIndex = 0;
+            this.RbTodos.TabStop = true;
             this.RbTodos.Text = "Todos";
             this.RbTodos.UseVisualStyleBackColor = true;
             this.RbTodos.CheckedChanged += new System.EventHandler(this.RbTodos_CheckedChanged);
@@ -105,7 +106,7 @@
             this.GbPeriodo.Location = new System.Drawing.Point(9, 127);
             this.GbPeriodo.Name = "GbPeriodo";
             this.GbPeriodo.Size = new System.Drawing.Size(277, 93);
-            this.GbPeriodo.TabIndex = 6;
+            this.GbPeriodo.TabIndex = 2;
             this.GbPeriodo.TabStop = false;
             this.GbPeriodo.Text = "Período";
             // 
@@ -117,6 +118,7 @@
             this.RbDataInicio.Name = "RbDataInicio";
             this.RbDataInicio.Size = new System.Drawing.Size(78, 17);
             this.RbDataInicio.TabIndex = 7;
+            this.RbDataInicio.TabStop = true;
             this.RbDataInicio.Text = "Data Inicial";
             this.RbDataInicio.UseVisualStyleBackColor = true;
             this.RbDataInicio.CheckedChanged += new System.EventHandler(this.RbDataInicio_CheckedChanged);
@@ -138,7 +140,7 @@
             this.CbListaDataNull.Location = new System.Drawing.Point(6, 65);
             this.CbListaDataNull.Name = "CbListaDataNull";
             this.CbListaDataNull.Size = new System.Drawing.Size(136, 17);
-            this.CbListaDataNull.TabIndex = 11;
+            this.CbListaDataNull.TabIndex = 2;
             this.CbListaDataNull.Text = "Listar Data Final Vazias";
             this.CbListaDataNull.UseVisualStyleBackColor = true;
             this.CbListaDataNull.Visible = false;
@@ -158,7 +160,7 @@
             this.MktDataFinal.Mask = "00/00/0000";
             this.MktDataFinal.Name = "MktDataFinal";
             this.MktDataFinal.Size = new System.Drawing.Size(100, 20);
-            this.MktDataFinal.TabIndex = 10;
+            this.MktDataFinal.TabIndex = 1;
             this.MktDataFinal.ValidatingType = typeof(System.DateTime);
             // 
             // MktDataInicio
@@ -167,7 +169,7 @@
             this.MktDataInicio.Mask = "00/00/0000";
             this.MktDataInicio.Name = "MktDataInicio";
             this.MktDataInicio.Size = new System.Drawing.Size(100, 20);
-            this.MktDataInicio.TabIndex = 9;
+            this.MktDataInicio.TabIndex = 0;
             this.MktDataInicio.ValidatingType = typeof(System.DateTime);
             // 
             // BtnListar
@@ -175,7 +177,7 @@
             this.BtnListar.Location = new System.Drawing.Point(306, 10);
             this.BtnListar.Name = "BtnListar";
             this.BtnListar.Size = new System.Drawing.Size(75, 23);
-            this.BtnListar.TabIndex = 12;
+            this.BtnListar.TabIndex = 3;
             this.BtnListar.Text = "Listar";
             this.BtnListar.UseVisualStyleBackColor = true;
             this.BtnListar.Click += new System.EventHandler(this.BtnListar_Click);
@@ -187,7 +189,7 @@
             this.GbVeiculo.Location = new System.Drawing.Point(9, 64);
             this.GbVeiculo.Name = "GbVeiculo";
             this.GbVeiculo.Size = new System.Drawing.Size(277, 57);
-            this.GbVeiculo.TabIndex = 4;
+            this.GbVeiculo.TabIndex = 1;
             this.GbVeiculo.TabStop = false;
             // 
             // UCVeiculo
@@ -195,7 +197,7 @@
             this.UCVeiculo.Location = new System.Drawing.Point(6, 10);
             this.UCVeiculo.Name = "UCVeiculo";
             this.UCVeiculo.Size = new System.Drawing.Size(265, 38);
-            this.UCVeiculo.TabIndex = 5;
+            this.UCVeiculo.TabIndex = 0;
             // 
             // FrmRelStatusVeiculo
             // 
