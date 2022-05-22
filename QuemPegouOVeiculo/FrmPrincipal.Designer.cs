@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrincipal));
             this.MstPrincipal = new System.Windows.Forms.MenuStrip();
             this.MenuCadastro = new System.Windows.Forms.ToolStripMenuItem();
             this.SubMenuCadVeiculo = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,6 +40,8 @@
             this.SubMenuConAbastecimento = new System.Windows.Forms.ToolStripMenuItem();
             this.SubMenuConMulta = new System.Windows.Forms.ToolStripMenuItem();
             this.SubMenuConManutencao = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuChegada = new System.Windows.Forms.ToolStripMenuItem();
+            this.SubMenuCheControle = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuRelatorio = new System.Windows.Forms.ToolStripMenuItem();
             this.SubMenuRelControle = new System.Windows.Forms.ToolStripMenuItem();
             this.SubMenuRelConVeiculo = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,8 +56,6 @@
             this.MenuSair = new System.Windows.Forms.ToolStripMenuItem();
             this.SstPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.MenuChegada = new System.Windows.Forms.ToolStripMenuItem();
-            this.SubMenuCheControle = new System.Windows.Forms.ToolStripMenuItem();
             this.MstPrincipal.SuspendLayout();
             this.SstPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -130,30 +131,45 @@
             // SubMenuConVeiculo
             // 
             this.SubMenuConVeiculo.Name = "SubMenuConVeiculo";
-            this.SubMenuConVeiculo.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuConVeiculo.Size = new System.Drawing.Size(167, 22);
             this.SubMenuConVeiculo.Text = "Veículo";
             this.SubMenuConVeiculo.Click += new System.EventHandler(this.SubMenuConVeiculo_Click);
             // 
             // SubMenuConAbastecimento
             // 
             this.SubMenuConAbastecimento.Name = "SubMenuConAbastecimento";
-            this.SubMenuConAbastecimento.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuConAbastecimento.Size = new System.Drawing.Size(167, 22);
             this.SubMenuConAbastecimento.Text = "Abastecimento";
             this.SubMenuConAbastecimento.Click += new System.EventHandler(this.SubMenuConAbastecimento_Click);
             // 
             // SubMenuConMulta
             // 
             this.SubMenuConMulta.Name = "SubMenuConMulta";
-            this.SubMenuConMulta.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuConMulta.Size = new System.Drawing.Size(167, 22);
             this.SubMenuConMulta.Text = "Multa";
             this.SubMenuConMulta.Click += new System.EventHandler(this.SubMenuConMulta_Click);
             // 
             // SubMenuConManutencao
             // 
             this.SubMenuConManutencao.Name = "SubMenuConManutencao";
-            this.SubMenuConManutencao.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuConManutencao.Size = new System.Drawing.Size(167, 22);
             this.SubMenuConManutencao.Text = "Manutenção";
             this.SubMenuConManutencao.Click += new System.EventHandler(this.SubMenuConManutencao_Click);
+            // 
+            // MenuChegada
+            // 
+            this.MenuChegada.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SubMenuCheControle});
+            this.MenuChegada.Name = "MenuChegada";
+            this.MenuChegada.Size = new System.Drawing.Size(76, 20);
+            this.MenuChegada.Text = "Chegada";
+            // 
+            // SubMenuCheControle
+            // 
+            this.SubMenuCheControle.Name = "SubMenuCheControle";
+            this.SubMenuCheControle.Size = new System.Drawing.Size(128, 22);
+            this.SubMenuCheControle.Text = "Controle";
+            this.SubMenuCheControle.Click += new System.EventHandler(this.SubMenuCheControle_Click);
             // 
             // MenuRelatorio
             // 
@@ -267,21 +283,6 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(217, 17);
             this.toolStripStatusLabel1.Text = "Desenvolvido por: Maycon Wisley";
             // 
-            // MenuChegada
-            // 
-            this.MenuChegada.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SubMenuCheControle});
-            this.MenuChegada.Name = "MenuChegada";
-            this.MenuChegada.Size = new System.Drawing.Size(76, 20);
-            this.MenuChegada.Text = "Chegada";
-            // 
-            // SubMenuCheControle
-            // 
-            this.SubMenuCheControle.Name = "SubMenuCheControle";
-            this.SubMenuCheControle.Size = new System.Drawing.Size(180, 22);
-            this.SubMenuCheControle.Text = "Controle";
-            this.SubMenuCheControle.Click += new System.EventHandler(this.SubMenuCheControle_Click);
-            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -290,6 +291,7 @@
             this.Controls.Add(this.SstPrincipal);
             this.Controls.Add(this.MstPrincipal);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.KeyPreview = true;
             this.MainMenuStrip = this.MstPrincipal;

@@ -56,7 +56,7 @@
             this.BtnListar.Location = new System.Drawing.Point(374, 12);
             this.BtnListar.Name = "BtnListar";
             this.BtnListar.Size = new System.Drawing.Size(75, 23);
-            this.BtnListar.TabIndex = 25;
+            this.BtnListar.TabIndex = 4;
             this.BtnListar.Text = "Listar";
             this.BtnListar.UseVisualStyleBackColor = true;
             this.BtnListar.Click += new System.EventHandler(this.BtnListar_Click);
@@ -72,7 +72,7 @@
             this.GbPeriodo.Location = new System.Drawing.Point(12, 75);
             this.GbPeriodo.Name = "GbPeriodo";
             this.GbPeriodo.Size = new System.Drawing.Size(356, 77);
-            this.GbPeriodo.TabIndex = 22;
+            this.GbPeriodo.TabIndex = 1;
             this.GbPeriodo.TabStop = false;
             this.GbPeriodo.Text = "Período";
             // 
@@ -113,7 +113,7 @@
             this.MktDataFinal.Mask = "00/00/0000";
             this.MktDataFinal.Name = "MktDataFinal";
             this.MktDataFinal.Size = new System.Drawing.Size(100, 20);
-            this.MktDataFinal.TabIndex = 12;
+            this.MktDataFinal.TabIndex = 1;
             this.MktDataFinal.ValidatingType = typeof(System.DateTime);
             // 
             // MktDataIncial
@@ -122,7 +122,7 @@
             this.MktDataIncial.Mask = "00/00/0000";
             this.MktDataIncial.Name = "MktDataIncial";
             this.MktDataIncial.Size = new System.Drawing.Size(100, 20);
-            this.MktDataIncial.TabIndex = 11;
+            this.MktDataIncial.TabIndex = 0;
             this.MktDataIncial.ValidatingType = typeof(System.DateTime);
             // 
             // GbMotorista
@@ -132,7 +132,7 @@
             this.GbMotorista.Location = new System.Drawing.Point(12, 229);
             this.GbMotorista.Name = "GbMotorista";
             this.GbMotorista.Size = new System.Drawing.Size(356, 59);
-            this.GbMotorista.TabIndex = 24;
+            this.GbMotorista.TabIndex = 3;
             this.GbMotorista.TabStop = false;
             // 
             // UCMotorista
@@ -150,7 +150,7 @@
             this.GbVeiculo.Location = new System.Drawing.Point(12, 158);
             this.GbVeiculo.Name = "GbVeiculo";
             this.GbVeiculo.Size = new System.Drawing.Size(356, 65);
-            this.GbVeiculo.TabIndex = 23;
+            this.GbVeiculo.TabIndex = 2;
             this.GbVeiculo.TabStop = false;
             // 
             // UCVeiculo
@@ -158,7 +158,7 @@
             this.UCVeiculo.Location = new System.Drawing.Point(6, 10);
             this.UCVeiculo.Name = "UCVeiculo";
             this.UCVeiculo.Size = new System.Drawing.Size(268, 38);
-            this.UCVeiculo.TabIndex = 17;
+            this.UCVeiculo.TabIndex = 0;
             // 
             // GbOpcoes
             // 
@@ -170,7 +170,7 @@
             this.GbOpcoes.Location = new System.Drawing.Point(12, 12);
             this.GbOpcoes.Name = "GbOpcoes";
             this.GbOpcoes.Size = new System.Drawing.Size(356, 57);
-            this.GbOpcoes.TabIndex = 21;
+            this.GbOpcoes.TabIndex = 0;
             this.GbOpcoes.TabStop = false;
             this.GbOpcoes.Text = "Opções";
             // 

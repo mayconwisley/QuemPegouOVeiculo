@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.GbOpcoes = new System.Windows.Forms.GroupBox();
-            this.RbGeral = new System.Windows.Forms.RadioButton();
-            this.RbVeiculo = new System.Windows.Forms.RadioButton();
             this.RbPeriodo = new System.Windows.Forms.RadioButton();
+            this.RbVeiculo = new System.Windows.Forms.RadioButton();
+            this.RbGeral = new System.Windows.Forms.RadioButton();
             this.GbVeiculo = new System.Windows.Forms.GroupBox();
             this.UCVeiculo = new QuemPegouOVeiculo.UCVeiculo();
             this.GbPeriodo = new System.Windows.Forms.GroupBox();
-            this.MktDataInicio = new System.Windows.Forms.MaskedTextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.MktDataFinal = new System.Windows.Forms.MaskedTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.MktDataInicio = new System.Windows.Forms.MaskedTextBox();
             this.BtnListar = new System.Windows.Forms.Button();
             this.GbOpcoes.SuspendLayout();
             this.GbVeiculo.SuspendLayout();
@@ -56,18 +56,16 @@
             this.GbOpcoes.TabStop = false;
             this.GbOpcoes.Text = "Opções";
             // 
-            // RbGeral
+            // RbPeriodo
             // 
-            this.RbGeral.AutoSize = true;
-            this.RbGeral.Checked = true;
-            this.RbGeral.Location = new System.Drawing.Point(6, 19);
-            this.RbGeral.Name = "RbGeral";
-            this.RbGeral.Size = new System.Drawing.Size(50, 17);
-            this.RbGeral.TabIndex = 0;
-            this.RbGeral.TabStop = true;
-            this.RbGeral.Text = "Geral";
-            this.RbGeral.UseVisualStyleBackColor = true;
-            this.RbGeral.CheckedChanged += new System.EventHandler(this.RbGeral_CheckedChanged);
+            this.RbPeriodo.AutoSize = true;
+            this.RbPeriodo.Location = new System.Drawing.Point(130, 19);
+            this.RbPeriodo.Name = "RbPeriodo";
+            this.RbPeriodo.Size = new System.Drawing.Size(63, 17);
+            this.RbPeriodo.TabIndex = 2;
+            this.RbPeriodo.Text = "Período";
+            this.RbPeriodo.UseVisualStyleBackColor = true;
+            this.RbPeriodo.CheckedChanged += new System.EventHandler(this.RbPeriodo_CheckedChanged);
             // 
             // RbVeiculo
             // 
@@ -80,16 +78,18 @@
             this.RbVeiculo.UseVisualStyleBackColor = true;
             this.RbVeiculo.CheckedChanged += new System.EventHandler(this.RbVeiculo_CheckedChanged);
             // 
-            // RbPeriodo
+            // RbGeral
             // 
-            this.RbPeriodo.AutoSize = true;
-            this.RbPeriodo.Location = new System.Drawing.Point(130, 19);
-            this.RbPeriodo.Name = "RbPeriodo";
-            this.RbPeriodo.Size = new System.Drawing.Size(63, 17);
-            this.RbPeriodo.TabIndex = 2;
-            this.RbPeriodo.Text = "Período";
-            this.RbPeriodo.UseVisualStyleBackColor = true;
-            this.RbPeriodo.CheckedChanged += new System.EventHandler(this.RbPeriodo_CheckedChanged);
+            this.RbGeral.AutoSize = true;
+            this.RbGeral.Checked = true;
+            this.RbGeral.Location = new System.Drawing.Point(6, 19);
+            this.RbGeral.Name = "RbGeral";
+            this.RbGeral.Size = new System.Drawing.Size(50, 17);
+            this.RbGeral.TabIndex = 0;
+            this.RbGeral.TabStop = true;
+            this.RbGeral.Text = "Geral";
+            this.RbGeral.UseVisualStyleBackColor = true;
+            this.RbGeral.CheckedChanged += new System.EventHandler(this.RbGeral_CheckedChanged);
             // 
             // GbVeiculo
             // 
@@ -121,14 +121,14 @@
             this.GbPeriodo.TabStop = false;
             this.GbPeriodo.Text = "Período";
             // 
-            // MktDataInicio
+            // MktDataFinal
             // 
-            this.MktDataInicio.Location = new System.Drawing.Point(28, 19);
-            this.MktDataInicio.Mask = "00/00/0000";
-            this.MktDataInicio.Name = "MktDataInicio";
-            this.MktDataInicio.Size = new System.Drawing.Size(100, 20);
-            this.MktDataInicio.TabIndex = 0;
-            this.MktDataInicio.ValidatingType = typeof(System.DateTime);
+            this.MktDataFinal.Location = new System.Drawing.Point(152, 19);
+            this.MktDataFinal.Mask = "00/00/0000";
+            this.MktDataFinal.Name = "MktDataFinal";
+            this.MktDataFinal.Size = new System.Drawing.Size(100, 20);
+            this.MktDataFinal.TabIndex = 1;
+            this.MktDataFinal.ValidatingType = typeof(System.DateTime);
             // 
             // label1
             // 
@@ -139,14 +139,14 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "a";
             // 
-            // MktDataFinal
+            // MktDataInicio
             // 
-            this.MktDataFinal.Location = new System.Drawing.Point(152, 19);
-            this.MktDataFinal.Mask = "00/00/0000";
-            this.MktDataFinal.Name = "MktDataFinal";
-            this.MktDataFinal.Size = new System.Drawing.Size(100, 20);
-            this.MktDataFinal.TabIndex = 2;
-            this.MktDataFinal.ValidatingType = typeof(System.DateTime);
+            this.MktDataInicio.Location = new System.Drawing.Point(28, 19);
+            this.MktDataInicio.Mask = "00/00/0000";
+            this.MktDataInicio.Name = "MktDataInicio";
+            this.MktDataInicio.Size = new System.Drawing.Size(100, 20);
+            this.MktDataInicio.TabIndex = 0;
+            this.MktDataInicio.ValidatingType = typeof(System.DateTime);
             // 
             // BtnListar
             // 

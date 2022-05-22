@@ -62,7 +62,7 @@
             this.MktDtVencimento.Mask = "00/00/0000";
             this.MktDtVencimento.Name = "MktDtVencimento";
             this.MktDtVencimento.Size = new System.Drawing.Size(100, 21);
-            this.MktDtVencimento.TabIndex = 2;
+            this.MktDtVencimento.TabIndex = 1;
             this.MktDtVencimento.ValidatingType = typeof(System.DateTime);
             // 
             // BtnGravar
@@ -70,7 +70,7 @@
             this.BtnGravar.Location = new System.Drawing.Point(346, 10);
             this.BtnGravar.Name = "BtnGravar";
             this.BtnGravar.Size = new System.Drawing.Size(75, 23);
-            this.BtnGravar.TabIndex = 4;
+            this.BtnGravar.TabIndex = 3;
             this.BtnGravar.Text = "&Gravar";
             this.BtnGravar.UseVisualStyleBackColor = true;
             this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
@@ -81,7 +81,7 @@
             this.BtnAlterar.Location = new System.Drawing.Point(346, 39);
             this.BtnAlterar.Name = "BtnAlterar";
             this.BtnAlterar.Size = new System.Drawing.Size(75, 23);
-            this.BtnAlterar.TabIndex = 5;
+            this.BtnAlterar.TabIndex = 4;
             this.BtnAlterar.Text = "&Alterar";
             this.BtnAlterar.UseVisualStyleBackColor = true;
             this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
@@ -92,7 +92,7 @@
             this.BtnExcluir.Location = new System.Drawing.Point(346, 68);
             this.BtnExcluir.Name = "BtnExcluir";
             this.BtnExcluir.Size = new System.Drawing.Size(75, 23);
-            this.BtnExcluir.TabIndex = 6;
+            this.BtnExcluir.TabIndex = 5;
             this.BtnExcluir.Text = "&Excluir";
             this.BtnExcluir.UseVisualStyleBackColor = true;
             this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
@@ -111,7 +111,7 @@
             this.TxtPesquisa.Location = new System.Drawing.Point(18, 141);
             this.TxtPesquisa.Name = "TxtPesquisa";
             this.TxtPesquisa.Size = new System.Drawing.Size(403, 21);
-            this.TxtPesquisa.TabIndex = 7;
+            this.TxtPesquisa.TabIndex = 6;
             this.TxtPesquisa.TextChanged += new System.EventHandler(this.TxtPesquisa_TextChanged);
             // 
             // CbVencida
@@ -120,7 +120,7 @@
             this.CbVencida.Location = new System.Drawing.Point(135, 91);
             this.CbVencida.Name = "CbVencida";
             this.CbVencida.Size = new System.Drawing.Size(70, 17);
-            this.CbVencida.TabIndex = 3;
+            this.CbVencida.TabIndex = 2;
             this.CbVencida.Text = "Vencida";
             this.CbVencida.UseVisualStyleBackColor = true;
             // 
@@ -144,7 +144,7 @@
             this.DgvVencCNH.ReadOnly = true;
             this.DgvVencCNH.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvVencCNH.Size = new System.Drawing.Size(403, 150);
-            this.DgvVencCNH.TabIndex = 8;
+            this.DgvVencCNH.TabIndex = 7;
             this.DgvVencCNH.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvVencCNH_CellDoubleClick);
             // 
             // Id
@@ -201,7 +201,7 @@
             this.UCMotorista.Location = new System.Drawing.Point(18, 10);
             this.UCMotorista.Name = "UCMotorista";
             this.UCMotorista.Size = new System.Drawing.Size(322, 44);
-            this.UCMotorista.TabIndex = 1;
+            this.UCMotorista.TabIndex = 0;
             // 
             // FrmCadVencCNH
             // 

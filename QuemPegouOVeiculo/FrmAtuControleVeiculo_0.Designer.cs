@@ -50,7 +50,7 @@
             this.MktDtChegada.Mask = "00/00/0000 90:00";
             this.MktDtChegada.Name = "MktDtChegada";
             this.MktDtChegada.Size = new System.Drawing.Size(111, 20);
-            this.MktDtChegada.TabIndex = 2;
+            this.MktDtChegada.TabIndex = 0;
             this.MktDtChegada.ValidatingType = typeof(System.DateTime);
             // 
             // label3
@@ -67,14 +67,14 @@
             this.TxtKmFinal.Location = new System.Drawing.Point(132, 30);
             this.TxtKmFinal.Name = "TxtKmFinal";
             this.TxtKmFinal.Size = new System.Drawing.Size(100, 20);
-            this.TxtKmFinal.TabIndex = 4;
+            this.TxtKmFinal.TabIndex = 1;
             // 
             // BtnGravar
             // 
             this.BtnGravar.Location = new System.Drawing.Point(242, 28);
             this.BtnGravar.Name = "BtnGravar";
             this.BtnGravar.Size = new System.Drawing.Size(75, 23);
-            this.BtnGravar.TabIndex = 5;
+            this.BtnGravar.TabIndex = 2;
             this.BtnGravar.Text = "&Gravar";
             this.BtnGravar.UseVisualStyleBackColor = true;
             this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);

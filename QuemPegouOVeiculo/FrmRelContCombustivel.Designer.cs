@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.GbOpcoes = new System.Windows.Forms.GroupBox();
-            this.RbGeral = new System.Windows.Forms.RadioButton();
-            this.RbVeiculo = new System.Windows.Forms.RadioButton();
-            this.RbMotorista = new System.Windows.Forms.RadioButton();
-            this.RbPeriodo = new System.Windows.Forms.RadioButton();
             this.RbVeiMot = new System.Windows.Forms.RadioButton();
+            this.RbPeriodo = new System.Windows.Forms.RadioButton();
+            this.RbMotorista = new System.Windows.Forms.RadioButton();
+            this.RbVeiculo = new System.Windows.Forms.RadioButton();
+            this.RbGeral = new System.Windows.Forms.RadioButton();
             this.GbPeriodo = new System.Windows.Forms.GroupBox();
             this.CbMotorista = new System.Windows.Forms.CheckBox();
             this.CbVeiculo = new System.Windows.Forms.CheckBox();
@@ -65,6 +65,50 @@
             this.GbOpcoes.TabStop = false;
             this.GbOpcoes.Text = "Opções";
             // 
+            // RbVeiMot
+            // 
+            this.RbVeiMot.AutoSize = true;
+            this.RbVeiMot.Location = new System.Drawing.Point(274, 19);
+            this.RbVeiMot.Name = "RbVeiMot";
+            this.RbVeiMot.Size = new System.Drawing.Size(69, 17);
+            this.RbVeiMot.TabIndex = 4;
+            this.RbVeiMot.Text = "Vei / Mot";
+            this.RbVeiMot.UseVisualStyleBackColor = true;
+            this.RbVeiMot.CheckedChanged += new System.EventHandler(this.RbVeiMot_CheckedChanged);
+            // 
+            // RbPeriodo
+            // 
+            this.RbPeriodo.AutoSize = true;
+            this.RbPeriodo.Location = new System.Drawing.Point(204, 19);
+            this.RbPeriodo.Name = "RbPeriodo";
+            this.RbPeriodo.Size = new System.Drawing.Size(61, 17);
+            this.RbPeriodo.TabIndex = 3;
+            this.RbPeriodo.Text = "Periodo";
+            this.RbPeriodo.UseVisualStyleBackColor = true;
+            this.RbPeriodo.CheckedChanged += new System.EventHandler(this.RbPeriodo_CheckedChanged);
+            // 
+            // RbMotorista
+            // 
+            this.RbMotorista.AutoSize = true;
+            this.RbMotorista.Location = new System.Drawing.Point(130, 19);
+            this.RbMotorista.Name = "RbMotorista";
+            this.RbMotorista.Size = new System.Drawing.Size(68, 17);
+            this.RbMotorista.TabIndex = 2;
+            this.RbMotorista.Text = "Motorista";
+            this.RbMotorista.UseVisualStyleBackColor = true;
+            this.RbMotorista.CheckedChanged += new System.EventHandler(this.RbMotorista_CheckedChanged);
+            // 
+            // RbVeiculo
+            // 
+            this.RbVeiculo.AutoSize = true;
+            this.RbVeiculo.Location = new System.Drawing.Point(62, 19);
+            this.RbVeiculo.Name = "RbVeiculo";
+            this.RbVeiculo.Size = new System.Drawing.Size(62, 17);
+            this.RbVeiculo.TabIndex = 1;
+            this.RbVeiculo.Text = "Veículo";
+            this.RbVeiculo.UseVisualStyleBackColor = true;
+            this.RbVeiculo.CheckedChanged += new System.EventHandler(this.RbVeiculo_CheckedChanged);
+            // 
             // RbGeral
             // 
             this.RbGeral.AutoSize = true;
@@ -78,50 +122,6 @@
             this.RbGeral.UseVisualStyleBackColor = true;
             this.RbGeral.CheckedChanged += new System.EventHandler(this.RbGeral_CheckedChanged);
             // 
-            // RbVeiculo
-            // 
-            this.RbVeiculo.AutoSize = true;
-            this.RbVeiculo.Location = new System.Drawing.Point(62, 19);
-            this.RbVeiculo.Name = "RbVeiculo";
-            this.RbVeiculo.Size = new System.Drawing.Size(62, 17);
-            this.RbVeiculo.TabIndex = 1;
-            this.RbVeiculo.Text = "Veículo";
-            this.RbVeiculo.UseVisualStyleBackColor = true;
-            this.RbVeiculo.CheckedChanged += new System.EventHandler(this.RbVeiculo_CheckedChanged);
-            // 
-            // RbMotorista
-            // 
-            this.RbMotorista.AutoSize = true;
-            this.RbMotorista.Location = new System.Drawing.Point(130, 19);
-            this.RbMotorista.Name = "RbMotorista";
-            this.RbMotorista.Size = new System.Drawing.Size(68, 17);
-            this.RbMotorista.TabIndex = 2;
-            this.RbMotorista.Text = "Motorista";
-            this.RbMotorista.UseVisualStyleBackColor = true;
-            this.RbMotorista.CheckedChanged += new System.EventHandler(this.RbMotorista_CheckedChanged);
-            // 
-            // RbPeriodo
-            // 
-            this.RbPeriodo.AutoSize = true;
-            this.RbPeriodo.Location = new System.Drawing.Point(204, 19);
-            this.RbPeriodo.Name = "RbPeriodo";
-            this.RbPeriodo.Size = new System.Drawing.Size(61, 17);
-            this.RbPeriodo.TabIndex = 3;
-            this.RbPeriodo.Text = "Periodo";
-            this.RbPeriodo.UseVisualStyleBackColor = true;
-            this.RbPeriodo.CheckedChanged += new System.EventHandler(this.RbPeriodo_CheckedChanged);
-            // 
-            // RbVeiMot
-            // 
-            this.RbVeiMot.AutoSize = true;
-            this.RbVeiMot.Location = new System.Drawing.Point(274, 19);
-            this.RbVeiMot.Name = "RbVeiMot";
-            this.RbVeiMot.Size = new System.Drawing.Size(69, 17);
-            this.RbVeiMot.TabIndex = 4;
-            this.RbVeiMot.Text = "Vei / Mot";
-            this.RbVeiMot.UseVisualStyleBackColor = true;
-            this.RbVeiMot.CheckedChanged += new System.EventHandler(this.RbVeiMot_CheckedChanged);
-            // 
             // GbPeriodo
             // 
             this.GbPeriodo.Controls.Add(this.CbMotorista);
@@ -133,7 +133,7 @@
             this.GbPeriodo.Location = new System.Drawing.Point(12, 75);
             this.GbPeriodo.Name = "GbPeriodo";
             this.GbPeriodo.Size = new System.Drawing.Size(356, 77);
-            this.GbPeriodo.TabIndex = 17;
+            this.GbPeriodo.TabIndex = 1;
             this.GbPeriodo.TabStop = false;
             this.GbPeriodo.Text = "Período";
             // 
@@ -174,7 +174,7 @@
             this.MktDataFinal.Mask = "00/00/0000";
             this.MktDataFinal.Name = "MktDataFinal";
             this.MktDataFinal.Size = new System.Drawing.Size(100, 20);
-            this.MktDataFinal.TabIndex = 12;
+            this.MktDataFinal.TabIndex = 1;
             this.MktDataFinal.ValidatingType = typeof(System.DateTime);
             // 
             // MktDataIncial
@@ -183,7 +183,7 @@
             this.MktDataIncial.Mask = "00/00/0000";
             this.MktDataIncial.Name = "MktDataIncial";
             this.MktDataIncial.Size = new System.Drawing.Size(100, 20);
-            this.MktDataIncial.TabIndex = 11;
+            this.MktDataIncial.TabIndex = 0;
             this.MktDataIncial.ValidatingType = typeof(System.DateTime);
             // 
             // GbMotorista
@@ -193,7 +193,7 @@
             this.GbMotorista.Location = new System.Drawing.Point(12, 229);
             this.GbMotorista.Name = "GbMotorista";
             this.GbMotorista.Size = new System.Drawing.Size(356, 59);
-            this.GbMotorista.TabIndex = 19;
+            this.GbMotorista.TabIndex = 3;
             this.GbMotorista.TabStop = false;
             // 
             // UCMotorista
@@ -211,7 +211,7 @@
             this.GbVeiculo.Location = new System.Drawing.Point(12, 158);
             this.GbVeiculo.Name = "GbVeiculo";
             this.GbVeiculo.Size = new System.Drawing.Size(356, 65);
-            this.GbVeiculo.TabIndex = 18;
+            this.GbVeiculo.TabIndex = 2;
             this.GbVeiculo.TabStop = false;
             // 
             // UCVeiculo
@@ -219,14 +219,14 @@
             this.UCVeiculo.Location = new System.Drawing.Point(6, 10);
             this.UCVeiculo.Name = "UCVeiculo";
             this.UCVeiculo.Size = new System.Drawing.Size(268, 38);
-            this.UCVeiculo.TabIndex = 17;
+            this.UCVeiculo.TabIndex = 0;
             // 
             // BtnListar
             // 
             this.BtnListar.Location = new System.Drawing.Point(374, 12);
             this.BtnListar.Name = "BtnListar";
             this.BtnListar.Size = new System.Drawing.Size(75, 23);
-            this.BtnListar.TabIndex = 20;
+            this.BtnListar.TabIndex = 4;
             this.BtnListar.Text = "Listar";
             this.BtnListar.UseVisualStyleBackColor = true;
             this.BtnListar.Click += new System.EventHandler(this.BtnListar_Click);

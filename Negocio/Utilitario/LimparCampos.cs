@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Negocio.Utilitario
 {
@@ -52,7 +47,7 @@ namespace Negocio.Utilitario
         {
             foreach (UserControl userControl in userControls)
             {
-                if(userControl.Controls.Owner.Name == "UCDescricao")
+                if (userControl.Controls.Owner.Name == "UCDescricao")
                 {
                     userControl.Controls.Owner.AccessibilityObject.Value = "TxtDescricao";
                 }

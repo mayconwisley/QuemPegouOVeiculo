@@ -74,7 +74,7 @@
             this.MktDtSaida.Mask = "00/00/0000 00:00";
             this.MktDtSaida.Name = "MktDtSaida";
             this.MktDtSaida.Size = new System.Drawing.Size(121, 21);
-            this.MktDtSaida.TabIndex = 2;
+            this.MktDtSaida.TabIndex = 1;
             // 
             // MktDtChegada
             // 
@@ -82,7 +82,7 @@
             this.MktDtChegada.Mask = "00/00/0000 00:00";
             this.MktDtChegada.Name = "MktDtChegada";
             this.MktDtChegada.Size = new System.Drawing.Size(121, 21);
-            this.MktDtChegada.TabIndex = 3;
+            this.MktDtChegada.TabIndex = 2;
             // 
             // label3
             // 
@@ -116,21 +116,21 @@
             this.TxtKmInicial.Location = new System.Drawing.Point(12, 183);
             this.TxtKmInicial.Name = "TxtKmInicial";
             this.TxtKmInicial.Size = new System.Drawing.Size(100, 21);
-            this.TxtKmInicial.TabIndex = 4;
+            this.TxtKmInicial.TabIndex = 3;
             // 
             // TxtKmFinal
             // 
             this.TxtKmFinal.Location = new System.Drawing.Point(118, 183);
             this.TxtKmFinal.Name = "TxtKmFinal";
             this.TxtKmFinal.Size = new System.Drawing.Size(100, 21);
-            this.TxtKmFinal.TabIndex = 5;
+            this.TxtKmFinal.TabIndex = 4;
             // 
             // BtnGravar
             // 
             this.BtnGravar.Location = new System.Drawing.Point(356, 17);
             this.BtnGravar.Name = "BtnGravar";
             this.BtnGravar.Size = new System.Drawing.Size(75, 33);
-            this.BtnGravar.TabIndex = 7;
+            this.BtnGravar.TabIndex = 6;
             this.BtnGravar.Text = "&Gravar";
             this.BtnGravar.UseVisualStyleBackColor = true;
             this.BtnGravar.Click += new System.EventHandler(this.BtnGravar_Click);
@@ -141,7 +141,7 @@
             this.BtnAlterar.Location = new System.Drawing.Point(356, 56);
             this.BtnAlterar.Name = "BtnAlterar";
             this.BtnAlterar.Size = new System.Drawing.Size(75, 33);
-            this.BtnAlterar.TabIndex = 8;
+            this.BtnAlterar.TabIndex = 7;
             this.BtnAlterar.Text = "&Alterar";
             this.BtnAlterar.UseVisualStyleBackColor = true;
             this.BtnAlterar.Click += new System.EventHandler(this.BtnAlterar_Click);
@@ -152,7 +152,7 @@
             this.BtnExcluir.Location = new System.Drawing.Point(356, 95);
             this.BtnExcluir.Name = "BtnExcluir";
             this.BtnExcluir.Size = new System.Drawing.Size(75, 33);
-            this.BtnExcluir.TabIndex = 9;
+            this.BtnExcluir.TabIndex = 8;
             this.BtnExcluir.Text = "&Excluir";
             this.BtnExcluir.UseVisualStyleBackColor = true;
             this.BtnExcluir.Click += new System.EventHandler(this.BtnExcluir_Click);
@@ -186,7 +186,7 @@
             this.DgvControleVeiculo.ReadOnly = true;
             this.DgvControleVeiculo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvControleVeiculo.Size = new System.Drawing.Size(416, 150);
-            this.DgvControleVeiculo.TabIndex = 11;
+            this.DgvControleVeiculo.TabIndex = 10;
             this.DgvControleVeiculo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvControleVeiculo_CellDoubleClick);
             // 
             // Id
@@ -327,7 +327,7 @@
             this.TxtPesquisa.Location = new System.Drawing.Point(12, 298);
             this.TxtPesquisa.Name = "TxtPesquisa";
             this.TxtPesquisa.Size = new System.Drawing.Size(419, 21);
-            this.TxtPesquisa.TabIndex = 10;
+            this.TxtPesquisa.TabIndex = 9;
             this.TxtPesquisa.TextChanged += new System.EventHandler(this.TxtPesquisa_TextChanged);
             // 
             // LblContVeiculo
@@ -376,7 +376,7 @@
             this.UCVeiculoMotorista.Location = new System.Drawing.Point(12, 17);
             this.UCVeiculoMotorista.Name = "UCVeiculoMotorista";
             this.UCVeiculoMotorista.Size = new System.Drawing.Size(308, 81);
-            this.UCVeiculoMotorista.TabIndex = 22;
+            this.UCVeiculoMotorista.TabIndex = 0;
             this.UCVeiculoMotorista.KmFinal += new QuemPegouOVeiculo.USVeiculoMotorista.KmFimVeiculo(this.UCVeiculoMotorista_KmFinal);
             // 
             // UCDescricao
@@ -385,7 +385,7 @@
             this.UCDescricao.Location = new System.Drawing.Point(12, 210);
             this.UCDescricao.Name = "UCDescricao";
             this.UCDescricao.Size = new System.Drawing.Size(411, 67);
-            this.UCDescricao.TabIndex = 6;
+            this.UCDescricao.TabIndex = 5;
             // 
             // FrmCadContVeiculo
             // 

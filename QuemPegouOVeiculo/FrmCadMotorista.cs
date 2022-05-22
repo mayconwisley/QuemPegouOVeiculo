@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Objeto;
+using System;
 using System.Windows.Forms;
-using Objeto;
 
 namespace QuemPegouOVeiculo
 {
@@ -91,7 +84,7 @@ namespace QuemPegouOVeiculo
                 {
                     motorista.Ativo = 'D';
                 }
-                
+
                 /*Insert, Update, Delete*/
                 switch (opc)
                 {
@@ -108,14 +101,14 @@ namespace QuemPegouOVeiculo
                         MessageBox.Show("Opção não encontrada");
                         break;
                 }
-               
+
                 /*Listar registros após cada Insert, Update, Delete*/
                 ListRegister("%" + TxtPesquisa.Text.Trim() + "%");
-                
+
                 /*Limpar os campos*/
                 Negocio.Utilitario.LimparCampos.LimparTextBox(this.Controls);
                 Negocio.Utilitario.LimparCampos.LimparMaskedTextBox(this.Controls);
-                
+
                 /*Librar BtnGravar, e desativar os BtnAlterar, BtnExcluir*/
                 Negocio.Utilitario.HabilitarBotoes.AlterarExcluir(false, BtnAlterar, BtnExcluir, BtnGravar);
 

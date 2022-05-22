@@ -1,12 +1,6 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuemPegouOVeiculo
@@ -54,7 +48,7 @@ namespace QuemPegouOVeiculo
             dateTime1 = dtDateTime1;
         }
 
-   
+
         public FrmVisualizarRelatorio(string search, int iOpc, DateTime dtDateTime, DateTime dtDateTime1, int iVeiculoMotorista)
         {
             InitializeComponent();

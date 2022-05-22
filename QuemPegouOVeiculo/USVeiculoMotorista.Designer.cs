@@ -41,7 +41,7 @@
             this.CbxMotorista.Location = new System.Drawing.Point(0, 57);
             this.CbxMotorista.Name = "CbxMotorista";
             this.CbxMotorista.Size = new System.Drawing.Size(262, 21);
-            this.CbxMotorista.TabIndex = 2;
+            this.CbxMotorista.TabIndex = 1;
             this.CbxMotorista.ValueMember = "Id";
             this.CbxMotorista.SelectedIndexChanged += new System.EventHandler(this.CbxMotorista_SelectedIndexChanged);
             // 
@@ -61,7 +61,7 @@
             this.CbxVeiculo.Location = new System.Drawing.Point(0, 17);
             this.CbxVeiculo.Name = "CbxVeiculo";
             this.CbxVeiculo.Size = new System.Drawing.Size(262, 21);
-            this.CbxVeiculo.TabIndex = 1;
+            this.CbxVeiculo.TabIndex = 0;
             this.CbxVeiculo.ValueMember = "Id";
             this.CbxVeiculo.SelectedIndexChanged += new System.EventHandler(this.CbxVeiculo_SelectedIndexChanged);
             // 
