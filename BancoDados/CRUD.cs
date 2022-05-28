@@ -21,7 +21,7 @@ namespace BancoDados
 
         public object Run(CommandType commandType, string sql)
         {
-            if (Connecrion())
+            if (Connection())
             {
                 try
                 {
@@ -53,7 +53,7 @@ namespace BancoDados
 
         public DataTable Query(CommandType commandType, string sql)
         {
-            if (Connecrion())
+            if (Connection())
             {
                 try
                 {

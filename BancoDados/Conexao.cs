@@ -7,12 +7,12 @@ namespace BancoDados
     public class Conexao
     {
         protected FbConnection fbConnection;
-        static string strWay = AppDomain.CurrentDomain.BaseDirectory.ToString();
 
-        private string strConnection = "User=sysdba; Password=masterkey; ServerType=1; DataBase=" + strWay + @"Banco\Pegou.fdb";
-
-        protected bool Connecrion()
+        protected bool Connection()
         {
+            string strWay = AppDomain.CurrentDomain.BaseDirectory.ToString();
+            string strConnection = "User=sysdba; Password=masterkey; ServerType=1; DataBase=" + strWay + @"Banco\Pegou.fdb";
+
             fbConnection = new FbConnection(strConnection);
             try
             {
