@@ -91,29 +91,28 @@
             // SubMenuCadVeiculo
             // 
             this.SubMenuCadVeiculo.Name = "SubMenuCadVeiculo";
-            this.SubMenuCadVeiculo.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuCadVeiculo.Size = new System.Drawing.Size(180, 22);
             this.SubMenuCadVeiculo.Text = "Veículo";
             this.SubMenuCadVeiculo.Click += new System.EventHandler(this.SubMenuCadVeiculo_Click);
             // 
             // SubMenuCadMotorista
             // 
             this.SubMenuCadMotorista.Name = "SubMenuCadMotorista";
-            this.SubMenuCadMotorista.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuCadMotorista.Size = new System.Drawing.Size(180, 22);
             this.SubMenuCadMotorista.Text = "Motorista";
             this.SubMenuCadMotorista.Click += new System.EventHandler(this.SubMenuCadMotorista_Click);
             // 
             // SubMenuCadVenciCNH
             // 
             this.SubMenuCadVenciCNH.Name = "SubMenuCadVenciCNH";
-            this.SubMenuCadVenciCNH.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuCadVenciCNH.Size = new System.Drawing.Size(180, 22);
             this.SubMenuCadVenciCNH.Text = "Vencimento CNH";
-            this.SubMenuCadVenciCNH.Visible = false;
             this.SubMenuCadVenciCNH.Click += new System.EventHandler(this.SubMenuCadVenciCNH_Click);
             // 
             // SubMenuCadStatusVeic
             // 
             this.SubMenuCadStatusVeic.Name = "SubMenuCadStatusVeic";
-            this.SubMenuCadStatusVeic.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuCadStatusVeic.Size = new System.Drawing.Size(180, 22);
             this.SubMenuCadStatusVeic.Text = "Status Veículo";
             this.SubMenuCadStatusVeic.Click += new System.EventHandler(this.SubMenuCadStatusVeic_Click);
             // 
