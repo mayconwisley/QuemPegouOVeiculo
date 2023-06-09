@@ -91,28 +91,28 @@
             // SubMenuCadVeiculo
             // 
             this.SubMenuCadVeiculo.Name = "SubMenuCadVeiculo";
-            this.SubMenuCadVeiculo.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuCadVeiculo.Size = new System.Drawing.Size(177, 22);
             this.SubMenuCadVeiculo.Text = "Veículo";
             this.SubMenuCadVeiculo.Click += new System.EventHandler(this.SubMenuCadVeiculo_Click);
             // 
             // SubMenuCadMotorista
             // 
             this.SubMenuCadMotorista.Name = "SubMenuCadMotorista";
-            this.SubMenuCadMotorista.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuCadMotorista.Size = new System.Drawing.Size(177, 22);
             this.SubMenuCadMotorista.Text = "Motorista";
             this.SubMenuCadMotorista.Click += new System.EventHandler(this.SubMenuCadMotorista_Click);
             // 
             // SubMenuCadVenciCNH
             // 
             this.SubMenuCadVenciCNH.Name = "SubMenuCadVenciCNH";
-            this.SubMenuCadVenciCNH.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuCadVenciCNH.Size = new System.Drawing.Size(177, 22);
             this.SubMenuCadVenciCNH.Text = "Vencimento CNH";
             this.SubMenuCadVenciCNH.Click += new System.EventHandler(this.SubMenuCadVenciCNH_Click);
             // 
             // SubMenuCadStatusVeic
             // 
             this.SubMenuCadStatusVeic.Name = "SubMenuCadStatusVeic";
-            this.SubMenuCadStatusVeic.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuCadStatusVeic.Size = new System.Drawing.Size(177, 22);
             this.SubMenuCadStatusVeic.Text = "Status Veículo";
             this.SubMenuCadStatusVeic.Click += new System.EventHandler(this.SubMenuCadStatusVeic_Click);
             // 
@@ -187,34 +187,34 @@
             this.SubMenuRelConManutencao,
             this.SubMenuRelConMulta});
             this.SubMenuRelControle.Name = "SubMenuRelControle";
-            this.SubMenuRelControle.Size = new System.Drawing.Size(132, 22);
+            this.SubMenuRelControle.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelControle.Text = "Controle";
             // 
             // SubMenuRelConVeiculo
             // 
             this.SubMenuRelConVeiculo.Name = "SubMenuRelConVeiculo";
-            this.SubMenuRelConVeiculo.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuRelConVeiculo.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelConVeiculo.Text = "Veículo";
             this.SubMenuRelConVeiculo.Click += new System.EventHandler(this.SubMenuRelConVeiculo_Click);
             // 
             // SubMenuRelConAbastecimento
             // 
             this.SubMenuRelConAbastecimento.Name = "SubMenuRelConAbastecimento";
-            this.SubMenuRelConAbastecimento.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuRelConAbastecimento.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelConAbastecimento.Text = "Abastecimento";
             this.SubMenuRelConAbastecimento.Click += new System.EventHandler(this.SubMenuRelConAbastecimento_Click);
             // 
             // SubMenuRelConManutencao
             // 
             this.SubMenuRelConManutencao.Name = "SubMenuRelConManutencao";
-            this.SubMenuRelConManutencao.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuRelConManutencao.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelConManutencao.Text = "Manutenção";
             this.SubMenuRelConManutencao.Click += new System.EventHandler(this.SubMenuRelConManutencao_Click);
             // 
             // SubMenuRelConMulta
             // 
             this.SubMenuRelConMulta.Name = "SubMenuRelConMulta";
-            this.SubMenuRelConMulta.Size = new System.Drawing.Size(167, 22);
+            this.SubMenuRelConMulta.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelConMulta.Text = "Multa";
             this.SubMenuRelConMulta.Click += new System.EventHandler(this.SubMenuRelConMulta_Click);
             // 
@@ -226,34 +226,34 @@
             this.SubMenuRelCadStatusVeic,
             this.SubMenuRelCadVencCNH});
             this.SubMenuRelCadastro.Name = "SubMenuRelCadastro";
-            this.SubMenuRelCadastro.Size = new System.Drawing.Size(132, 22);
+            this.SubMenuRelCadastro.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelCadastro.Text = "Cadastro";
             // 
             // SubMenuRelCadVeiculo
             // 
             this.SubMenuRelCadVeiculo.Name = "SubMenuRelCadVeiculo";
-            this.SubMenuRelCadVeiculo.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuRelCadVeiculo.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelCadVeiculo.Text = "Veículo";
             this.SubMenuRelCadVeiculo.Click += new System.EventHandler(this.SubMenuRelCadVeiculo_Click);
             // 
             // SubMenuRelCadMotorista
             // 
             this.SubMenuRelCadMotorista.Name = "SubMenuRelCadMotorista";
-            this.SubMenuRelCadMotorista.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuRelCadMotorista.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelCadMotorista.Text = "Motorista";
             this.SubMenuRelCadMotorista.Click += new System.EventHandler(this.SubMenuRelCadMotorista_Click);
             // 
             // SubMenuRelCadStatusVeic
             // 
             this.SubMenuRelCadStatusVeic.Name = "SubMenuRelCadStatusVeic";
-            this.SubMenuRelCadStatusVeic.Size = new System.Drawing.Size(177, 22);
-            this.SubMenuRelCadStatusVeic.Text = "Status Veiculo";
+            this.SubMenuRelCadStatusVeic.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelCadStatusVeic.Text = "Status Veículo";
             this.SubMenuRelCadStatusVeic.Click += new System.EventHandler(this.SubMenuRelCadStatusVeic_Click);
             // 
             // SubMenuRelCadVencCNH
             // 
             this.SubMenuRelCadVencCNH.Name = "SubMenuRelCadVencCNH";
-            this.SubMenuRelCadVencCNH.Size = new System.Drawing.Size(177, 22);
+            this.SubMenuRelCadVencCNH.Size = new System.Drawing.Size(180, 22);
             this.SubMenuRelCadVencCNH.Text = "Vencimento CNH";
             this.SubMenuRelCadVencCNH.Visible = false;
             // 

@@ -258,7 +258,7 @@
             this.LblVeiculos.Name = "LblVeiculos";
             this.LblVeiculos.Size = new System.Drawing.Size(87, 13);
             this.LblVeiculos.TabIndex = 15;
-            this.LblVeiculos.Text = "Veiculos - 000";
+            this.LblVeiculos.Text = "Veículos - 000";
             // 
             // FrmCadVeiculo
             // 

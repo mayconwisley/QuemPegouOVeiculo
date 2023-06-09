@@ -133,10 +133,10 @@
             // 
             this.DataHoraSaida.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.DataHoraSaida.DataPropertyName = "DataHoraSaida";
-            this.DataHoraSaida.HeaderText = "DataHoraSaida";
+            this.DataHoraSaida.HeaderText = "Data_Hora_Saída";
             this.DataHoraSaida.Name = "DataHoraSaida";
             this.DataHoraSaida.ReadOnly = true;
-            this.DataHoraSaida.Width = 105;
+            this.DataHoraSaida.Width = 119;
             // 
             // Modelo
             // 
@@ -157,10 +157,10 @@
             // DataHoraChegada
             // 
             this.DataHoraChegada.DataPropertyName = "DataHoraChegada";
-            this.DataHoraChegada.HeaderText = "DataHoraChegada";
+            this.DataHoraChegada.HeaderText = "Data_Hora_Chegada";
             this.DataHoraChegada.Name = "DataHoraChegada";
             this.DataHoraChegada.ReadOnly = true;
-            this.DataHoraChegada.Width = 121;
+            this.DataHoraChegada.Width = 133;
             // 
             // Dias
             // 
@@ -183,7 +183,7 @@
             // Descricao
             // 
             this.Descricao.DataPropertyName = "Descricao";
-            this.Descricao.HeaderText = "Descricao";
+            this.Descricao.HeaderText = "Descrição";
             this.Descricao.Name = "Descricao";
             this.Descricao.ReadOnly = true;
             this.Descricao.Width = 80;
@@ -193,30 +193,30 @@
             this.KmInicial.DataPropertyName = "KmInicial";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.KmInicial.DefaultCellStyle = dataGridViewCellStyle2;
-            this.KmInicial.HeaderText = "KmInicial";
+            this.KmInicial.HeaderText = "Km_Inicial";
             this.KmInicial.Name = "KmInicial";
             this.KmInicial.ReadOnly = true;
-            this.KmInicial.Width = 74;
+            this.KmInicial.Width = 80;
             // 
             // KmFinal
             // 
             this.KmFinal.DataPropertyName = "KmFinal";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.KmFinal.DefaultCellStyle = dataGridViewCellStyle3;
-            this.KmFinal.HeaderText = "KmFinal";
+            this.KmFinal.HeaderText = "Km_Final";
             this.KmFinal.Name = "KmFinal";
             this.KmFinal.ReadOnly = true;
-            this.KmFinal.Width = 69;
+            this.KmFinal.Width = 75;
             // 
             // KmTotal
             // 
             this.KmTotal.DataPropertyName = "KmTotal";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.KmTotal.DefaultCellStyle = dataGridViewCellStyle4;
-            this.KmTotal.HeaderText = "KmTotal";
+            this.KmTotal.HeaderText = "Km_Total";
             this.KmTotal.Name = "KmTotal";
             this.KmTotal.ReadOnly = true;
-            this.KmTotal.Width = 71;
+            this.KmTotal.Width = 77;
             // 
             // Status
             // 
@@ -241,7 +241,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Atualização Controle Veiculo";
+            this.Text = "Atualização Controle Veículo";
             this.Load += new System.EventHandler(this.FrmAtuControleVeiculo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvControleVeiculo)).EndInit();
             this.ResumeLayout(false);

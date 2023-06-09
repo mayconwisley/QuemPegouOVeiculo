@@ -58,9 +58,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(129, 14);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "KmFinal";
+            this.label3.Text = "Km Final";
             // 
             // TxtKmFinal
             // 

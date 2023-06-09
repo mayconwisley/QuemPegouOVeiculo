@@ -43,6 +43,14 @@
             this.BtnAlterar = new System.Windows.Forms.Button();
             this.BtnExcluir = new System.Windows.Forms.Button();
             this.DgvControleVeiculo = new System.Windows.Forms.DataGridView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.TxtPesquisa = new System.Windows.Forms.TextBox();
+            this.LblContVeiculo = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.LkLblDtChegadaAtual = new System.Windows.Forms.LinkLabel();
+            this.LkLblDtSaidaAtual = new System.Windows.Forms.LinkLabel();
+            this.UCVeiculoMotorista = new QuemPegouOVeiculo.USVeiculoMotorista();
+            this.UCDescricao = new QuemPegouOVeiculo.UCDescricao();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id_Veiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id_Motorista = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,14 +65,6 @@
             this.KmFinal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KmTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label7 = new System.Windows.Forms.Label();
-            this.TxtPesquisa = new System.Windows.Forms.TextBox();
-            this.LblContVeiculo = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.LkLblDtChegadaAtual = new System.Windows.Forms.LinkLabel();
-            this.LkLblDtSaidaAtual = new System.Windows.Forms.LinkLabel();
-            this.UCVeiculoMotorista = new QuemPegouOVeiculo.USVeiculoMotorista();
-            this.UCDescricao = new QuemPegouOVeiculo.UCDescricao();
             ((System.ComponentModel.ISupportInitialize)(this.DgvControleVeiculo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,7 +91,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Dt. Saida";
+            this.label3.Text = "Dt. Saída";
             // 
             // label4
             // 
@@ -189,130 +189,6 @@
             this.DgvControleVeiculo.TabIndex = 10;
             this.DgvControleVeiculo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvControleVeiculo_CellDoubleClick);
             // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            this.Id.Width = 41;
-            // 
-            // Id_Veiculo
-            // 
-            this.Id_Veiculo.DataPropertyName = "Id_Veiculo";
-            this.Id_Veiculo.HeaderText = "Id_Veiculo";
-            this.Id_Veiculo.Name = "Id_Veiculo";
-            this.Id_Veiculo.ReadOnly = true;
-            this.Id_Veiculo.Visible = false;
-            this.Id_Veiculo.Width = 82;
-            // 
-            // Id_Motorista
-            // 
-            this.Id_Motorista.DataPropertyName = "Id_Motorista";
-            this.Id_Motorista.HeaderText = "Id_Motorista";
-            this.Id_Motorista.Name = "Id_Motorista";
-            this.Id_Motorista.ReadOnly = true;
-            this.Id_Motorista.Visible = false;
-            this.Id_Motorista.Width = 90;
-            // 
-            // DataHoraSaida
-            // 
-            this.DataHoraSaida.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.DataHoraSaida.DataPropertyName = "DataHoraSaida";
-            this.DataHoraSaida.HeaderText = "DataHoraSaida";
-            this.DataHoraSaida.Name = "DataHoraSaida";
-            this.DataHoraSaida.ReadOnly = true;
-            this.DataHoraSaida.Width = 118;
-            // 
-            // Modelo
-            // 
-            this.Modelo.DataPropertyName = "Modelo";
-            this.Modelo.HeaderText = "Modelo";
-            this.Modelo.Name = "Modelo";
-            this.Modelo.ReadOnly = true;
-            this.Modelo.Width = 72;
-            // 
-            // Nome
-            // 
-            this.Nome.DataPropertyName = "Nome";
-            this.Nome.HeaderText = "Nome";
-            this.Nome.Name = "Nome";
-            this.Nome.ReadOnly = true;
-            this.Nome.Width = 65;
-            // 
-            // DataHoraChegada
-            // 
-            this.DataHoraChegada.DataPropertyName = "DataHoraChegada";
-            this.DataHoraChegada.HeaderText = "DataHoraChegada";
-            this.DataHoraChegada.Name = "DataHoraChegada";
-            this.DataHoraChegada.ReadOnly = true;
-            this.DataHoraChegada.Width = 137;
-            // 
-            // Dias
-            // 
-            this.Dias.DataPropertyName = "Dias";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Dias.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Dias.HeaderText = "Dias";
-            this.Dias.Name = "Dias";
-            this.Dias.ReadOnly = true;
-            this.Dias.Width = 57;
-            // 
-            // Horas
-            // 
-            this.Horas.DataPropertyName = "Horas";
-            this.Horas.HeaderText = "Horas";
-            this.Horas.Name = "Horas";
-            this.Horas.ReadOnly = true;
-            this.Horas.Width = 65;
-            // 
-            // Descricao
-            // 
-            this.Descricao.DataPropertyName = "Descricao";
-            this.Descricao.HeaderText = "Descricao";
-            this.Descricao.Name = "Descricao";
-            this.Descricao.ReadOnly = true;
-            this.Descricao.Width = 88;
-            // 
-            // KmInicial
-            // 
-            this.KmInicial.DataPropertyName = "KmInicial";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.KmInicial.DefaultCellStyle = dataGridViewCellStyle2;
-            this.KmInicial.HeaderText = "KmInicial";
-            this.KmInicial.Name = "KmInicial";
-            this.KmInicial.ReadOnly = true;
-            this.KmInicial.Width = 85;
-            // 
-            // KmFinal
-            // 
-            this.KmFinal.DataPropertyName = "KmFinal";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.KmFinal.DefaultCellStyle = dataGridViewCellStyle3;
-            this.KmFinal.HeaderText = "KmFinal";
-            this.KmFinal.Name = "KmFinal";
-            this.KmFinal.ReadOnly = true;
-            this.KmFinal.Width = 77;
-            // 
-            // KmTotal
-            // 
-            this.KmTotal.DataPropertyName = "KmTotal";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.KmTotal.DefaultCellStyle = dataGridViewCellStyle4;
-            this.KmTotal.HeaderText = "KmTotal";
-            this.KmTotal.Name = "KmTotal";
-            this.KmTotal.ReadOnly = true;
-            this.KmTotal.Width = 78;
-            // 
-            // Status
-            // 
-            this.Status.DataPropertyName = "Status";
-            this.Status.HeaderText = "Status";
-            this.Status.Name = "Status";
-            this.Status.ReadOnly = true;
-            this.Status.Width = 68;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -337,7 +213,7 @@
             this.LblContVeiculo.Name = "LblContVeiculo";
             this.LblContVeiculo.Size = new System.Drawing.Size(134, 13);
             this.LblContVeiculo.TabIndex = 14;
-            this.LblContVeiculo.Text = "Controle Veiculo - 000";
+            this.LblContVeiculo.Text = "Controle Veículo - 000";
             // 
             // label9
             // 
@@ -375,7 +251,7 @@
             this.UCVeiculoMotorista.AutoSize = true;
             this.UCVeiculoMotorista.Location = new System.Drawing.Point(12, 17);
             this.UCVeiculoMotorista.Name = "UCVeiculoMotorista";
-            this.UCVeiculoMotorista.Size = new System.Drawing.Size(308, 81);
+            this.UCVeiculoMotorista.Size = new System.Drawing.Size(309, 81);
             this.UCVeiculoMotorista.TabIndex = 0;
             this.UCVeiculoMotorista.KmFinal += new QuemPegouOVeiculo.USVeiculoMotorista.KmFimVeiculo(this.UCVeiculoMotorista_KmFinal);
             // 
@@ -384,8 +260,132 @@
             this.UCDescricao.AutoSize = true;
             this.UCDescricao.Location = new System.Drawing.Point(12, 210);
             this.UCDescricao.Name = "UCDescricao";
-            this.UCDescricao.Size = new System.Drawing.Size(411, 67);
+            this.UCDescricao.Size = new System.Drawing.Size(412, 67);
             this.UCDescricao.TabIndex = 5;
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            this.Id.Width = 44;
+            // 
+            // Id_Veiculo
+            // 
+            this.Id_Veiculo.DataPropertyName = "Id_Veiculo";
+            this.Id_Veiculo.HeaderText = "Id_Veiculo";
+            this.Id_Veiculo.Name = "Id_Veiculo";
+            this.Id_Veiculo.ReadOnly = true;
+            this.Id_Veiculo.Visible = false;
+            this.Id_Veiculo.Width = 91;
+            // 
+            // Id_Motorista
+            // 
+            this.Id_Motorista.DataPropertyName = "Id_Motorista";
+            this.Id_Motorista.HeaderText = "Id_Motorista";
+            this.Id_Motorista.Name = "Id_Motorista";
+            this.Id_Motorista.ReadOnly = true;
+            this.Id_Motorista.Visible = false;
+            this.Id_Motorista.Width = 103;
+            // 
+            // DataHoraSaida
+            // 
+            this.DataHoraSaida.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.DataHoraSaida.DataPropertyName = "DataHoraSaida";
+            this.DataHoraSaida.HeaderText = "Data_Hora_Saída";
+            this.DataHoraSaida.Name = "DataHoraSaida";
+            this.DataHoraSaida.ReadOnly = true;
+            this.DataHoraSaida.Width = 132;
+            // 
+            // Modelo
+            // 
+            this.Modelo.DataPropertyName = "Modelo";
+            this.Modelo.HeaderText = "Modelo";
+            this.Modelo.Name = "Modelo";
+            this.Modelo.ReadOnly = true;
+            this.Modelo.Width = 72;
+            // 
+            // Nome
+            // 
+            this.Nome.DataPropertyName = "Nome";
+            this.Nome.HeaderText = "Nome";
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            this.Nome.Width = 65;
+            // 
+            // DataHoraChegada
+            // 
+            this.DataHoraChegada.DataPropertyName = "DataHoraChegada";
+            this.DataHoraChegada.HeaderText = "Data_Hora_Chegada";
+            this.DataHoraChegada.Name = "DataHoraChegada";
+            this.DataHoraChegada.ReadOnly = true;
+            this.DataHoraChegada.Width = 151;
+            // 
+            // Dias
+            // 
+            this.Dias.DataPropertyName = "Dias";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Dias.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Dias.HeaderText = "Dias";
+            this.Dias.Name = "Dias";
+            this.Dias.ReadOnly = true;
+            this.Dias.Width = 57;
+            // 
+            // Horas
+            // 
+            this.Horas.DataPropertyName = "Horas";
+            this.Horas.HeaderText = "Horas";
+            this.Horas.Name = "Horas";
+            this.Horas.ReadOnly = true;
+            this.Horas.Width = 65;
+            // 
+            // Descricao
+            // 
+            this.Descricao.DataPropertyName = "Descricao";
+            this.Descricao.HeaderText = "Descrição";
+            this.Descricao.Name = "Descricao";
+            this.Descricao.ReadOnly = true;
+            this.Descricao.Width = 88;
+            // 
+            // KmInicial
+            // 
+            this.KmInicial.DataPropertyName = "KmInicial";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KmInicial.DefaultCellStyle = dataGridViewCellStyle2;
+            this.KmInicial.HeaderText = "Km_Inicial";
+            this.KmInicial.Name = "KmInicial";
+            this.KmInicial.ReadOnly = true;
+            this.KmInicial.Width = 92;
+            // 
+            // KmFinal
+            // 
+            this.KmFinal.DataPropertyName = "KmFinal";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KmFinal.DefaultCellStyle = dataGridViewCellStyle3;
+            this.KmFinal.HeaderText = "Km_Final";
+            this.KmFinal.Name = "KmFinal";
+            this.KmFinal.ReadOnly = true;
+            this.KmFinal.Width = 84;
+            // 
+            // KmTotal
+            // 
+            this.KmTotal.DataPropertyName = "KmTotal";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.KmTotal.DefaultCellStyle = dataGridViewCellStyle4;
+            this.KmTotal.HeaderText = "Km_Total";
+            this.KmTotal.Name = "KmTotal";
+            this.KmTotal.ReadOnly = true;
+            this.KmTotal.Width = 85;
+            // 
+            // Status
+            // 
+            this.Status.DataPropertyName = "Status";
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
+            this.Status.Width = 68;
             // 
             // FrmCadContVeiculo
             // 
@@ -419,7 +419,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Controle de Veiculo";
+            this.Text = "Controle de Veículo";
             this.Load += new System.EventHandler(this.FrmCadContVeiculo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvControleVeiculo)).EndInit();
             this.ResumeLayout(false);
@@ -445,6 +445,8 @@
         private UCDescricao UCDescricao;
         private System.Windows.Forms.LinkLabel LkLblDtChegadaAtual;
         private System.Windows.Forms.LinkLabel LkLblDtSaidaAtual;
+        public System.Windows.Forms.TextBox TxtKmInicial;
+        private USVeiculoMotorista UCVeiculoMotorista;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id_Veiculo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id_Motorista;
@@ -459,7 +461,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn KmFinal;
         private System.Windows.Forms.DataGridViewTextBoxColumn KmTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn Status;
-        public System.Windows.Forms.TextBox TxtKmInicial;
-        private USVeiculoMotorista UCVeiculoMotorista;
     }
 }
