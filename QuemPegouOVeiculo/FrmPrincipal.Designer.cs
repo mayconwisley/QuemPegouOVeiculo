@@ -74,7 +74,7 @@
             this.MstPrincipal.Name = "MstPrincipal";
             this.MstPrincipal.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             this.MstPrincipal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MstPrincipal.Size = new System.Drawing.Size(1173, 24);
+            this.MstPrincipal.Size = new System.Drawing.Size(1008, 24);
             this.MstPrincipal.TabIndex = 0;
             // 
             // MenuCadastro
@@ -187,34 +187,34 @@
             this.SubMenuRelConManutencao,
             this.SubMenuRelConMulta});
             this.SubMenuRelControle.Name = "SubMenuRelControle";
-            this.SubMenuRelControle.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelControle.Size = new System.Drawing.Size(132, 22);
             this.SubMenuRelControle.Text = "Controle";
             // 
             // SubMenuRelConVeiculo
             // 
             this.SubMenuRelConVeiculo.Name = "SubMenuRelConVeiculo";
-            this.SubMenuRelConVeiculo.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelConVeiculo.Size = new System.Drawing.Size(167, 22);
             this.SubMenuRelConVeiculo.Text = "Veículo";
             this.SubMenuRelConVeiculo.Click += new System.EventHandler(this.SubMenuRelConVeiculo_Click);
             // 
             // SubMenuRelConAbastecimento
             // 
             this.SubMenuRelConAbastecimento.Name = "SubMenuRelConAbastecimento";
-            this.SubMenuRelConAbastecimento.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelConAbastecimento.Size = new System.Drawing.Size(167, 22);
             this.SubMenuRelConAbastecimento.Text = "Abastecimento";
             this.SubMenuRelConAbastecimento.Click += new System.EventHandler(this.SubMenuRelConAbastecimento_Click);
             // 
             // SubMenuRelConManutencao
             // 
             this.SubMenuRelConManutencao.Name = "SubMenuRelConManutencao";
-            this.SubMenuRelConManutencao.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelConManutencao.Size = new System.Drawing.Size(167, 22);
             this.SubMenuRelConManutencao.Text = "Manutenção";
             this.SubMenuRelConManutencao.Click += new System.EventHandler(this.SubMenuRelConManutencao_Click);
             // 
             // SubMenuRelConMulta
             // 
             this.SubMenuRelConMulta.Name = "SubMenuRelConMulta";
-            this.SubMenuRelConMulta.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelConMulta.Size = new System.Drawing.Size(167, 22);
             this.SubMenuRelConMulta.Text = "Multa";
             this.SubMenuRelConMulta.Click += new System.EventHandler(this.SubMenuRelConMulta_Click);
             // 
@@ -226,34 +226,34 @@
             this.SubMenuRelCadStatusVeic,
             this.SubMenuRelCadVencCNH});
             this.SubMenuRelCadastro.Name = "SubMenuRelCadastro";
-            this.SubMenuRelCadastro.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelCadastro.Size = new System.Drawing.Size(132, 22);
             this.SubMenuRelCadastro.Text = "Cadastro";
             // 
             // SubMenuRelCadVeiculo
             // 
             this.SubMenuRelCadVeiculo.Name = "SubMenuRelCadVeiculo";
-            this.SubMenuRelCadVeiculo.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelCadVeiculo.Size = new System.Drawing.Size(177, 22);
             this.SubMenuRelCadVeiculo.Text = "Veículo";
             this.SubMenuRelCadVeiculo.Click += new System.EventHandler(this.SubMenuRelCadVeiculo_Click);
             // 
             // SubMenuRelCadMotorista
             // 
             this.SubMenuRelCadMotorista.Name = "SubMenuRelCadMotorista";
-            this.SubMenuRelCadMotorista.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelCadMotorista.Size = new System.Drawing.Size(177, 22);
             this.SubMenuRelCadMotorista.Text = "Motorista";
             this.SubMenuRelCadMotorista.Click += new System.EventHandler(this.SubMenuRelCadMotorista_Click);
             // 
             // SubMenuRelCadStatusVeic
             // 
             this.SubMenuRelCadStatusVeic.Name = "SubMenuRelCadStatusVeic";
-            this.SubMenuRelCadStatusVeic.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelCadStatusVeic.Size = new System.Drawing.Size(177, 22);
             this.SubMenuRelCadStatusVeic.Text = "Status Veículo";
             this.SubMenuRelCadStatusVeic.Click += new System.EventHandler(this.SubMenuRelCadStatusVeic_Click);
             // 
             // SubMenuRelCadVencCNH
             // 
             this.SubMenuRelCadVencCNH.Name = "SubMenuRelCadVencCNH";
-            this.SubMenuRelCadVencCNH.Size = new System.Drawing.Size(180, 22);
+            this.SubMenuRelCadVencCNH.Size = new System.Drawing.Size(177, 22);
             this.SubMenuRelCadVencCNH.Text = "Vencimento CNH";
             this.SubMenuRelCadVencCNH.Visible = false;
             // 
@@ -269,10 +269,10 @@
             this.SstPrincipal.Font = new System.Drawing.Font("Verdana", 9F);
             this.SstPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.SstPrincipal.Location = new System.Drawing.Point(0, 657);
+            this.SstPrincipal.Location = new System.Drawing.Point(0, 659);
             this.SstPrincipal.Name = "SstPrincipal";
             this.SstPrincipal.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.SstPrincipal.Size = new System.Drawing.Size(1173, 22);
+            this.SstPrincipal.Size = new System.Drawing.Size(1008, 22);
             this.SstPrincipal.TabIndex = 1;
             this.SstPrincipal.Text = "statusStrip1";
             // 
@@ -286,7 +286,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1173, 679);
+            this.ClientSize = new System.Drawing.Size(1008, 681);
             this.Controls.Add(this.SstPrincipal);
             this.Controls.Add(this.MstPrincipal);
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
