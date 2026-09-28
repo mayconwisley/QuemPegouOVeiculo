@@ -62,9 +62,6 @@
     <ApplicationIcon>scienceandfiction.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FirebirdSql.Data.FirebirdClient, Version=9.1.1.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FirebirdSql.Data.FirebirdClient.9.1.1\lib\net48\FirebirdSql.Data.FirebirdClient.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
@@ -363,15 +360,6 @@
     <None Include="Properties\DataSources\Objeto.Relatorios.StatusVeiculoObjRel.datasource" />
     <None Include="Properties\DataSources\Objeto.StatusVeiculoObj.datasource" />
     <None Include="Properties\DataSources\Objeto.VeiculoObj.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -407,7 +395,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props'))" />
-    <Error Condition="!Exists('..\packages\Firebird.Embedded.3.0.0.32485\build\Firebird.Embedded.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Firebird.Embedded.3.0.0.32485\build\Firebird.Embedded.targets'))" />
   </Target>
-  <Import Project="..\packages\Firebird.Embedded.3.0.0.32485\build\Firebird.Embedded.targets" Condition="Exists('..\packages\Firebird.Embedded.3.0.0.32485\build\Firebird.Embedded.targets')" />
 </Project>

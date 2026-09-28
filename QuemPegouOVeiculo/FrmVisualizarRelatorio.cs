@@ -336,7 +336,15 @@ namespace QuemPegouOVeiculo
 
         private void FrmVisualizarRelatorio_Load(object sender, EventArgs e)
         {
-            ListarRelatorio(strSearch);
+            try
+            {
+                ListarRelatorio(strSearch);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Falha ao carregar relatório", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+            }
         }
     }
 }

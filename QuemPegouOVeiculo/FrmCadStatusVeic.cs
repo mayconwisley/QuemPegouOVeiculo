@@ -140,6 +140,7 @@ namespace QuemPegouOVeiculo
 
         private void FrmCadStatusVeic_Load(object sender, EventArgs e)
         {
+            MktDtInicio.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             ListResgister("%%");
         }
 

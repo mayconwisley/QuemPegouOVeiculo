@@ -85,7 +85,7 @@ namespace QuemPegouOVeiculo
 
             if (dtDataHoraChegada.Date == DateTime.Parse("01/01/0001 00:00:00"))
             {
-                MktDtChegada.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                MktDtChegada.Clear();
             }
             else
             {
@@ -199,6 +199,7 @@ namespace QuemPegouOVeiculo
 
         private void FrmCadContVeiculo_Load(object sender, EventArgs e)
         {
+            MktDtSaida.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             ListRegister("%%");
         }
 

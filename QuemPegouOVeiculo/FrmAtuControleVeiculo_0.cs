@@ -30,7 +30,7 @@ namespace QuemPegouOVeiculo
             idControle = idCont;
         }
 
-        private void Manipaulte(char opc)
+        private bool Manipaulte(char opc)
         {
             controleVeiculo = new ControleVeiculoObj();
             try
@@ -53,15 +53,16 @@ namespace QuemPegouOVeiculo
                 {
                     case 'U':
                         Negocio.Controle.Veiculo.Update.RegisterControl(controleVeiculo);
-                        break;
+                        return true;
                     default:
                         MessageBox.Show("Opção não encontrada");
-                        break;
+                        return false;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return false;
             }
         }
         private void FrmAtuControleVeiculo_0_FormClosing(object sender, FormClosingEventArgs e)
@@ -79,8 +80,8 @@ namespace QuemPegouOVeiculo
 
         private void BtnGravar_Click(object sender, EventArgs e)
         {
-            Manipaulte('U');
-            Close();
+            if (Manipaulte('U'))
+                Close();
         }
 
         private void FrmAtuControleVeiculo_0_Load(object sender, EventArgs e)

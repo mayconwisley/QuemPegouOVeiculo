@@ -32,6 +32,13 @@ namespace QuemPegouOVeiculo
 
             try
             {
+                if (opc == 'D')
+                {
+                    Negocio.Motorista.Delete.Register(new MotoristaObj { Id = idMotorista });
+                    ListRegister("%" + TxtPesquisa.Text.Trim() + "%");
+                    Negocio.Utilitario.HabilitarBotoes.AlterarExcluir(false, BtnAlterar, BtnExcluir, BtnGravar);
+                    return;
+                }
                 motorista.Id = idMotorista;
                 motorista.Nome = TxtNome.Text.Trim();
                 motorista.CNH = TxtCNH.Text.Trim();
@@ -58,21 +65,12 @@ namespace QuemPegouOVeiculo
                 /*Validar CPF*/
                 string cpf = MktCPF.Text.Replace(".", "").Replace("-", "").Trim();
                 bool validarCPF = Negocio.Utilitario.ValidarCPF.CPF(cpf);
-                if (validarCPF == true)
+                if (!validarCPF)
                 {
-                    motorista.CPF = cpf;
+                    MessageBox.Show("CPF inválido.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else
-                {
-                    if (MessageBox.Show("CPF inválido.\n\nDeseja cadastrar mesmo assim?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                    {
-                        motorista.CPF = cpf;
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
+                motorista.CPF = cpf;
 
                 motorista.RG = TxtRG.Text.Trim();
 
