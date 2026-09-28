@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -100,207 +100,211 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmAtuControleVeiculo.cs">
+    <Compile Include="Features\Operacoes\Movimentacoes\FrmAtuControleVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAtuControleVeiculo.Designer.cs">
+    <Compile Include="Features\Operacoes\Movimentacoes\FrmAtuControleVeiculo.Designer.cs">
       <DependentUpon>FrmAtuControleVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmAtuControleVeiculo_0.cs">
+    <Compile Include="Features\Operacoes\Movimentacoes\FrmAtuControleVeiculo_0.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAtuControleVeiculo_0.Designer.cs">
+    <Compile Include="Features\Operacoes\Movimentacoes\FrmAtuControleVeiculo_0.Designer.cs">
       <DependentUpon>FrmAtuControleVeiculo_0.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCadContVeiculo.cs">
+    <Compile Include="Features\Operacoes\Movimentacoes\FrmCadContVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCadContVeiculo.Designer.cs">
+    <Compile Include="Features\Operacoes\Movimentacoes\FrmCadContVeiculo.Designer.cs">
       <DependentUpon>FrmCadContVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCadMotorista.cs">
+    <Compile Include="Features\Cadastros\Motoristas\FrmCadMotorista.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCadMotorista.Designer.cs">
+    <Compile Include="Features\Cadastros\Motoristas\FrmCadMotorista.Designer.cs">
       <DependentUpon>FrmCadMotorista.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCadStatusVeic.cs">
+    <Compile Include="Features\Operacoes\StatusVeiculos\FrmCadStatusVeic.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCadStatusVeic.Designer.cs">
+    <Compile Include="Features\Operacoes\StatusVeiculos\FrmCadStatusVeic.Designer.cs">
       <DependentUpon>FrmCadStatusVeic.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCadVeiculo.cs">
+    <Compile Include="Features\Cadastros\Veiculos\FrmCadVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCadVeiculo.Designer.cs">
+    <Compile Include="Features\Cadastros\Veiculos\FrmCadVeiculo.Designer.cs">
       <DependentUpon>FrmCadVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCadVencCNH.cs">
+    <Compile Include="Features\Cadastros\VencimentosCnh\FrmCadVencCNH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCadVencCNH.Designer.cs">
+    <Compile Include="Features\Cadastros\VencimentosCnh\FrmCadVencCNH.Designer.cs">
       <DependentUpon>FrmCadVencCNH.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmContCombustivel.cs">
+    <Compile Include="Features\Operacoes\Abastecimentos\FrmContCombustivel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmContCombustivel.Designer.cs">
+    <Compile Include="Features\Operacoes\Abastecimentos\FrmContCombustivel.Designer.cs">
       <DependentUpon>FrmContCombustivel.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmContManutencao.cs">
+    <Compile Include="Features\Operacoes\Manutencoes\FrmContManutencao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmContManutencao.Designer.cs">
+    <Compile Include="Features\Operacoes\Manutencoes\FrmContManutencao.Designer.cs">
       <DependentUpon>FrmContManutencao.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmContMulta.cs">
+    <Compile Include="Features\Operacoes\Multas\FrmContMulta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmContMulta.Designer.cs">
+    <Compile Include="Features\Operacoes\Multas\FrmContMulta.Designer.cs">
       <DependentUpon>FrmContMulta.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmPrincipal.cs">
+    <Compile Include="Shell\FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPrincipal.Designer.cs">
+    <Compile Include="Shell\FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelContCombustivel.cs">
+    <Compile Include="Reports\Forms\FrmRelContCombustivel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelContCombustivel.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelContCombustivel.Designer.cs">
       <DependentUpon>FrmRelContCombustivel.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelContManutencao.cs">
+    <Compile Include="Reports\Forms\FrmRelContManutencao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelContManutencao.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelContManutencao.Designer.cs">
       <DependentUpon>FrmRelContManutencao.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelContMulta.cs">
+    <Compile Include="Reports\Forms\FrmRelContMulta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelContMulta.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelContMulta.Designer.cs">
       <DependentUpon>FrmRelContMulta.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelContVeiculo.cs">
+    <Compile Include="Reports\Forms\FrmRelContVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelContVeiculo.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelContVeiculo.Designer.cs">
       <DependentUpon>FrmRelContVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelMotorista.cs">
+    <Compile Include="Reports\Forms\FrmRelMotorista.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelMotorista.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelMotorista.Designer.cs">
       <DependentUpon>FrmRelMotorista.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelStatusVeiculo.cs">
+    <Compile Include="Reports\Forms\FrmRelStatusVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelStatusVeiculo.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelStatusVeiculo.Designer.cs">
       <DependentUpon>FrmRelStatusVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRelVeiculo.cs">
+    <Compile Include="Reports\Forms\FrmRelVeiculo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRelVeiculo.Designer.cs">
+    <Compile Include="Reports\Forms\FrmRelVeiculo.Designer.cs">
       <DependentUpon>FrmRelVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmVisualizarRelatorio.cs">
+    <Compile Include="Reports\Forms\FrmVisualizarRelatorio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmVisualizarRelatorio.Designer.cs">
+    <Compile Include="Reports\Forms\FrmVisualizarRelatorio.Designer.cs">
       <DependentUpon>FrmVisualizarRelatorio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Shared\Presentation\FormatarValor.cs" />
+    <Compile Include="Shared\Presentation\HabilitarBotoes.cs" />
+    <Compile Include="Shared\Presentation\LimparCampos.cs" />
+    <Compile Include="Shared\Presentation\MdiForms.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UCDescricao.cs">
+    <Compile Include="Shared\Controls\UCDescricao.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCDescricao.Designer.cs">
+    <Compile Include="Shared\Controls\UCDescricao.Designer.cs">
       <DependentUpon>UCDescricao.cs</DependentUpon>
     </Compile>
-    <Compile Include="UCMotorista.cs">
+    <Compile Include="Shared\Controls\UCMotorista.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCMotorista.Designer.cs">
+    <Compile Include="Shared\Controls\UCMotorista.Designer.cs">
       <DependentUpon>UCMotorista.cs</DependentUpon>
     </Compile>
-    <Compile Include="UCValor.cs">
+    <Compile Include="Shared\Controls\UCValor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCValor.Designer.cs">
+    <Compile Include="Shared\Controls\UCValor.Designer.cs">
       <DependentUpon>UCValor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UCVeiculo.cs">
+    <Compile Include="Shared\Controls\UCVeiculo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCVeiculo.Designer.cs">
+    <Compile Include="Shared\Controls\UCVeiculo.Designer.cs">
       <DependentUpon>UCVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="USVeiculoMotorista.cs">
+    <Compile Include="Shared\Controls\USVeiculoMotorista.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="USVeiculoMotorista.Designer.cs">
+    <Compile Include="Shared\Controls\USVeiculoMotorista.Designer.cs">
       <DependentUpon>USVeiculoMotorista.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FrmAtuControleVeiculo.resx">
+    <EmbeddedResource Include="Features\Operacoes\Movimentacoes\FrmAtuControleVeiculo.resx">
       <DependentUpon>FrmAtuControleVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmAtuControleVeiculo_0.resx">
+    <EmbeddedResource Include="Features\Operacoes\Movimentacoes\FrmAtuControleVeiculo_0.resx">
       <DependentUpon>FrmAtuControleVeiculo_0.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCadContVeiculo.resx">
+    <EmbeddedResource Include="Features\Operacoes\Movimentacoes\FrmCadContVeiculo.resx">
       <DependentUpon>FrmCadContVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCadMotorista.resx">
+    <EmbeddedResource Include="Features\Cadastros\Motoristas\FrmCadMotorista.resx">
       <DependentUpon>FrmCadMotorista.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCadStatusVeic.resx">
+    <EmbeddedResource Include="Features\Operacoes\StatusVeiculos\FrmCadStatusVeic.resx">
       <DependentUpon>FrmCadStatusVeic.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCadVeiculo.resx">
+    <EmbeddedResource Include="Features\Cadastros\Veiculos\FrmCadVeiculo.resx">
       <DependentUpon>FrmCadVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCadVencCNH.resx">
+    <EmbeddedResource Include="Features\Cadastros\VencimentosCnh\FrmCadVencCNH.resx">
       <DependentUpon>FrmCadVencCNH.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmContCombustivel.resx">
+    <EmbeddedResource Include="Features\Operacoes\Abastecimentos\FrmContCombustivel.resx">
       <DependentUpon>FrmContCombustivel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmContManutencao.resx">
+    <EmbeddedResource Include="Features\Operacoes\Manutencoes\FrmContManutencao.resx">
       <DependentUpon>FrmContManutencao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmContMulta.resx">
+    <EmbeddedResource Include="Features\Operacoes\Multas\FrmContMulta.resx">
       <DependentUpon>FrmContMulta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmPrincipal.resx">
+    <EmbeddedResource Include="Shell\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelContCombustivel.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelContCombustivel.resx">
       <DependentUpon>FrmRelContCombustivel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelContManutencao.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelContManutencao.resx">
       <DependentUpon>FrmRelContManutencao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelContMulta.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelContMulta.resx">
       <DependentUpon>FrmRelContMulta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelContVeiculo.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelContVeiculo.resx">
       <DependentUpon>FrmRelContVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelMotorista.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelMotorista.resx">
       <DependentUpon>FrmRelMotorista.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelStatusVeiculo.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelStatusVeiculo.resx">
       <DependentUpon>FrmRelStatusVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmRelVeiculo.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmRelVeiculo.resx">
       <DependentUpon>FrmRelVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmVisualizarRelatorio.resx">
+    <EmbeddedResource Include="Reports\Forms\FrmVisualizarRelatorio.resx">
       <DependentUpon>FrmVisualizarRelatorio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -313,65 +317,65 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Relatorios\RelControleCombustivel.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelControleCombustivel.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\RelControleManutencao.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelControleManutencao.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\RelControleMulta.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelControleMulta.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\RelControleVeiculo.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelControleVeiculo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\RelMotorista.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelMotorista.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\RelStatusVeiculo.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelStatusVeiculo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Relatorios\RelVeiculo.rdlc">
+    <EmbeddedResource Include="Reports\Templates\RelVeiculo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCDescricao.resx">
+    <EmbeddedResource Include="Shared\Controls\UCDescricao.resx">
       <DependentUpon>UCDescricao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCMotorista.resx">
+    <EmbeddedResource Include="Shared\Controls\UCMotorista.resx">
       <DependentUpon>UCMotorista.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCValor.resx">
+    <EmbeddedResource Include="Shared\Controls\UCValor.resx">
       <DependentUpon>UCValor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCVeiculo.resx">
+    <EmbeddedResource Include="Shared\Controls\UCVeiculo.resx">
       <DependentUpon>UCVeiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="USVeiculoMotorista.resx">
+    <EmbeddedResource Include="Shared\Controls\USVeiculoMotorista.resx">
       <DependentUpon>USVeiculoMotorista.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\Objeto.ControleAbastecimentoObj.datasource" />
-    <None Include="Properties\DataSources\Objeto.ControleVeiculoObj.datasource" />
-    <None Include="Properties\DataSources\Objeto.MotoristaObj.datasource" />
-    <None Include="Properties\DataSources\Objeto.Relatorios.ControleAbastecimentoObjRel.datasource" />
-    <None Include="Properties\DataSources\Objeto.Relatorios.ControleManutencaoObjRel.datasource" />
-    <None Include="Properties\DataSources\Objeto.Relatorios.ControleMultaObjRel.datasource" />
-    <None Include="Properties\DataSources\Objeto.Relatorios.ControleVeiculoObjRel.datasource" />
-    <None Include="Properties\DataSources\Objeto.Relatorios.StatusVeiculoObjRel.datasource" />
-    <None Include="Properties\DataSources\Objeto.StatusVeiculoObj.datasource" />
-    <None Include="Properties\DataSources\Objeto.VeiculoObj.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.ControleAbastecimentoObj.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.ControleVeiculoObj.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.MotoristaObj.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.Reports.ControleAbastecimentoObjRel.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.Reports.ControleManutencaoObjRel.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.Reports.ControleMultaObjRel.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.Reports.ControleVeiculoObjRel.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.Reports.StatusVeiculoObjRel.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.StatusVeiculoObj.datasource" />
+    <None Include="Properties\DataSources\QuemPegouOVeiculo.Desktop.Models.VeiculoObj.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Negocio\Negocio.csproj">
+    <ProjectReference Include="..\Desktop.Client\Desktop.Client.csproj">
       <Project>{e7293482-6453-4aa3-9b77-0ab8ecdb6093}</Project>
-      <Name>Negocio</Name>
+      <Name>QuemPegouOVeiculo.Desktop.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Objeto\Objeto.csproj">
+    <ProjectReference Include="..\Desktop.Models\Desktop.Models.csproj">
       <Project>{e52b9635-dd0b-4ef1-b0de-95032c0996dc}</Project>
-      <Name>Objeto</Name>
+      <Name>QuemPegouOVeiculo.Desktop.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

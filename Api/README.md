@@ -15,9 +15,27 @@ Api/
 
 Cada camada organiza seu código por módulo e feature. `Operacoes` referencia motorista e veículo por ID; o domínio não depende do módulo de cadastro nem de infraestrutura. O fluxo de escrita é endpoint → comando → entidade → repositório de escrita → PostgreSQL. O fluxo de leitura é endpoint → consulta → repositório de leitura → DTO projetado. CQRS aqui separa responsabilidades de leitura e escrita, sem fila, event sourcing ou mediador externo.
 
-O contexto EF mantém os schemas `cadastros` e `operacoes`. Índices únicos protegem CPF, placa e uma única movimentação aberta por veículo. Restrições de banco reforçam quilometragem, valores e ordem de datas. As consultas usam `AsNoTracking`, projeção e paginação no banco; comandos usam entidades rastreadas. A API retorna `ProblemDetails` para validação (400), ausência (404) e conflitos de negócio ou integridade (409).
+O contexto EF mantém os schemas `cadastros` e `operacoes`. Índices únicos protegem CPF, placa e uma única movimentação aberta por veículo. Restrições de banco reforçam quilometragem, valores e ordem de datas. As consultas usam `AsNoTracking`, projeção e paginação no banco; comandos usam entidades rastreadas.
+
+Os casos de uso retornam `Result` ou `Result<T>` para falhas esperadas. A camada de aplicação converte violações do domínio, ausência de registros e conflitos de persistência em erros explícitos; exceções inesperadas continuam sendo tratadas pelo middleware global. Os endpoints mapeiam esses erros para `ProblemDetails` com `code` (`validation`, `not_found`, `conflict`) e status 400, 404 ou 409. As respostas de sucesso mantêm os contratos 200, 201 e 204 usados pelo desktop.
 
 Não existe projeto de conversão do Firebird. O banco legado está vazio e não há clientes; o schema PostgreSQL começa na migration EF `InitialCreate`. O WinForms usa a API por `HttpClient`, sem credenciais PostgreSQL no executável. A URL da API é configurada em `QuemPegouOVeiculo/App.config` ou pela variável `QUEMPEGOU_API_URL`.
+
+A organização dos projetos WinForms, cliente HTTP e modelos está descrita no [README principal](../README.md).
+
+## Executar com o desktop
+
+No Visual Studio, selecione o perfil da solução `Desktop + API (Development)` e inicie a depuração. Ele inicia primeiro a API e depois o WinForms. O perfil HTTP da API e o `ApiBaseUrl` do desktop usam `http://localhost:5000`. Mantenha o serviço PostgreSQL local em execução e aplique a migration de Development antes de abrir os cadastros.
+
+Para executar o `.exe` do desktop isoladamente, inicie a API em outro terminal e mantenha o processo aberto:
+
+```powershell
+$env:ASPNETCORE_ENVIRONMENT = 'Development'
+$env:ASPNETCORE_URLS = 'http://localhost:5000'
+dotnet run --no-launch-profile --project Api/QuemPegouOVeiculo.Api
+```
+
+Confirme `http://localhost:5000/health/ready` antes de usar o desktop. Se a API estiver em outro endereço, ajuste `QUEMPEGOU_API_URL` ou `ApiBaseUrl` no arquivo `.exe.config` gerado junto ao executável.
 
 ## Tipos e contrato
 
@@ -37,6 +55,17 @@ A API monta a connection string com `QVeiculoUser` e `QVeiculoPass` do ambiente.
 | Production | `localhost` | `5432` | `qveiculo_prod` | `Prefer` |
 
 Os valores estão em `appsettings.Development.json` e `appsettings.Production.json`. `Postgres__Host`, `Postgres__Port`, `Postgres__Database` e `Postgres__SslMode` podem sobrescrevê-los por ambiente. O servidor PostgreSQL não cria os bancos automaticamente; crie `qveiculo_dev` e `qveiculo_prod` antes de aplicar suas migrations.
+
+No PostgreSQL local do Windows, crie o banco de desenvolvimento uma vez com `createdb` (substitua o caminho do executável se necessário):
+
+```powershell
+$env:PGPASSWORD = [Environment]::GetEnvironmentVariable('QVeiculoPass', 'Machine')
+$postgresUser = [Environment]::GetEnvironmentVariable('QVeiculoUser', 'Machine')
+& 'C:\Programas\PostgreSQL\18\bin\createdb.exe' -h localhost -p 5432 -U $postgresUser qveiculo_dev
+Remove-Item Env:PGPASSWORD
+```
+
+Use um banco separado para Production. Crie `qveiculo_prod` apenas ao preparar esse ambiente e aplique nele somente o script de migration revisado.
 
 Para iniciar em desenvolvimento com o PostgreSQL local:
 

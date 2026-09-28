@@ -1,3 +1,4 @@
+using QuemPegouOVeiculo.Api.Common;
 using QuemPegouOVeiculo.Application.Common;
 using QuemPegouOVeiculo.Application.Modules.Cadastros.Motoristas;
 
@@ -11,32 +12,29 @@ public static class Endpoints
 
         group.MapGet("/", async (MotoristaQueries queries, int page = 1, int pageSize = 50,
             CancellationToken cancellationToken = default) =>
-            Results.Ok(await queries.ListAsync(new PageRequest(page, pageSize), cancellationToken)));
+            (await queries.ListAsync(new PageRequest(page, pageSize), cancellationToken)).ToHttpResult());
 
         group.MapGet("/{id:int:min(1)}", async (int id, MotoristaQueries queries, CancellationToken cancellationToken) =>
         {
-            var motorista = await queries.GetAsync(id, cancellationToken);
-            return motorista is null ? Results.NotFound() : Results.Ok(motorista);
+            return (await queries.GetAsync(id, cancellationToken)).ToHttpResult();
         });
 
         group.MapPost("/", async (MotoristaInput input, MotoristaCommands commands, CancellationToken cancellationToken) =>
         {
-            var id = await commands.CreateAsync(input, cancellationToken);
-            return Results.Created($"/api/v1/motoristas/{id}", new { id });
+            return (await commands.CreateAsync(input, cancellationToken))
+                .ToCreatedHttpResult("/api/v1/motoristas");
         });
 
         group.MapPut("/{id:int:min(1)}", async (int id, MotoristaInput input, MotoristaCommands commands,
             CancellationToken cancellationToken) =>
         {
-            await commands.UpdateAsync(id, input, cancellationToken);
-            return Results.NoContent();
+            return (await commands.UpdateAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
         group.MapDelete("/{id:int:min(1)}", async (int id, MotoristaCommands commands,
             CancellationToken cancellationToken) =>
         {
-            await commands.DeleteAsync(id, cancellationToken);
-            return Results.NoContent();
+            return (await commands.DeleteAsync(id, cancellationToken)).ToHttpResult();
         });
     }
 }

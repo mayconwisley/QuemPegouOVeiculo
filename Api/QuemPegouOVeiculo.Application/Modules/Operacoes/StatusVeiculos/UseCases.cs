@@ -9,25 +9,41 @@ public sealed record StatusVeiculoView(int Id, int VeiculoId, DateTime InicioUtc
 
 public sealed class StatusVeiculoCommands(ICommandRepository<StatusVeiculo> repository)
 {
-    public async Task<int> CreateAsync(StatusVeiculoInput input, CancellationToken cancellationToken)
+    public async Task<Result<int>> CreateAsync(StatusVeiculoInput input, CancellationToken cancellationToken)
     {
-        var item = new StatusVeiculo(input.VeiculoId, input.InicioUtc, input.FimUtc, input.Descricao);
-        await repository.AddAsync(item, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
-        return item.Id;
+        return await Result.TryAsync(async () =>
+        {
+            var item = new StatusVeiculo(input.VeiculoId, input.InicioUtc, input.FimUtc, input.Descricao);
+            await repository.AddAsync(item, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+            return item.Id;
+        });
     }
 
-    public async Task UpdateAsync(int id, StatusVeiculoInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(int id, StatusVeiculoInput input, CancellationToken cancellationToken)
     {
-        var item = await repository.GetRequiredAsync(id, "Status do veículo", cancellationToken);
-        item.Atualizar(input.VeiculoId, input.InicioUtc, input.FimUtc, input.Descricao);
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var item = await repository.GetByIdAsync(id, cancellationToken);
+            if (item is null)
+                return Result.Failure(Error.NotFound("Status do veículo", id));
+            item.Atualizar(input.VeiculoId, input.InicioUtc, input.FimUtc, input.Descricao);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        repository.Remove(await repository.GetRequiredAsync(id, "Status do veículo", cancellationToken));
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var item = await repository.GetByIdAsync(id, cancellationToken);
+            if (item is null)
+                return Result.Failure(Error.NotFound("Status do veículo", id));
+            repository.Remove(item);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 }
 
@@ -36,9 +52,14 @@ public sealed class StatusVeiculoQueries(IQueryRepository<StatusVeiculo> reposit
     private static readonly Expression<Func<StatusVeiculo, StatusVeiculoView>> Projection = x =>
         new StatusVeiculoView(x.Id, x.VeiculoId, x.InicioUtc, x.FimUtc, x.Descricao);
 
-    public Task<StatusVeiculoView?> GetAsync(int id, CancellationToken cancellationToken) =>
-        repository.GetByIdAsync(id, Projection, cancellationToken);
+    public async Task<Result<StatusVeiculoView>> GetAsync(int id, CancellationToken cancellationToken)
+    {
+        var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
+        return item is null
+            ? Result<StatusVeiculoView>.Failure(Error.NotFound("Status do veículo", id))
+            : Result<StatusVeiculoView>.Success(item);
+    }
 
-    public Task<PagedResult<StatusVeiculoView>> ListAsync(PageRequest page, CancellationToken cancellationToken) =>
-        repository.ListAsync(page, Projection, cancellationToken);
+    public Task<Result<PagedResult<StatusVeiculoView>>> ListAsync(PageRequest page, CancellationToken cancellationToken) =>
+        Result.TryAsync(() => repository.ListAsync(page, Projection, cancellationToken));
 }

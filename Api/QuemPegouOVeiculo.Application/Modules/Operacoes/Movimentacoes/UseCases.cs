@@ -17,51 +17,80 @@ public sealed class MovimentacaoCommands(
     ICommandRepository<MovimentacaoVeiculo> repository,
     ICadastrosStatusReader cadastros)
 {
-    public async Task<int> CreateAsync(MovimentacaoInput input, CancellationToken cancellationToken)
+    public async Task<Result<int>> CreateAsync(MovimentacaoInput input, CancellationToken cancellationToken)
     {
-        var movimentacao = new MovimentacaoVeiculo(input.VeiculoId, input.MotoristaId,
-            input.SaidaUtc, input.KmInicial, input.Descricao);
-        movimentacao.Atualizar(input.VeiculoId, input.MotoristaId, input.SaidaUtc,
-            input.ChegadaUtc, input.KmInicial, input.KmFinal, input.Descricao);
-        await EnsureReferencesActiveAsync(input.VeiculoId, input.MotoristaId, cancellationToken);
+        return await Result.CaptureValueAsync<int>(async () =>
+        {
+            var movimentacao = new MovimentacaoVeiculo(input.VeiculoId, input.MotoristaId,
+                input.SaidaUtc, input.KmInicial, input.Descricao);
+            movimentacao.Atualizar(input.VeiculoId, input.MotoristaId, input.SaidaUtc,
+                input.ChegadaUtc, input.KmInicial, input.KmFinal, input.Descricao);
+            var references = await EnsureReferencesActiveAsync(input.VeiculoId, input.MotoristaId, cancellationToken);
+            if (!references.IsSuccess)
+                return Result<int>.Failure(references.Error);
 
-        await repository.AddAsync(movimentacao, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
-        return movimentacao.Id;
+            await repository.AddAsync(movimentacao, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result<int>.Success(movimentacao.Id);
+        });
     }
 
-    public async Task UpdateAsync(int id, MovimentacaoInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(int id, MovimentacaoInput input, CancellationToken cancellationToken)
     {
-        var movimentacao = await repository.GetRequiredAsync(id, "Movimentação", cancellationToken);
-        movimentacao.Atualizar(input.VeiculoId, input.MotoristaId, input.SaidaUtc,
-            input.ChegadaUtc, input.KmInicial, input.KmFinal, input.Descricao);
-        await EnsureReferencesActiveAsync(input.VeiculoId, input.MotoristaId, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var movimentacao = await repository.GetByIdAsync(id, cancellationToken);
+            if (movimentacao is null)
+                return Result.Failure(Error.NotFound("Movimentação", id));
+            movimentacao.Atualizar(input.VeiculoId, input.MotoristaId, input.SaidaUtc,
+                input.ChegadaUtc, input.KmInicial, input.KmFinal, input.Descricao);
+            var references = await EnsureReferencesActiveAsync(input.VeiculoId, input.MotoristaId, cancellationToken);
+            if (!references.IsSuccess)
+                return references;
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 
-    public async Task ConcludeAsync(int id, ConcluirMovimentacaoInput input, CancellationToken cancellationToken)
+    public async Task<Result> ConcludeAsync(int id, ConcluirMovimentacaoInput input, CancellationToken cancellationToken)
     {
-        var movimentacao = await repository.GetRequiredAsync(id, "Movimentação", cancellationToken);
-        movimentacao.Concluir(input.ChegadaUtc, input.KmFinal);
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var movimentacao = await repository.GetByIdAsync(id, cancellationToken);
+            if (movimentacao is null)
+                return Result.Failure(Error.NotFound("Movimentação", id));
+            movimentacao.Concluir(input.ChegadaUtc, input.KmFinal);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        repository.Remove(await repository.GetRequiredAsync(id, "Movimentação", cancellationToken));
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var item = await repository.GetByIdAsync(id, cancellationToken);
+            if (item is null)
+                return Result.Failure(Error.NotFound("Movimentação", id));
+            repository.Remove(item);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 
-    private async Task EnsureReferencesActiveAsync(int veiculoId, int motoristaId, CancellationToken cancellationToken)
+    private async Task<Result> EnsureReferencesActiveAsync(int veiculoId, int motoristaId,
+        CancellationToken cancellationToken)
     {
         var veiculoAtivo = await cadastros.IsVeiculoActiveAsync(veiculoId, cancellationToken);
         var motoristaAtivo = await cadastros.IsMotoristaActiveAsync(motoristaId, cancellationToken);
         if (veiculoAtivo is null)
-            throw new EntityNotFoundException("Veículo", veiculoId);
+            return Result.Failure(Error.NotFound("Veículo", veiculoId));
         if (motoristaAtivo is null)
-            throw new EntityNotFoundException("Motorista", motoristaId);
+            return Result.Failure(Error.NotFound("Motorista", motoristaId));
         if (!veiculoAtivo.Value || !motoristaAtivo.Value)
-            throw new BusinessConflictException("Veículo e motorista devem estar ativos para registrar movimentação.");
+            return Result.Failure(Error.Conflict(
+                "Veículo e motorista devem estar ativos para registrar movimentação."));
+        return Result.Success();
     }
 }
 
@@ -71,9 +100,14 @@ public sealed class MovimentacaoQueries(IQueryRepository<MovimentacaoVeiculo> re
         new MovimentacaoView(x.Id, x.VeiculoId, x.MotoristaId, x.SaidaUtc, x.ChegadaUtc,
             x.KmInicial, x.KmFinal, x.Descricao, x.ChegadaUtc == null);
 
-    public Task<MovimentacaoView?> GetAsync(int id, CancellationToken cancellationToken) =>
-        repository.GetByIdAsync(id, Projection, cancellationToken);
+    public async Task<Result<MovimentacaoView>> GetAsync(int id, CancellationToken cancellationToken)
+    {
+        var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
+        return item is null
+            ? Result<MovimentacaoView>.Failure(Error.NotFound("Movimentação", id))
+            : Result<MovimentacaoView>.Success(item);
+    }
 
-    public Task<PagedResult<MovimentacaoView>> ListAsync(PageRequest page, CancellationToken cancellationToken) =>
-        repository.ListAsync(page, Projection, cancellationToken);
+    public Task<Result<PagedResult<MovimentacaoView>>> ListAsync(PageRequest page, CancellationToken cancellationToken) =>
+        Result.TryAsync(() => repository.ListAsync(page, Projection, cancellationToken));
 }

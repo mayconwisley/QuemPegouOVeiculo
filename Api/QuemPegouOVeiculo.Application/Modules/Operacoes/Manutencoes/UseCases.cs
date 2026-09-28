@@ -9,25 +9,41 @@ public sealed record ManutencaoView(int Id, int VeiculoId, DateOnly Data, decima
 
 public sealed class ManutencaoCommands(ICommandRepository<Manutencao> repository)
 {
-    public async Task<int> CreateAsync(ManutencaoInput input, CancellationToken cancellationToken)
+    public async Task<Result<int>> CreateAsync(ManutencaoInput input, CancellationToken cancellationToken)
     {
-        var item = new Manutencao(input.VeiculoId, input.Data, input.Valor, input.Descricao);
-        await repository.AddAsync(item, cancellationToken);
-        await repository.SaveChangesAsync(cancellationToken);
-        return item.Id;
+        return await Result.TryAsync(async () =>
+        {
+            var item = new Manutencao(input.VeiculoId, input.Data, input.Valor, input.Descricao);
+            await repository.AddAsync(item, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+            return item.Id;
+        });
     }
 
-    public async Task UpdateAsync(int id, ManutencaoInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(int id, ManutencaoInput input, CancellationToken cancellationToken)
     {
-        var item = await repository.GetRequiredAsync(id, "Manutenção", cancellationToken);
-        item.Atualizar(input.VeiculoId, input.Data, input.Valor, input.Descricao);
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var item = await repository.GetByIdAsync(id, cancellationToken);
+            if (item is null)
+                return Result.Failure(Error.NotFound("Manutenção", id));
+            item.Atualizar(input.VeiculoId, input.Data, input.Valor, input.Descricao);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        repository.Remove(await repository.GetRequiredAsync(id, "Manutenção", cancellationToken));
-        await repository.SaveChangesAsync(cancellationToken);
+        return await Result.CaptureAsync(async () =>
+        {
+            var item = await repository.GetByIdAsync(id, cancellationToken);
+            if (item is null)
+                return Result.Failure(Error.NotFound("Manutenção", id));
+            repository.Remove(item);
+            await repository.SaveChangesAsync(cancellationToken);
+            return Result.Success();
+        });
     }
 }
 
@@ -36,9 +52,14 @@ public sealed class ManutencaoQueries(IQueryRepository<Manutencao> repository)
     private static readonly Expression<Func<Manutencao, ManutencaoView>> Projection = x =>
         new ManutencaoView(x.Id, x.VeiculoId, x.Data, x.Valor, x.Descricao);
 
-    public Task<ManutencaoView?> GetAsync(int id, CancellationToken cancellationToken) =>
-        repository.GetByIdAsync(id, Projection, cancellationToken);
+    public async Task<Result<ManutencaoView>> GetAsync(int id, CancellationToken cancellationToken)
+    {
+        var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
+        return item is null
+            ? Result<ManutencaoView>.Failure(Error.NotFound("Manutenção", id))
+            : Result<ManutencaoView>.Success(item);
+    }
 
-    public Task<PagedResult<ManutencaoView>> ListAsync(PageRequest page, CancellationToken cancellationToken) =>
-        repository.ListAsync(page, Projection, cancellationToken);
+    public Task<Result<PagedResult<ManutencaoView>>> ListAsync(PageRequest page, CancellationToken cancellationToken) =>
+        Result.TryAsync(() => repository.ListAsync(page, Projection, cancellationToken));
 }

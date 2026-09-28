@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Desktop + API (Development)",
+    "Projects": [
+      {
+        "Path": "Api\\QuemPegouOVeiculo.Api\\QuemPegouOVeiculo.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "QuemPegouOVeiculo\\QuemPegouOVeiculo.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

@@ -35,15 +35,5 @@ public sealed record PageRequest(int Page = 1, int PageSize = 50)
 
 public sealed record PagedResult<T>(IReadOnlyList<T> Items, int Page, int PageSize, int Total);
 
-public sealed class EntityNotFoundException(string entity, int id)
-    : Exception($"{entity} {id} não encontrado.");
-
 public sealed class BusinessConflictException(string message, Exception? innerException = null)
     : Exception(message, innerException);
-
-public static class CommandRepositoryExtensions
-{
-    public static async Task<TEntity> GetRequiredAsync<TEntity>(this ICommandRepository<TEntity> repository,
-        int id, string entityName, CancellationToken cancellationToken) where TEntity : class, IEntity =>
-        await repository.GetByIdAsync(id, cancellationToken) ?? throw new EntityNotFoundException(entityName, id);
-}

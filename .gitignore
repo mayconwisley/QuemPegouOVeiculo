@@ -340,3 +340,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Bancos locais de versões legadas
+*.[Ff][Dd][Bb]
