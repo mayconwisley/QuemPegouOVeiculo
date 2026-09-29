@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Desktop + API (Development)",
+    "Projects": [
+      {
+        "Path": "Api\\FleetManagement.Api\\FleetManagement.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "FleetManagement\\FleetManagement.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

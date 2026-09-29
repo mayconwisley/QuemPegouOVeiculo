@@ -7,10 +7,10 @@ O WinForms permanece em .NET Framework 4.8 por depender do controle ReportViewer
 ## Estrutura
 
 ```text
-QuemPegouOVeiculo/       WinForms: formulários, controles, utilitários visuais e RDLC
+FleetManagement/       WinForms: formulários, controles, utilitários visuais e RDLC
   Shell/                janela principal
-  Features/Cadastros/   telas de motorista, veículo e vencimento de CNH
-  Features/Operacoes/   telas de movimentação, abastecimento, multa, manutenção e status
+  Features/Registrations/  telas de motorista, veículo e vencimento de CNH
+  Features/Operations/     telas de movimentação, abastecimento, multa, manutenção e status
   Reports/Forms/        seleção e visualização de relatórios
   Reports/Templates/    definições RDLC copiadas para a saída
   Shared/Controls/      controles reutilizados pelos formulários
@@ -25,17 +25,17 @@ Api/                    domínio, casos de uso, persistência PostgreSQL e endpo
 
 As dependências seguem `WinForms → Desktop.Client → Desktop.Models`. O WinForms também referencia `Desktop.Models` para edição e para o designer dos relatórios. `Desktop.Client` não referencia `System.Windows.Forms` nem PostgreSQL. As entidades e invariantes ficam na API; os modelos do desktop são dados de tela, não entidades de domínio.
 
-Os formulários, designers e arquivos `.resx` ficam juntos em cada feature. Seus namespaces de formulário foram mantidos para preservar o designer do WinForms e os nomes dos recursos incorporados. Os sete RDLC e os arquivos `.datasource` apontam para o assembly `QuemPegouOVeiculo.Desktop.Models`.
+Os formulários, designers e arquivos `.resx` ficam juntos em cada feature. O namespace dos formulários é `FleetManagement`, preservando o vínculo do designer WinForms. Os sete RDLC e os arquivos `.datasource` apontam para o assembly `FleetManagement.Desktop.Models`.
 
 A janela principal ativa uma tela MDI já aberta sem criar outra instância. Uma nova solicitação de relatório substitui o visualizador anterior para aplicar os filtros atuais. Cliques nos cabeçalhos das grades são ignorados pelos manipuladores de seleção.
 
 ## Execução local
 
 1. Inicie o PostgreSQL e crie/aplique o banco de Development conforme [Api/README.md](Api/README.md).
-2. No Visual Studio, abra `slnQuemPegouOVeiculo.sln`, selecione `Desktop + API (Development)` e execute.
+2. No Visual Studio, abra `FleetManagement.sln`, selecione `Desktop + API (Development)` e execute.
 3. Verifique `http://localhost:5000/health/ready` se algum cadastro não conseguir consultar a API.
 
-Ao executar somente o `.exe` do WinForms, inicie a API separadamente na URL configurada em `QuemPegouOVeiculo/App.config` ou `QUEMPEGOU_API_URL`.
+Ao executar somente o `.exe` do WinForms, inicie a API separadamente na URL configurada em `FleetManagement/App.config` ou `FLEET_MANAGEMENT_API_URL`.
 
 ## Desempenho das telas
 
@@ -56,9 +56,9 @@ O script abre as telas fora da área visível e fecha cada uma após a medição
 - Modelos de edição e de relatório ficam em `Desktop.Models`. Não coloque SQL, `HttpClient` ou regras de domínio nesses modelos.
 - Preserve os nomes de datasets e colunas consumidos pelos RDLC ao alterar o adaptador `LegacyTableMapper`.
 - As fachadas síncronas `Query`, `Insert`, `Update` e `Delete` preservam relatórios e fluxos legados. Em novas telas, use os métodos assíncronos com cancelamento do cliente e `await` nos eventos para manter a interface responsiva.
-- O projeto Firebird e os arquivos `.FDB` foram retirados do código versionado. O banco de dados ativo é PostgreSQL, acessado exclusivamente pela API.
+- O banco de dados ativo é PostgreSQL, acessado exclusivamente pela API. Artefatos `.FDB` legados ainda existem no repositório, mas não participam da solução nem do fluxo de persistência.
 
-Para a matriz funcional desktop/API e as verificações pendentes, consulte [Api/PARIDADE_DESKTOP.md](Api/PARIDADE_DESKTOP.md).
+Em Development, a integração desktop/API foi validada para os oito cadastros (inclusão, consulta, alteração e exclusão), conclusão de movimentação, filtros, seletores, última quilometragem e respostas HTTP 400/404/409. Os sete relatórios RDLC foram renderizados com dados e inspecionados visualmente. A validação usou registros temporários, removidos ao final.
 
 Após compilar a solução, valide os recursos do designer e os modelos dos relatórios:
 

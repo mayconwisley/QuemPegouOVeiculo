@@ -1,13 +1,13 @@
 param(
     [string[]]$Forms = @(
-        'FrmCadVeiculo',
-        'FrmCadMotorista',
-        'FrmCadContVeiculo',
-        'FrmContCombustivel',
-        'FrmContMulta',
-        'FrmContManutencao',
-        'FrmCadStatusVeic',
-        'FrmCadVencCNH'
+        'VehicleForm',
+        'DriverForm',
+        'VehicleMovementForm',
+        'RefuelingForm',
+        'FineForm',
+        'MaintenanceForm',
+        'VehicleStatusForm',
+        'LicenseExpirationForm'
     ),
     [switch]$WaitForData,
     [int]$TimeoutMs = 5000
@@ -17,8 +17,8 @@ $ErrorActionPreference = 'Stop'
 if ($Forms.Count -eq 1 -and $Forms[0].Contains(',')) {
     $Forms = $Forms[0].Split(',')
 }
-$outputDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'QuemPegouOVeiculo\bin\Debug'
-$applicationPath = Join-Path $outputDirectory 'QuemPegouOVeiculo.exe'
+$outputDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) 'FleetManagement\bin\Debug'
+$applicationPath = Join-Path $outputDirectory 'FleetManagement.exe'
 if (-not (Test-Path -LiteralPath $applicationPath)) {
     throw "Compile a solução em Debug antes de medir: $applicationPath"
 }
@@ -41,7 +41,7 @@ function Find-Grid([System.Windows.Forms.Control]$root) {
 }
 
 foreach ($name in $Forms) {
-    $type = $assembly.GetType("QuemPegouOVeiculo.$name", $true)
+    $type = $assembly.GetType("FleetManagement.$name", $true)
     $total = [System.Diagnostics.Stopwatch]::StartNew()
     $form = [System.Activator]::CreateInstance($type)
     $constructedMs = $total.ElapsedMilliseconds

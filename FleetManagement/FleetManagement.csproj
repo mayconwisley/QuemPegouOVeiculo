@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6CD4FD52-F26E-452C-B1C4-763D1FAE84CC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>FleetManagement</RootNamespace>
+    <AssemblyName>FleetManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>scienceandfiction.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1576.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.160.1000.6\lib\net462\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Features\Operations\Movements\VehicleArrivalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\Movements\VehicleArrivalForm.Designer.cs">
+      <DependentUpon>VehicleArrivalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Operations\Movements\VehicleArrivalCompactForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\Movements\VehicleArrivalCompactForm.Designer.cs">
+      <DependentUpon>VehicleArrivalCompactForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Operations\Movements\VehicleMovementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\Movements\VehicleMovementForm.Designer.cs">
+      <DependentUpon>VehicleMovementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Registrations\Drivers\DriverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Registrations\Drivers\DriverForm.Designer.cs">
+      <DependentUpon>DriverForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Operations\VehicleStatuses\VehicleStatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\VehicleStatuses\VehicleStatusForm.Designer.cs">
+      <DependentUpon>VehicleStatusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Registrations\Vehicles\VehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Registrations\Vehicles\VehicleForm.Designer.cs">
+      <DependentUpon>VehicleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Registrations\LicenseExpirations\LicenseExpirationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Registrations\LicenseExpirations\LicenseExpirationForm.Designer.cs">
+      <DependentUpon>LicenseExpirationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Operations\Refuelings\RefuelingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\Refuelings\RefuelingForm.Designer.cs">
+      <DependentUpon>RefuelingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Operations\Maintenance\MaintenanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\Maintenance\MaintenanceForm.Designer.cs">
+      <DependentUpon>MaintenanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Operations\Fines\FineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Operations\Fines\FineForm.Designer.cs">
+      <DependentUpon>FineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shell\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shell\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\RefuelingReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\RefuelingReportForm.Designer.cs">
+      <DependentUpon>RefuelingReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\MaintenanceReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\MaintenanceReportForm.Designer.cs">
+      <DependentUpon>MaintenanceReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\FineReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\FineReportForm.Designer.cs">
+      <DependentUpon>FineReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\VehicleMovementReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\VehicleMovementReportForm.Designer.cs">
+      <DependentUpon>VehicleMovementReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\DriverReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\DriverReportForm.Designer.cs">
+      <DependentUpon>DriverReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\VehicleStatusReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\VehicleStatusReportForm.Designer.cs">
+      <DependentUpon>VehicleStatusReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\VehicleReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\VehicleReportForm.Designer.cs">
+      <DependentUpon>VehicleReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\ReportViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\Forms\ReportViewerForm.Designer.cs">
+      <DependentUpon>ReportViewerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\Presentation\AsyncDataLoader.cs" />
+    <Compile Include="Shared\Presentation\DesktopTheme.cs" />
+    <Compile Include="Shared\Presentation\AmountFormatter.cs" />
+    <Compile Include="Shared\Presentation\EditButtonState.cs" />
+    <Compile Include="Shared\Presentation\ClearFields.cs" />
+    <Compile Include="Shared\Presentation\MdiForms.cs" />
+    <Compile Include="Shared\Presentation\ThemedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\Controls\DescriptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\Controls\DescriptionControl.Designer.cs">
+      <DependentUpon>DescriptionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\Controls\DriverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\Controls\DriverControl.Designer.cs">
+      <DependentUpon>DriverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\Controls\AmountControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\Controls\AmountControl.Designer.cs">
+      <DependentUpon>AmountControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\Controls\VehicleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\Controls\VehicleControl.Designer.cs">
+      <DependentUpon>VehicleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\Controls\VehicleDriverSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\Controls\VehicleDriverSelector.Designer.cs">
+      <DependentUpon>VehicleDriverSelector.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Features\Operations\Movements\VehicleArrivalForm.resx">
+      <DependentUpon>VehicleArrivalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Operations\Movements\VehicleArrivalCompactForm.resx">
+      <DependentUpon>VehicleArrivalCompactForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Operations\Movements\VehicleMovementForm.resx">
+      <DependentUpon>VehicleMovementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Registrations\Drivers\DriverForm.resx">
+      <DependentUpon>DriverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Operations\VehicleStatuses\VehicleStatusForm.resx">
+      <DependentUpon>VehicleStatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Registrations\Vehicles\VehicleForm.resx">
+      <DependentUpon>VehicleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Registrations\LicenseExpirations\LicenseExpirationForm.resx">
+      <DependentUpon>LicenseExpirationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Operations\Refuelings\RefuelingForm.resx">
+      <DependentUpon>RefuelingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Operations\Maintenance\MaintenanceForm.resx">
+      <DependentUpon>MaintenanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Operations\Fines\FineForm.resx">
+      <DependentUpon>FineForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shell\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\RefuelingReportForm.resx">
+      <DependentUpon>RefuelingReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\MaintenanceReportForm.resx">
+      <DependentUpon>MaintenanceReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\FineReportForm.resx">
+      <DependentUpon>FineReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\VehicleMovementReportForm.resx">
+      <DependentUpon>VehicleMovementReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\DriverReportForm.resx">
+      <DependentUpon>DriverReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\VehicleStatusReportForm.resx">
+      <DependentUpon>VehicleStatusReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\VehicleReportForm.resx">
+      <DependentUpon>VehicleReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Forms\ReportViewerForm.resx">
+      <DependentUpon>ReportViewerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Reports\Templates\RefuelingReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Templates\MaintenanceReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Templates\FineReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Templates\VehicleMovementReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Templates\DriverReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Templates\VehicleStatusReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Templates\VehicleReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\Controls\DescriptionControl.resx">
+      <DependentUpon>DescriptionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\Controls\DriverControl.resx">
+      <DependentUpon>DriverControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\Controls\AmountControl.resx">
+      <DependentUpon>AmountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\Controls\VehicleControl.resx">
+      <DependentUpon>VehicleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shared\Controls\VehicleDriverSelector.resx">
+      <DependentUpon>VehicleDriverSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.RefuelingModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.VehicleMovementModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.DriverModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.Reports.RefuelingReportModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.Reports.MaintenanceReportModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.Reports.FineReportModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.Reports.VehicleMovementReportModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.Reports.VehicleStatusReportModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.VehicleStatusModel.datasource" />
+    <None Include="Properties\DataSources\FleetManagement.Desktop.Models.VehicleModel.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Desktop.Client\FleetManagement.Desktop.Client.csproj">
+      <Project>{e7293482-6453-4aa3-9b77-0ab8ecdb6093}</Project>
+      <Name>FleetManagement.Desktop.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Desktop.Models\FleetManagement.Desktop.Models.csproj">
+      <Project>{e52b9635-dd0b-4ef1-b0de-95032c0996dc}</Project>
+      <Name>FleetManagement.Desktop.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scienceandfiction.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props'))" />
+  </Target>
+</Project>

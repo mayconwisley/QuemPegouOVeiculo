@@ -3,106 +3,106 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 
-namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
+namespace FleetManagement.Desktop.Client.Infrastructure.Api
 {
     internal static class LegacyTableMapper
     {
         private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
 
-        internal static DataTable CriarTabela(string recurso)
+        internal static DataTable CreateTable(string resource)
         {
-            var tabela = new DataTable(recurso);
-            switch (recurso)
+            var table = new DataTable(resource);
+            switch (resource)
             {
-                case "motoristas":
-                    Colunas(tabela, "Id:int", "Nome", "NumCNH", "VencimentoCNH:date", "CategoriaCNH", "CPF", "RG", "Ativo"); break;
-                case "veiculos":
-                    Colunas(tabela, "Id:int", "Placa", "Modelo", "Chassi", "Renavam", "Status"); break;
-                case "movimentacoes":
-                    Colunas(tabela, "Id:int", "Id_Veiculo:int", "Modelo", "Id_Motorista:int", "Nome",
-                        "DataHoraSaida:date", "DataHoraChegada:date", "Dias:int", "Horas:date", "Descricao",
-                        "KmInicial", "KmFinal", "KmTotal", "Status"); break;
-                case "abastecimentos":
-                    Colunas(tabela, "Id:int", "Id_Veiculo:int", "Modelo", "Id_Motorista:int", "Nome", "KmInicial",
-                        "Data:date", "Valor:decimal", "Litros:decimal", "Descricao"); break;
-                case "multas":
-                    Colunas(tabela, "Id:int", "Id_Veiculo:int", "Nome", "Modelo", "Id_Motorista:int",
-                        "Data:date", "Valor:decimal", "Pontos:int", "Descricao"); break;
-                case "manutencoes":
-                    Colunas(tabela, "Id:int", "Id_Veiculo:int", "Modelo", "Data:date", "Valor:decimal", "Descricao"); break;
-                case "status-veiculo":
-                    Colunas(tabela, "Id:int", "Id_Veiculo:int", "Modelo", "DataHoraInicio:date", "DataHoraFinal:date", "Descricao"); break;
-                case "vencimentos-cnh":
-                    Colunas(tabela, "Id:int", "Data:date", "Id_Motorista:int", "Nome", "Status"); break;
-                default: throw new ArgumentException("Recurso desconhecido: " + recurso);
+                case "drivers":
+                    Columns(table, "Id:int", "Name", "LicenseNumber", "LicenseExpiration:date", "LicenseCategory", "CPF", "RG", "Active"); break;
+                case "vehicles":
+                    Columns(table, "Id:int", "Plate", "Model", "Chassis", "Renavam", "Status"); break;
+                case "movements":
+                    Columns(table, "Id:int", "VehicleId:int", "Model", "DriverId:int", "Name",
+                        "DepartureAt:date", "ArrivalAt:date", "Days:int", "Hours", "Description",
+                        "InitialMileage", "FinalMileage", "TotalMileage", "Status"); break;
+                case "refuelings":
+                    Columns(table, "Id:int", "VehicleId:int", "Model", "DriverId:int", "Name", "InitialMileage",
+                        "Date:date", "Amount:decimal", "Liters:decimal", "Description"); break;
+                case "fines":
+                    Columns(table, "Id:int", "VehicleId:int", "Name", "Model", "DriverId:int",
+                        "Date:date", "Amount:decimal", "Points:int", "Description"); break;
+                case "maintenance":
+                    Columns(table, "Id:int", "VehicleId:int", "Model", "Date:date", "Amount:decimal", "Description"); break;
+                case "vehicle-statuses":
+                    Columns(table, "Id:int", "VehicleId:int", "Model", "StartAt:date", "EndAt:date", "Description"); break;
+                case "license-expirations":
+                    Columns(table, "Id:int", "Date:date", "DriverId:int", "Name", "Status"); break;
+                default: throw new ArgumentException("Recurso desconhecido: " + resource);
             }
-            return tabela;
+            return table;
         }
 
-        private static void Colunas(DataTable tabela, params string[] definicoes)
+        private static void Columns(DataTable table, params string[] definitions)
         {
-            foreach (var definicao in definicoes)
+            foreach (var definition in definitions)
             {
-                var partes = definicao.Split(':');
-                var tipo = partes.Length == 1 ? typeof(string)
-                    : partes[1] == "int" ? typeof(int)
-                    : partes[1] == "decimal" ? typeof(decimal) : typeof(DateTime);
-                tabela.Columns.Add(partes[0], tipo);
-            }
-        }
-
-        internal static void AdicionarLinha(DataTable tabela, string recurso, Dictionary<string, object> item)
-        {
-            switch (recurso)
-            {
-                case "motoristas":
-                    tabela.Rows.Add(Inteiro(item, "id"), Texto(item, "nome"), Texto(item, "cnh"), DataLocal(item, "vencimentoCnh"),
-                        Texto(item, "categoriaCnh"), Texto(item, "cpf"), Texto(item, "rg"), Booleano(item, "ativo") ? "Ativo" : "Desativado"); break;
-                case "veiculos":
-                    tabela.Rows.Add(Inteiro(item, "id"), Texto(item, "placa"), Texto(item, "modelo"), Texto(item, "chassi"),
-                        Texto(item, "renavam"), Booleano(item, "ativo") ? "Ativo" : "Desativado"); break;
-                case "movimentacoes":
-                    var saida = (DateTime)DataLocal(item, "saidaUtc");
-                    var chegada = DataLocal(item, "chegadaUtc");
-                    var duracao = chegada == DBNull.Value ? TimeSpan.Zero : (DateTime)chegada - saida;
-                    var kmInicial = Inteiro(item, "kmInicial");
-                    var kmFinal = item["kmFinal"] == null ? (int?)null : Inteiro(item, "kmFinal");
-                    tabela.Rows.Add(Inteiro(item, "id"), Inteiro(item, "veiculoId"), Texto(item, "modelo"),
-                        Inteiro(item, "motoristaId"), Texto(item, "nome"), saida, chegada, duracao.Days,
-                        DateTime.MinValue.Add(duracao - TimeSpan.FromDays(duracao.Days)), Texto(item, "descricao"),
-                        kmInicial.ToString(Invariant), kmFinal.HasValue ? kmFinal.Value.ToString(Invariant) : "",
-                        kmFinal.HasValue ? (kmFinal.Value - kmInicial).ToString(Invariant) : "",
-                        chegada == DBNull.Value ? "S" : "C"); break;
-                case "abastecimentos":
-                    tabela.Rows.Add(Inteiro(item, "id"), Inteiro(item, "veiculoId"), Texto(item, "modelo"),
-                        Inteiro(item, "motoristaId"), Texto(item, "nome"), Inteiro(item, "quilometragem").ToString(Invariant),
-                        DataLocal(item, "data"), Decimal(item, "valor"), Decimal(item, "litros"), Texto(item, "descricao")); break;
-                case "multas":
-                    tabela.Rows.Add(Inteiro(item, "id"), Inteiro(item, "veiculoId"), Texto(item, "nome"), Texto(item, "modelo"),
-                        Inteiro(item, "motoristaId"), DataLocal(item, "data"), Decimal(item, "valor"),
-                        Inteiro(item, "pontos"), Texto(item, "descricao")); break;
-                case "manutencoes":
-                    tabela.Rows.Add(Inteiro(item, "id"), Inteiro(item, "veiculoId"), Texto(item, "modelo"),
-                        DataLocal(item, "data"), Decimal(item, "valor"), Texto(item, "descricao")); break;
-                case "status-veiculo":
-                    tabela.Rows.Add(Inteiro(item, "id"), Inteiro(item, "veiculoId"), Texto(item, "modelo"),
-                        DataLocal(item, "inicioUtc"), DataLocal(item, "fimUtc"), Texto(item, "descricao")); break;
-                case "vencimentos-cnh":
-                    tabela.Rows.Add(Inteiro(item, "id"), DataLocal(item, "data"), Inteiro(item, "motoristaId"),
-                        Texto(item, "nome"), Booleano(item, "vencido") ? "Vencido" : "Não Vencido"); break;
+                var parts = definition.Split(':');
+                var type = parts.Length == 1 ? typeof(string)
+                    : parts[1] == "int" ? typeof(int)
+                    : parts[1] == "decimal" ? typeof(decimal) : typeof(DateTime);
+                table.Columns.Add(parts[0], type);
             }
         }
 
-        private static string Texto(Dictionary<string, object> item, string nome) =>
-            item[nome] == null ? "" : Convert.ToString(item[nome], Invariant);
-        private static int Inteiro(Dictionary<string, object> item, string nome) => Convert.ToInt32(item[nome], Invariant);
-        private static decimal Decimal(Dictionary<string, object> item, string nome) => Convert.ToDecimal(item[nome], Invariant);
-        private static bool Booleano(Dictionary<string, object> item, string nome) => Convert.ToBoolean(item[nome], Invariant);
-        private static object DataLocal(Dictionary<string, object> item, string nome)
+        internal static void AddRow(DataTable table, string resource, Dictionary<string, object> item)
         {
-            if (item[nome] == null)
+            switch (resource)
+            {
+                case "drivers":
+                    table.Rows.Add(Integer(item, "id"), Text(item, "name"), Text(item, "licenseNumber"), LocalDate(item, "licenseExpiration"),
+                        Text(item, "licenseCategory"), Text(item, "cpf"), Text(item, "rg"), Boolean(item, "active") ? "Ativo" : "Desativado"); break;
+                case "vehicles":
+                    table.Rows.Add(Integer(item, "id"), Text(item, "plate"), Text(item, "model"), Text(item, "chassis"),
+                        Text(item, "renavam"), Boolean(item, "active") ? "Ativo" : "Desativado"); break;
+                case "movements":
+                    var departure = (DateTime)LocalDate(item, "departureUtc");
+                    var arrival = LocalDate(item, "arrivalUtc");
+                    var duration = arrival == DBNull.Value ? TimeSpan.Zero : (DateTime)arrival - departure;
+                    var initialMileage = Integer(item, "initialMileage");
+                    var finalMileage = item["finalMileage"] == null ? (int?)null : Integer(item, "finalMileage");
+                    table.Rows.Add(Integer(item, "id"), Integer(item, "vehicleId"), Text(item, "model"),
+                        Integer(item, "driverId"), Text(item, "name"), departure, arrival, duration.Days,
+                        arrival == DBNull.Value ? "" : duration.ToString(@"hh\:mm", Invariant), Text(item, "description"),
+                        initialMileage.ToString(Invariant), finalMileage.HasValue ? finalMileage.Value.ToString(Invariant) : "",
+                        finalMileage.HasValue ? (finalMileage.Value - initialMileage).ToString(Invariant) : "",
+                        arrival == DBNull.Value ? "S" : "C"); break;
+                case "refuelings":
+                    table.Rows.Add(Integer(item, "id"), Integer(item, "vehicleId"), Text(item, "model"),
+                        Integer(item, "driverId"), Text(item, "name"), Integer(item, "mileage").ToString(Invariant),
+                        LocalDate(item, "date"), Decimal(item, "amount"), Decimal(item, "liters"), Text(item, "description")); break;
+                case "fines":
+                    table.Rows.Add(Integer(item, "id"), Integer(item, "vehicleId"), Text(item, "name"), Text(item, "model"),
+                        Integer(item, "driverId"), LocalDate(item, "date"), Decimal(item, "amount"),
+                        Integer(item, "points"), Text(item, "description")); break;
+                case "maintenance":
+                    table.Rows.Add(Integer(item, "id"), Integer(item, "vehicleId"), Text(item, "model"),
+                        LocalDate(item, "date"), Decimal(item, "amount"), Text(item, "description")); break;
+                case "vehicle-statuses":
+                    table.Rows.Add(Integer(item, "id"), Integer(item, "vehicleId"), Text(item, "model"),
+                        LocalDate(item, "startUtc"), LocalDate(item, "endUtc"), Text(item, "description")); break;
+                case "license-expirations":
+                    table.Rows.Add(Integer(item, "id"), LocalDate(item, "date"), Integer(item, "driverId"),
+                        Text(item, "name"), Boolean(item, "expired") ? "Vencido" : "Não Vencido"); break;
+            }
+        }
+
+        private static string Text(Dictionary<string, object> item, string name) =>
+            item[name] == null ? "" : Convert.ToString(item[name], Invariant);
+        private static int Integer(Dictionary<string, object> item, string name) => Convert.ToInt32(item[name], Invariant);
+        private static decimal Decimal(Dictionary<string, object> item, string name) => Convert.ToDecimal(item[name], Invariant);
+        private static bool Boolean(Dictionary<string, object> item, string name) => Convert.ToBoolean(item[name], Invariant);
+        private static object LocalDate(Dictionary<string, object> item, string name)
+        {
+            if (item[name] == null)
                 return DBNull.Value;
-            var data = DateTime.Parse(Texto(item, nome), Invariant, DateTimeStyles.RoundtripKind);
+            var data = DateTime.Parse(Text(item, name), Invariant, DateTimeStyles.RoundtripKind);
             return data.Kind == DateTimeKind.Utc ? data.ToLocalTime() : data;
         }
     }
