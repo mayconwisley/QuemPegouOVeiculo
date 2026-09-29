@@ -6,7 +6,7 @@ using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
-    public partial class FrmAtuControleVeiculo : Form
+    public partial class FrmAtuControleVeiculo : QuemPegouOVeiculo.Shared.Presentation.ThemedForm
     {
         private readonly AsyncDataLoader<DataTable> listLoader;
         int idCont;

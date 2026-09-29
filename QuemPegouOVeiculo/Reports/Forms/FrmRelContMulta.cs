@@ -4,7 +4,7 @@ using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
-    public partial class FrmRelContMulta : Form
+    public partial class FrmRelContMulta : QuemPegouOVeiculo.Shared.Presentation.ThemedForm
     {
         DateTime dtInicio, dtFinal;
         int idVeiculo = 0, idMotorista = 0;

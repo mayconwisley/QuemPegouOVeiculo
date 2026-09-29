@@ -4,7 +4,7 @@ using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
-    public partial class FrmRelMotorista : Form
+    public partial class FrmRelMotorista : QuemPegouOVeiculo.Shared.Presentation.ThemedForm
     {
         string search;
 

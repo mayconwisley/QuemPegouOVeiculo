@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace QuemPegouOVeiculo
 {
-    public partial class FrmAtuControleVeiculo_0 : Form
+    public partial class FrmAtuControleVeiculo_0 : QuemPegouOVeiculo.Shared.Presentation.ThemedForm
     {
         ControleVeiculoObj controleVeiculo;
         int idControle;

@@ -4,7 +4,7 @@ using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
-    public partial class FrmRelStatusVeiculo : Form
+    public partial class FrmRelStatusVeiculo : QuemPegouOVeiculo.Shared.Presentation.ThemedForm
     {
         DateTime dtInicio, dtFinal;
         public FrmRelStatusVeiculo()

@@ -215,10 +215,12 @@
       <DependentUpon>FrmVisualizarRelatorio.cs</DependentUpon>
     </Compile>
     <Compile Include="Shared\Presentation\AsyncDataLoader.cs" />
+    <Compile Include="Shared\Presentation\DesktopTheme.cs" />
     <Compile Include="Shared\Presentation\FormatarValor.cs" />
     <Compile Include="Shared\Presentation\HabilitarBotoes.cs" />
     <Compile Include="Shared\Presentation\LimparCampos.cs" />
     <Compile Include="Shared\Presentation\MdiForms.cs" />
+    <Compile Include="Shared\Presentation\ThemedForm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Controls\UCDescricao.cs">

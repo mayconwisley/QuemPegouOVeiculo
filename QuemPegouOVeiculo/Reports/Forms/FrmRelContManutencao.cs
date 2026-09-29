@@ -4,7 +4,7 @@ using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
-    public partial class FrmRelContManutencao : Form
+    public partial class FrmRelContManutencao : QuemPegouOVeiculo.Shared.Presentation.ThemedForm
     {
         public FrmRelContManutencao()
         {
