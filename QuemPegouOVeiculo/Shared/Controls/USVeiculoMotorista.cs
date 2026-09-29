@@ -1,47 +1,39 @@
 using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
     public partial class USVeiculoMotorista : UserControl
     {
-        Form form = new Form();
+        private readonly AsyncDataLoader<DataTable> veiculosLoader;
+        private readonly AsyncDataLoader<DataTable> motoristasLoader;
+        private readonly AsyncDataLoader<string> quilometragemLoader;
+        private Form form;
+
         public USVeiculoMotorista()
         {
             InitializeComponent();
+            veiculosLoader = new AsyncDataLoader<DataTable>(this);
+            motoristasLoader = new AsyncDataLoader<DataTable>(this);
+            quilometragemLoader = new AsyncDataLoader<string>(this);
+            Disposed += DisposeLoaders;
         }
 
 
         public USVeiculoMotorista(Form form)
+            : this()
         {
-            InitializeComponent();
             this.form = form;
         }
 
-        /*Listar Id e Nome dos Motoristas ativos*/
-        private void ListIdAndNameActiveMotorista()
+        private void DisposeLoaders(object sender, EventArgs args)
         {
-            try
-            {
-                CbxMotorista.DataSource = QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Motoristas.Query.IdAndNameActive();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        /*Listar Id e Modelo dos Veiculos ativos*/
-
-        private void ListIdAndModelActiveVeiculo()
-        {
-            try
-            {
-                CbxVeiculo.DataSource = QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Veiculos.Query.IdAndModelActive();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            veiculosLoader.Dispose();
+            motoristasLoader.Dispose();
+            quilometragemLoader.Dispose();
         }
 
         #region Retornar os valores selecionado no ComboBox Motorista
@@ -102,48 +94,47 @@ namespace QuemPegouOVeiculo
             }
         }
 
-        private void USVeiculoMotorista_Load(object sender, EventArgs e)
+        private async void USVeiculoMotorista_Load(object sender, EventArgs e)
         {
-            ListIdAndModelActiveVeiculo();
-            ListIdAndNameActiveMotorista();
+            await Task.WhenAll(
+                veiculosLoader.LoadAsync(
+                    cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Veiculos.Query
+                        .IdAndModelActiveAsync(cancellationToken),
+                    table => CbxVeiculo.DataSource = table),
+                motoristasLoader.LoadAsync(
+                    cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Motoristas.Query
+                        .IdAndNameActiveAsync(cancellationToken),
+                    table => CbxMotorista.DataSource = table));
         }
 
-        public void CbxVeiculo_SelectedIndexChanged(object sender, EventArgs e)
+        public async void CbxVeiculo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CbxVeiculo.SelectedValue != null)
-            {
-                idVeiculo = int.Parse(CbxVeiculo.SelectedValue.ToString());
-                modeloVeiculo = CbxVeiculo.Text.ToString();
-            }
-            else
-            {
+            if (CbxVeiculo.SelectedValue == null
+                || !int.TryParse(CbxVeiculo.SelectedValue.ToString(), out idVeiculo))
                 return;
-            }
 
-            try
-            {
-                if (this.form.Name == "FrmContCombustivel")
-                {
-                    kmFinalVeiculo = QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Abastecimentos.Query.UltimoKmVeiculo(idVeiculo);
-                }
-                else
-                {
-                    kmFinalVeiculo = QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Veiculos.Query.UltimoKmVeiculo(idVeiculo);
-                }
+            modeloVeiculo = CbxVeiculo.Text.ToString();
+            var veiculoId = idVeiculo;
+            var ownerForm = form ?? FindForm();
 
-                OnKmFinal();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            await quilometragemLoader.LoadAsync(
+                cancellationToken => ownerForm?.Name == "FrmContCombustivel"
+                    ? QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Abastecimentos.Query
+                        .UltimoKmVeiculoAsync(veiculoId, cancellationToken)
+                    : QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Veiculos.Query
+                        .UltimoKmVeiculoAsync(veiculoId, cancellationToken),
+                quilometragem =>
+                {
+                    kmFinalVeiculo = quilometragem;
+                    OnKmFinal();
+                });
         }
 
         private void CbxMotorista_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CbxMotorista.SelectedValue != null)
+            if (CbxMotorista.SelectedValue != null
+                && int.TryParse(CbxMotorista.SelectedValue.ToString(), out idMotorista))
             {
-                idMotorista = int.Parse(CbxMotorista.SelectedValue.ToString());
                 nomeMotorista = CbxMotorista.Text.ToString();
             }
         }

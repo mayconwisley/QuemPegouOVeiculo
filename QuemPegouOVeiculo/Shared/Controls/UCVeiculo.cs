@@ -1,27 +1,20 @@
 using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
     public partial class UCVeiculo : UserControl
     {
+        private readonly AsyncDataLoader<DataTable> loader;
+
         public UCVeiculo()
         {
             InitializeComponent();
-        }
-
-        /*Listar Id e Modelo dos Veiculos ativos*/
-
-        private void ListIdAndModelActiveVeiculo()
-        {
-            try
-            {
-                CbxVeiculo.DataSource = QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Veiculos.Query.IdAndModelActive();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            loader = new AsyncDataLoader<DataTable>(this);
+            Disposed += (sender, args) => loader.Dispose();
         }
 
         #region Retornar os valores selecionado no ComboBox Veiculos
@@ -43,16 +36,18 @@ namespace QuemPegouOVeiculo
         }
         #endregion
 
-        private void UCVeiculo_Load(object sender, EventArgs e)
+        private async void UCVeiculo_Load(object sender, EventArgs e)
         {
-            ListIdAndModelActiveVeiculo();
+            await loader.LoadAsync(
+                cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Veiculos.Query
+                    .IdAndModelActiveAsync(cancellationToken),
+                table => CbxVeiculo.DataSource = table);
         }
 
         private void CbxVeiculo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CbxVeiculo.SelectedValue != null)
+            if (CbxVeiculo.SelectedValue != null && int.TryParse(CbxVeiculo.SelectedValue.ToString(), out id))
             {
-                id = int.Parse(CbxVeiculo.SelectedValue.ToString());
                 modelo = CbxVeiculo.Text.ToString();
             }
             else

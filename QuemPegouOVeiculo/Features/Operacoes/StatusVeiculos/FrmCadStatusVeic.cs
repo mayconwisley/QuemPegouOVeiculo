@@ -1,5 +1,7 @@
 using QuemPegouOVeiculo.Desktop.Models;
 using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using QuemPegouOVeiculo.Shared.Presentation;
@@ -8,9 +10,13 @@ namespace QuemPegouOVeiculo
 {
     public partial class FrmCadStatusVeic : Form
     {
+        private readonly AsyncDataLoader<DataTable> listLoader;
+
         public FrmCadStatusVeic()
         {
             InitializeComponent();
+            listLoader = new AsyncDataLoader<DataTable>(this);
+            Disposed += (sender, args) => listLoader.Dispose();
         }
 
         StatusVeiculoObj statusVeiculo;
@@ -29,6 +35,16 @@ namespace QuemPegouOVeiculo
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private Task ListResgisterAsync(string search, int delayMilliseconds = 0) =>
+            listLoader.LoadAsync(
+                cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.StatusVeiculos.Query.RegisterAsync(search, cancellationToken),
+                table =>
+                {
+                    DgvVeiculo.DataSource = table;
+                    LblStatus.Text = "Status - " + DgvVeiculo.Rows.Count.ToString("000");
+                },
+                delayMilliseconds);
 
         private void Manipulate(char opc)
         {
@@ -143,15 +159,15 @@ namespace QuemPegouOVeiculo
             Manipulate('D');
         }
 
-        private void FrmCadStatusVeic_Load(object sender, EventArgs e)
+        private async void FrmCadStatusVeic_Load(object sender, EventArgs e)
         {
             MktDtInicio.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-            ListResgister("%%");
+            await ListResgisterAsync("%%");
         }
 
-        private void TxtPesquisa_TextChanged(object sender, EventArgs e)
+        private async void TxtPesquisa_TextChanged(object sender, EventArgs e)
         {
-            ListResgister("%" + TxtPesquisa.Text.Trim() + "%");
+            await ListResgisterAsync("%" + TxtPesquisa.Text.Trim() + "%", 300);
         }
 
         private void LkLblDtFinalAtual_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

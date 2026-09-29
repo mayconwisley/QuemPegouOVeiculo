@@ -1,5 +1,7 @@
 using System;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api;
 
 namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Movimentacoes
@@ -8,8 +10,12 @@ namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Movimentacoes
     {
         private const string Recurso = "movimentacoes";
         public static DataTable Register(string search) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("busca", ApiCliente.Busca(search)));
+        public static Task<DataTable> RegisterAsync(string search, CancellationToken cancellationToken) =>
+            ApiCliente.ListarAsync(Recurso, ApiCliente.Filtros("busca", ApiCliente.Busca(search)), cancellationToken);
         public static DataTable RegisterAll() => ApiCliente.Listar(Recurso);
         public static DataTable RegisterArrivalNull() => ApiCliente.Listar(Recurso, ApiCliente.Filtros("emAberto", true));
+        public static Task<DataTable> RegisterArrivalNullAsync(CancellationToken cancellationToken) =>
+            ApiCliente.ListarAsync(Recurso, ApiCliente.Filtros("emAberto", true), cancellationToken);
         public static DataTable RegisterVehicle(int idVeiculo) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("veiculoId", idVeiculo));
         public static DataTable RegisterDriver(int idMotorista) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("motoristaId", idMotorista));
         public static DataTable RegisterVehicleDriver(int idVeiculo, int idMotorista) =>

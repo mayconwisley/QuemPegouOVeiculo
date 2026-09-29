@@ -214,6 +214,7 @@
     <Compile Include="Reports\Forms\FrmVisualizarRelatorio.Designer.cs">
       <DependentUpon>FrmVisualizarRelatorio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Shared\Presentation\AsyncDataLoader.cs" />
     <Compile Include="Shared\Presentation\FormatarValor.cs" />
     <Compile Include="Shared\Presentation\HabilitarBotoes.cs" />
     <Compile Include="Shared\Presentation\LimparCampos.cs" />

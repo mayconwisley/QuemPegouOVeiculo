@@ -1,27 +1,21 @@
 using System;
+using System.Data;
 using System.Windows.Forms;
+using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
     public partial class UCMotorista : UserControl
     {
+        private readonly AsyncDataLoader<DataTable> loader;
+
         public UCMotorista()
         {
             InitializeComponent();
+            loader = new AsyncDataLoader<DataTable>(this);
+            Disposed += (sender, args) => loader.Dispose();
         }
 
-        /*Listar Id e Nome dos Motoristas ativos*/
-        private void ListIdAndNameActive()
-        {
-            try
-            {
-                CbxMotorista.DataSource = QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Motoristas.Query.IdAndNameActive();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
         #region Retornar os valores selecionado no ComboBox
 
         private int id;
@@ -41,16 +35,19 @@ namespace QuemPegouOVeiculo
             }
         }
         #endregion
-        private void UCMotorista_Load(object sender, EventArgs e)
+        private async void UCMotorista_Load(object sender, EventArgs e)
         {
-            ListIdAndNameActive();
+            await loader.LoadAsync(
+                cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Cadastros.Motoristas.Query
+                    .IdAndNameActiveAsync(cancellationToken),
+                table => CbxMotorista.DataSource = table);
         }
 
         private void CbxMotorista_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            id = int.Parse(CbxMotorista.SelectedValue.ToString());
-            nome = CbxMotorista.Text.ToString();
+            if (CbxMotorista.SelectedValue != null && int.TryParse(CbxMotorista.SelectedValue.ToString(), out id))
+                nome = CbxMotorista.Text.ToString();
         }
     }
 }

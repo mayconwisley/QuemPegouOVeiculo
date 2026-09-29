@@ -1,5 +1,7 @@
 using System;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api;
 
 namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Abastecimentos
@@ -8,6 +10,8 @@ namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Abastecimentos
     {
         private const string Recurso = "abastecimentos";
         public static DataTable Register(string search) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("busca", ApiCliente.Busca(search)));
+        public static Task<DataTable> RegisterAsync(string search, CancellationToken cancellationToken) =>
+            ApiCliente.ListarAsync(Recurso, ApiCliente.Filtros("busca", ApiCliente.Busca(search)), cancellationToken);
         public static DataTable RegisterAll() => ApiCliente.Listar(Recurso);
         public static DataTable RegisterVehicle(int idVeiculo) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("veiculoId", idVeiculo));
         public static DataTable RegisterDriver(int idMotorista) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("motoristaId", idMotorista));
@@ -17,6 +21,8 @@ namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Abastecimentos
         public static DataTable RegisterPeriodVehicle(DateTime inicio, DateTime fim, int idVeiculo) => Periodo(inicio, fim, idVeiculo);
         public static DataTable RegisterPeriodDriver(DateTime inicio, DateTime fim, int idMotorista) => Periodo(inicio, fim, null, idMotorista);
         public static string UltimoKmVeiculo(int idVeiculo) => ApiCliente.UltimaQuilometragem(idVeiculo, "abastecimento");
+        public static Task<string> UltimoKmVeiculoAsync(int idVeiculo, CancellationToken cancellationToken) =>
+            ApiCliente.UltimaQuilometragemAsync(idVeiculo, "abastecimento", cancellationToken);
         private static DataTable Periodo(DateTime inicio, DateTime fim, int? veiculo = null, int? motorista = null) =>
             ApiCliente.Listar(Recurso, ApiCliente.Filtros("dataDe", ApiCliente.Data(inicio), "dataAte", ApiCliente.Data(fim),
                 "veiculoId", veiculo, "motoristaId", motorista));

@@ -1,5 +1,7 @@
 using System;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api;
 
 namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.StatusVeiculos
@@ -8,6 +10,8 @@ namespace QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.StatusVeiculos
     {
         private const string Recurso = "status-veiculo";
         public static DataTable Register(string search) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("busca", ApiCliente.Busca(search)));
+        public static Task<DataTable> RegisterAsync(string search, CancellationToken cancellationToken) =>
+            ApiCliente.ListarAsync(Recurso, ApiCliente.Filtros("busca", ApiCliente.Busca(search)), cancellationToken);
         public static DataTable RegisterAll() => ApiCliente.Listar(Recurso);
         public static DataTable RegisterVehicle(int idVeiculo) => ApiCliente.Listar(Recurso, ApiCliente.Filtros("veiculoId", idVeiculo));
         public static DataTable RegisterDateStart(DateTime inicio, DateTime fim) => Periodo(inicio, fim, "inicio");

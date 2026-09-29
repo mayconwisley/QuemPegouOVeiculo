@@ -1,14 +1,20 @@
 using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuemPegouOVeiculo.Shared.Presentation;
 
 namespace QuemPegouOVeiculo
 {
     public partial class FrmAtuControleVeiculo : Form
     {
+        private readonly AsyncDataLoader<DataTable> listLoader;
         int idCont;
         public FrmAtuControleVeiculo()
         {
             InitializeComponent();
+            listLoader = new AsyncDataLoader<DataTable>(this);
+            Disposed += (sender, args) => listLoader.Dispose();
         }
         public void ListRegister()
         {
@@ -23,9 +29,19 @@ namespace QuemPegouOVeiculo
             }
         }
 
-        private void FrmAtuControleVeiculo_Load(object sender, EventArgs e)
+        private Task ListRegisterAsync() =>
+            listLoader.LoadAsync(
+                cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Movimentacoes.Query
+                    .RegisterArrivalNullAsync(cancellationToken),
+                table =>
+                {
+                    DgvControleVeiculo.DataSource = table;
+                    lblInfo.Text = "Controle Veiculo - " + DgvControleVeiculo.Rows.Count.ToString("000");
+                });
+
+        private async void FrmAtuControleVeiculo_Load(object sender, EventArgs e)
         {
-            ListRegister();
+            await ListRegisterAsync();
         }
 
         private void DgvControleVeiculo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

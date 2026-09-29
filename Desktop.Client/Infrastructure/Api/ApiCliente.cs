@@ -6,6 +6,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
@@ -13,7 +15,6 @@ namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
     internal static class ApiCliente
     {
         private static readonly HttpClient Http = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
-        private static readonly JavaScriptSerializer Json = new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
         private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
         private static readonly string BaseUrl = (Environment.GetEnvironmentVariable("QUEMPEGOU_API_URL")
             ?? ConfigurationManager.AppSettings["ApiBaseUrl"] ?? "http://localhost:5000").TrimEnd('/');
@@ -40,18 +41,24 @@ namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
         internal static string InicioUtc(DateTime data) => Utc(data.Date);
         internal static string FimUtc(DateTime data) => Utc(data.Date.AddDays(1));
 
-        internal static DataTable Listar(string recurso, Dictionary<string, string> filtros = null)
+        internal static DataTable Listar(string recurso, Dictionary<string, string> filtros = null) =>
+            ListarAsync(recurso, filtros, CancellationToken.None).GetAwaiter().GetResult();
+
+        internal static async Task<DataTable> ListarAsync(string recurso, Dictionary<string, string> filtros,
+            CancellationToken cancellationToken)
         {
             var tabela = LegacyTableMapper.CriarTabela(recurso);
             var pagina = 1;
             while (true)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var parametros = filtros == null
                     ? new Dictionary<string, string>()
                     : new Dictionary<string, string>(filtros);
                 parametros["page"] = pagina.ToString(Invariant);
                 parametros["pageSize"] = "100";
-                var resposta = Obter("consultas/" + recurso, parametros);
+                var resposta = await ObterAsync("consultas/" + recurso, parametros, cancellationToken)
+                    .ConfigureAwait(false);
                 var itens = (object[])resposta["items"];
                 foreach (Dictionary<string, object> item in itens)
                     LegacyTableMapper.AdicionarLinha(tabela, recurso, item);
@@ -61,10 +68,14 @@ namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
             }
         }
 
-        internal static string UltimaQuilometragem(int veiculoId, string origem)
+        internal static string UltimaQuilometragem(int veiculoId, string origem) =>
+            UltimaQuilometragemAsync(veiculoId, origem, CancellationToken.None).GetAwaiter().GetResult();
+
+        internal static async Task<string> UltimaQuilometragemAsync(int veiculoId, string origem,
+            CancellationToken cancellationToken)
         {
-            var resposta = Obter("consultas/veiculos/" + veiculoId + "/ultima-quilometragem",
-                Filtros("origem", origem));
+            var resposta = await ObterAsync("consultas/veiculos/" + veiculoId + "/ultima-quilometragem",
+                Filtros("origem", origem), cancellationToken).ConfigureAwait(false);
             return resposta["quilometragem"] == null ? "" : Convert.ToString(resposta["quilometragem"], Invariant);
         }
 
@@ -98,30 +109,42 @@ namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
         internal static int? QuilometragemOpcional(string valor, string campo) =>
             string.IsNullOrWhiteSpace(valor) ? (int?)null : Quilometragem(valor, campo);
 
-        private static Dictionary<string, object> Obter(string caminho, Dictionary<string, string> parametros)
+        private static async Task<Dictionary<string, object>> ObterAsync(string caminho,
+            Dictionary<string, string> parametros, CancellationToken cancellationToken)
         {
             var consulta = parametros.Count == 0 ? "" : "?" + string.Join("&", parametros.Select(x =>
                 Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value)));
-            return (Dictionary<string, object>)Enviar(HttpMethod.Get, caminho + consulta, null);
+            return (Dictionary<string, object>)await EnviarAsync(HttpMethod.Get, caminho + consulta, null,
+                cancellationToken).ConfigureAwait(false);
         }
 
-        private static object Enviar(HttpMethod metodo, string caminho, Dictionary<string, object> corpo)
+        private static object Enviar(HttpMethod metodo, string caminho, Dictionary<string, object> corpo) =>
+            EnviarAsync(metodo, caminho, corpo, CancellationToken.None).GetAwaiter().GetResult();
+
+        private static async Task<object> EnviarAsync(HttpMethod metodo, string caminho,
+            Dictionary<string, object> corpo, CancellationToken cancellationToken)
         {
             using (var requisicao = new HttpRequestMessage(metodo, BaseUrl + "/api/v1/" + caminho))
             {
                 if (corpo != null)
-                    requisicao.Content = new StringContent(Json.Serialize(corpo), Encoding.UTF8, "application/json");
+                    requisicao.Content = new StringContent(
+                        new JavaScriptSerializer { MaxJsonLength = int.MaxValue }.Serialize(corpo),
+                        Encoding.UTF8, "application/json");
                 HttpResponseMessage resposta;
                 try
                 {
-                    resposta = Http.SendAsync(requisicao).GetAwaiter().GetResult();
+                    resposta = await Http.SendAsync(requisicao, cancellationToken).ConfigureAwait(false);
                 }
                 catch (HttpRequestException ex)
                 {
                     throw new InvalidOperationException(
                         "Não foi possível conectar à API em " + BaseUrl + ". Inicie a API e confira a URL configurada no desktop.", ex);
                 }
-                catch (System.Threading.Tasks.TaskCanceledException ex)
+                catch (TaskCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    throw;
+                }
+                catch (TaskCanceledException ex)
                 {
                     throw new InvalidOperationException(
                         "A API em " + BaseUrl + " não respondeu dentro de 30 segundos. Verifique a API e o PostgreSQL.", ex);
@@ -129,13 +152,14 @@ namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
 
                 using (resposta)
                 {
-                    var conteudo = resposta.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    var conteudo = await resposta.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (!resposta.IsSuccessStatusCode)
                     {
                         var detalhe = "Falha na API: " + (int)resposta.StatusCode + ".";
                         try
                         {
-                            var problema = (Dictionary<string, object>)Json.DeserializeObject(conteudo);
+                            var problema = (Dictionary<string, object>)
+                                new JavaScriptSerializer { MaxJsonLength = int.MaxValue }.DeserializeObject(conteudo);
                             detalhe = (problema.ContainsKey("detail") ? problema["detail"] as string : null)
                                 ?? (problema.ContainsKey("title") ? problema["title"] as string : null)
                                 ?? detalhe;
@@ -143,7 +167,8 @@ namespace QuemPegouOVeiculo.Desktop.Client.Infrastructure.Api
                         catch (Exception) { }
                         throw new InvalidOperationException(detalhe);
                     }
-                    return string.IsNullOrWhiteSpace(conteudo) ? null : Json.DeserializeObject(conteudo);
+                    return string.IsNullOrWhiteSpace(conteudo) ? null
+                        : new JavaScriptSerializer { MaxJsonLength = int.MaxValue }.DeserializeObject(conteudo);
                 }
             }
         }

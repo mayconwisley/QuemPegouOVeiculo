@@ -37,13 +37,25 @@ A janela principal ativa uma tela MDI já aberta sem criar outra instância. Uma
 
 Ao executar somente o `.exe` do WinForms, inicie a API separadamente na URL configurada em `QuemPegouOVeiculo/App.config` ou `QUEMPEGOU_API_URL`.
 
+## Desempenho das telas
+
+Os cadastros carregam grades e listas de seleção de forma assíncrona. A busca espera 300 ms após a última tecla, cancela a consulta anterior e aplica somente a resposta mais recente. Isso mantém a janela responsiva durante a inicialização da API e do PostgreSQL. Consultas de relatório e comandos de gravação ainda passam pelas fachadas síncronas legadas.
+
+Para medir o tempo de abertura e o tempo até a grade receber dados, compile em Debug, inicie a API e execute:
+
+```powershell
+powershell.exe -NoProfile -Sta -ExecutionPolicy Bypass -File scripts/Measure-DesktopOpen.ps1 -WaitForData
+```
+
+O script abre as telas fora da área visível e fecha cada uma após a medição. Execute uma vez após iniciar a API para medir o carregamento frio e uma segunda vez para medir o carregamento aquecido. Os resultados dependem da máquina, rede, tamanho do banco e configuração de Debug/Release.
+
 ## Regras para evolução
 
 - Novas telas pertencem à feature de negócio correspondente, mantendo `.cs`, `.Designer.cs` e `.resx` no mesmo diretório.
 - O cliente HTTP e a serialização ficam em `Desktop.Client/Infrastructure/Api`; eventos e controles WinForms ficam no projeto de apresentação.
 - Modelos de edição e de relatório ficam em `Desktop.Models`. Não coloque SQL, `HttpClient` ou regras de domínio nesses modelos.
 - Preserve os nomes de datasets e colunas consumidos pelos RDLC ao alterar o adaptador `LegacyTableMapper`.
-- As fachadas síncronas `Query`, `Insert`, `Update` e `Delete` preservam as telas existentes. Antes de criar novas telas, adicione métodos assíncronos com cancelamento ao cliente e use `await` nos eventos para manter a interface responsiva.
+- As fachadas síncronas `Query`, `Insert`, `Update` e `Delete` preservam relatórios e fluxos legados. Em novas telas, use os métodos assíncronos com cancelamento do cliente e `await` nos eventos para manter a interface responsiva.
 - O projeto Firebird e os arquivos `.FDB` foram retirados do código versionado. O banco de dados ativo é PostgreSQL, acessado exclusivamente pela API.
 
 Para a matriz funcional desktop/API e as verificações pendentes, consulte [Api/PARIDADE_DESKTOP.md](Api/PARIDADE_DESKTOP.md).

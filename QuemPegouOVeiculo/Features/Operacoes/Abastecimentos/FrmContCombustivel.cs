@@ -1,5 +1,7 @@
 using QuemPegouOVeiculo.Desktop.Models;
 using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using QuemPegouOVeiculo.Shared.Presentation;
@@ -8,9 +10,13 @@ namespace QuemPegouOVeiculo
 {
     public partial class FrmContCombustivel : Form
     {
+        private readonly AsyncDataLoader<DataTable> listLoader;
+
         public FrmContCombustivel()
         {
             InitializeComponent();
+            listLoader = new AsyncDataLoader<DataTable>(this);
+            Disposed += (sender, args) => listLoader.Dispose();
         }
         ControleAbastecimentoObj controleAbastecimento = null;
         int idCtrlAbastecimento = 0, idVeiculo = 0, idMotorista = 0;
@@ -28,9 +34,19 @@ namespace QuemPegouOVeiculo
             }
         }
 
-        private void TxtPesquisa_TextChanged(object sender, EventArgs e)
+        private Task ListRegisterAsync(string search, int delayMilliseconds = 0) =>
+            listLoader.LoadAsync(
+                cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Abastecimentos.Query.RegisterAsync(search, cancellationToken),
+                table =>
+                {
+                    DgvAbastecimento.DataSource = table;
+                    LblAbastecimento.Text = "Abastecimento - " + DgvAbastecimento.Rows.Count.ToString("000");
+                },
+                delayMilliseconds);
+
+        private async void TxtPesquisa_TextChanged(object sender, EventArgs e)
         {
-            ListRegister("%" + TxtPesquisa.Text.Trim() + "%");
+            await ListRegisterAsync("%" + TxtPesquisa.Text.Trim() + "%", 300);
         }
 
         private void DgvAbastecimento_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -167,9 +183,9 @@ namespace QuemPegouOVeiculo
             }
         }
 
-        private void FrmContCombustivel_Load(object sender, EventArgs e)
+        private async void FrmContCombustivel_Load(object sender, EventArgs e)
         {
-            ListRegister("%%");
+            await ListRegisterAsync("%%");
         }
     }
 }

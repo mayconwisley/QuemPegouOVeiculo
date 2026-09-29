@@ -1,5 +1,7 @@
 using QuemPegouOVeiculo.Desktop.Models;
 using System;
+using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using QuemPegouOVeiculo.Shared.Presentation;
@@ -8,9 +10,13 @@ namespace QuemPegouOVeiculo
 {
     public partial class FrmCadContVeiculo : Form
     {
+        private readonly AsyncDataLoader<DataTable> listLoader;
+
         public FrmCadContVeiculo()
         {
             InitializeComponent();
+            listLoader = new AsyncDataLoader<DataTable>(this);
+            Disposed += (sender, args) => listLoader.Dispose();
         }
         ControleVeiculoObj controleVeiculo;
         int idContVeiculo = 0, idVeiculo = 0, idMotorista = 0;
@@ -29,6 +35,16 @@ namespace QuemPegouOVeiculo
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private Task ListRegisterAsync(string search, int delayMilliseconds = 0) =>
+            listLoader.LoadAsync(
+                cancellationToken => QuemPegouOVeiculo.Desktop.Client.Features.Operacoes.Movimentacoes.Query.RegisterAsync(search, cancellationToken),
+                table =>
+                {
+                    DgvControleVeiculo.DataSource = table;
+                    LblContVeiculo.Text = "Controle Veiculo - " + DgvControleVeiculo.Rows.Count.ToString("000");
+                },
+                delayMilliseconds);
         private void BtnGravar_Click(object sender, EventArgs e)
         {
             Manipupate('I');
@@ -202,15 +218,15 @@ namespace QuemPegouOVeiculo
             MktDtChegada.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
         }
 
-        private void FrmCadContVeiculo_Load(object sender, EventArgs e)
+        private async void FrmCadContVeiculo_Load(object sender, EventArgs e)
         {
             MktDtSaida.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-            ListRegister("%%");
+            await ListRegisterAsync("%%");
         }
 
-        private void TxtPesquisa_TextChanged(object sender, EventArgs e)
+        private async void TxtPesquisa_TextChanged(object sender, EventArgs e)
         {
-            ListRegister("%" + TxtPesquisa.Text.Trim() + "%");
+            await ListRegisterAsync("%" + TxtPesquisa.Text.Trim() + "%", 300);
         }
     }
 }
