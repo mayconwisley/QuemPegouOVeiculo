@@ -1,0 +1,26 @@
+<UserControl x:Class="FleetManagement.Wpf.Features.Access.UsersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Usuários" FontSize="25" FontWeight="SemiBold" />
+        <WrapPanel Grid.Row="1" Margin="0,20,0,14">
+            <Button Content="Atualizar" Click="Refresh_Click" />
+            <Button Content="Novo usuário" Click="New_Click" />
+            <Button Content="Alterar perfil" Click="Edit_Click" />
+            <Button Content="Redefinir senha" Click="Password_Click" />
+        </WrapPanel>
+        <DataGrid x:Name="UsersGrid" Grid.Row="2" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding [id]}" Width="80" />
+                <DataGridTextColumn Header="Usuário" Binding="{Binding [username]}" Width="*" />
+                <DataGridTextColumn Header="Perfil" Binding="{Binding [role]}" Width="160" />
+                <DataGridTextColumn Header="Ativo" Binding="{Binding [isActive]}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

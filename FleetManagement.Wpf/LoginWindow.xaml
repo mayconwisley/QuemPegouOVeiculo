@@ -1,0 +1,22 @@
+<Window x:Class="FleetManagement.Wpf.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Acessar · Gestão de Frota" Width="430" Height="420"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="32">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Gestão de Frota" FontSize="28" FontWeight="Bold" />
+            <TextBlock Text="Entre para acessar os dados da frota" Foreground="#667085"
+                       Margin="0,7,0,28" />
+            <TextBlock Text="Usuário" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <TextBox x:Name="UsernameBox" Margin="0,0,0,18" />
+            <TextBlock Text="Senha" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <PasswordBox x:Name="PasswordInput" Margin="0,0,0,20" />
+            <Button x:Name="EnterButton" Content="Entrar" IsDefault="True"
+                    Background="#175CD3" Foreground="White" BorderBrush="#175CD3"
+                    Click="Enter_Click" />
+            <TextBlock x:Name="ErrorText" Foreground="#B42318" TextWrapping="Wrap"
+                       Margin="0,16,0,0" Visibility="Collapsed" />
+        </StackPanel>
+    </Grid>
+</Window>

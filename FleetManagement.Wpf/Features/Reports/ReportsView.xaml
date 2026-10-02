@@ -1,0 +1,43 @@
+<UserControl x:Class="FleetManagement.Wpf.Features.Reports.ReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Relatórios e exportação" FontSize="25" FontWeight="SemiBold" />
+            <TextBlock Text="Filtre, visualize, imprima ou exporte os dados da API"
+                       Foreground="#667085" Margin="0,4,0,0" />
+        </StackPanel>
+        <WrapPanel Grid.Row="1" Margin="0,18,0,14" VerticalAlignment="Center">
+            <ComboBox x:Name="ReportBox" Width="195" DisplayMemberPath="Title"
+                      SelectionChanged="Report_Changed" Margin="0,0,8,0" />
+            <TextBox x:Name="SearchBox" Width="180" Margin="0,0,8,0"
+                     ToolTip="Busca por nome, placa ou descrição" />
+            <Button x:Name="VehicleButton" Content="Veículo: todos" Click="Vehicle_Click" />
+            <Button x:Name="DriverButton" Content="Motorista: todos" Click="Driver_Click" />
+            <ComboBox x:Name="StateBox" Width="145" Margin="0,0,8,0"
+                      Visibility="Collapsed" />
+            <ComboBox x:Name="DateFieldBox" Width="150" Margin="0,0,8,0"
+                      Visibility="Collapsed" />
+            <DatePicker x:Name="FromDate" Width="135" Margin="0,0,8,0" />
+            <DatePicker x:Name="ToDate" Width="135" Margin="0,0,8,0" />
+            <Button Content="Limpar filtros" Click="Clear_Click" />
+            <Button Content="Visualizar" Click="Preview_Click" />
+            <Button Content="Imprimir" Click="Print_Click" />
+            <Button Content="Exportar CSV" Click="Export_Click" />
+        </WrapPanel>
+        <DataGrid x:Name="PreviewGrid" Grid.Row="2" Background="White" />
+        <DockPanel Grid.Row="3" Margin="0,12,0,0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="Anterior" Click="Previous_Click" />
+                <Button Content="Próxima" Click="Next_Click" />
+            </StackPanel>
+            <TextBlock x:Name="StatusText" Foreground="#667085" VerticalAlignment="Center" />
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,36 @@
+<UserControl x:Class="FleetManagement.Wpf.Features.Dashboard.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button Content="Atualizar" DockPanel.Dock="Right" Click="Refresh_Click" />
+            <StackPanel>
+                <TextBlock Text="Painel operacional" FontSize="25" FontWeight="SemiBold" />
+                <TextBlock x:Name="StatusText" Text="Carregando..." Foreground="#667085"
+                           Margin="0,4,0,0" />
+            </StackPanel>
+        </DockPanel>
+        <WrapPanel x:Name="MetricsPanel" Grid.Row="1" Margin="0,22,0,18" />
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Pendências que exigem atenção" FontSize="17"
+                       FontWeight="SemiBold" Margin="0,0,0,10" />
+            <DataGrid x:Name="AttentionGrid" Grid.Row="1" Background="White"
+                      MouseDoubleClick="Attention_DoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" Width="190" />
+                    <DataGridTextColumn Header="Registro" Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="Data" Binding="{Binding Date}" Width="170" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

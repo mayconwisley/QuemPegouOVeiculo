@@ -1,0 +1,44 @@
+<UserControl x:Class="FleetManagement.Wpf.Features.Shared.ResourceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock x:Name="TitleText" FontSize="25" FontWeight="SemiBold" />
+            <TextBlock Text="Consulte e gerencie os registros da frota" Foreground="#667085"
+                       Margin="0,4,0,0" />
+        </StackPanel>
+        <WrapPanel Grid.Row="1" Margin="0,20,0,14" VerticalAlignment="Center">
+            <TextBox x:Name="SearchBox" Width="260" Margin="0,0,8,0"
+                     ToolTip="Buscar por nome, placa ou descrição" KeyDown="Search_KeyDown" />
+            <ComboBox x:Name="StateFilter" Width="150" Margin="0,0,8,0"
+                      Visibility="Collapsed" SelectionChanged="State_Changed" />
+            <Button x:Name="SearchButton" Content="Buscar" Click="Search_Click" />
+            <Button Content="Atualizar" Click="Refresh_Click" />
+            <Button x:Name="NewButton" Content="Novo" Click="New_Click"
+                    Background="#175CD3" BorderBrush="#175CD3" Foreground="White" />
+            <Button x:Name="DetailsButton" Content="Detalhes" Click="Details_Click" />
+            <Button x:Name="EditButton" Content="Editar" Click="Edit_Click" />
+            <Button x:Name="DeleteButton" Content="Excluir" Click="Delete_Click" />
+            <Button x:Name="ActionButton" Visibility="Collapsed" Click="Action_Click" />
+            <Button x:Name="SecondaryActionButton" Visibility="Collapsed"
+                    Click="SecondaryAction_Click" />
+            <Button x:Name="ThirdActionButton" Visibility="Collapsed"
+                    Click="ThirdAction_Click" />
+        </WrapPanel>
+        <DataGrid x:Name="ResultsGrid" Grid.Row="2" SelectionChanged="Selection_Changed"
+                  Background="White" BorderBrush="#D0D5DD" />
+        <DockPanel Grid.Row="3" Margin="0,12,0,0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="PreviousButton" Content="Anterior" Click="Previous_Click" />
+                <Button x:Name="NextButton" Content="Próxima" Click="Next_Click" />
+            </StackPanel>
+            <TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="#667085" />
+        </DockPanel>
+    </Grid>
+</UserControl>

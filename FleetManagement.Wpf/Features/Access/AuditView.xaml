@@ -1,0 +1,32 @@
+<UserControl x:Class="FleetManagement.Wpf.Features.Access.AuditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Margin="0,0,0,18">
+            <Button DockPanel.Dock="Right" Content="Atualizar" Click="Refresh_Click" />
+            <TextBlock Text="Auditoria" FontSize="25" FontWeight="SemiBold" />
+        </DockPanel>
+        <DataGrid x:Name="AuditGrid" Grid.Row="1" Background="White"
+                  MouseDoubleClick="Audit_DoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data" Binding="{Binding [occurredAtUtc]}" Width="170" />
+                <DataGridTextColumn Header="Usuário" Binding="{Binding [actorUsername]}" Width="170" />
+                <DataGridTextColumn Header="Entidade" Binding="{Binding [entityName]}" Width="*" />
+                <DataGridTextColumn Header="Registro" Binding="{Binding [entityId]}" Width="95" />
+                <DataGridTextColumn Header="Ação" Binding="{Binding [action]}" Width="140" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel Grid.Row="2" Margin="0,12,0,0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="Anterior" Click="Previous_Click" />
+                <Button Content="Próxima" Click="Next_Click" />
+            </StackPanel>
+            <TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="#667085" />
+        </DockPanel>
+    </Grid>
+</UserControl>

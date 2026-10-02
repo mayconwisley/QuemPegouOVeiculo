@@ -1,6 +1,19 @@
 [
   {
-    "Name": "Desktop + API (Development)",
+    "Name": "WPF + API (Development)",
+    "Projects": [
+      {
+        "Path": "Api\\FleetManagement.Api\\FleetManagement.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "FleetManagement.Wpf\\FleetManagement.Wpf.csproj",
+        "Action": "Start"
+      }
+    ]
+  },
+  {
+    "Name": "WinForms legado + API (Development)",
     "Projects": [
       {
         "Path": "Api\\FleetManagement.Api\\FleetManagement.Api.csproj",

@@ -1,0 +1,110 @@
+namespace FleetManagement.Wpf.Features.Shared;
+
+public enum FieldKind { Text, Integer, Decimal, Date, DateTime, Boolean, Vehicle, Driver }
+
+public sealed record Field(string Key, string Label, FieldKind Kind = FieldKind.Text,
+    bool Required = true);
+
+public sealed record Column(string Key, string Label);
+
+public sealed record ResourceDefinition(string Key, string Title, string ListPath,
+    string CommandPath, IReadOnlyList<Column> Columns, IReadOnlyList<Field> Fields,
+    bool CanDelete = true, bool CanExport = true);
+
+public static class ResourceCatalog
+{
+    private static readonly ResourceDefinition[] Items =
+    [
+        new("drivers", "Motoristas", "queries/drivers", "drivers",
+            [new("id", "ID"), new("name", "Nome"), new("licenseNumber", "CNH"),
+                new("licenseExpiration", "Vencimento"), new("licenseCategory", "Categoria"),
+                new("cpf", "CPF"), new("active", "Ativo")],
+            [new("name", "Nome"), new("licenseNumber", "Número da CNH"),
+                new("licenseExpiration", "Vencimento da CNH", FieldKind.Date),
+                new("licenseCategory", "Categoria"), new("cpf", "CPF"),
+                new("rg", "RG", Required: false), new("active", "Ativo", FieldKind.Boolean)]),
+        new("vehicles", "Veículos", "queries/vehicles", "vehicles",
+            [new("id", "ID"), new("plate", "Placa"), new("model", "Modelo"),
+                new("chassis", "Chassi"), new("renavam", "Renavam"), new("active", "Ativo")],
+            [new("plate", "Placa"), new("model", "Modelo"),
+                new("chassis", "Chassi", Required: false),
+                new("renavam", "Renavam", Required: false),
+                new("active", "Ativo", FieldKind.Boolean)]),
+        new("movements", "Movimentações", "queries/movements", "movements",
+            [new("id", "ID"), new("plate", "Placa"), new("name", "Motorista"),
+                new("departureUtc", "Saída"), new("expectedReturnUtc", "Retorno previsto"),
+                new("arrivalUtc", "Chegada"), new("initialMileage", "KM inicial"),
+                new("finalMileage", "KM final")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle),
+                new("driverId", "Motorista", FieldKind.Driver),
+                new("departureUtc", "Saída", FieldKind.DateTime),
+                new("expectedReturnUtc", "Retorno previsto", FieldKind.DateTime, false),
+                new("arrivalUtc", "Chegada", FieldKind.DateTime, false),
+                new("initialMileage", "KM inicial", FieldKind.Integer),
+                new("finalMileage", "KM final", FieldKind.Integer, false),
+                new("description", "Descrição", Required: false)]),
+        new("refuelings", "Abastecimentos", "queries/refuelings", "refuelings",
+            [new("id", "ID"), new("model", "Veículo"), new("name", "Motorista"),
+                new("date", "Data"), new("mileage", "KM"), new("amount", "Valor"),
+                new("liters", "Litros")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle),
+                new("driverId", "Motorista", FieldKind.Driver),
+                new("date", "Data", FieldKind.Date),
+                new("mileage", "KM", FieldKind.Integer),
+                new("amount", "Valor", FieldKind.Decimal),
+                new("liters", "Litros", FieldKind.Decimal),
+                new("description", "Descrição", Required: false)]),
+        new("fines", "Multas", "queries/fines", "fines",
+            [new("id", "ID"), new("model", "Veículo"), new("name", "Motorista"),
+                new("date", "Data"), new("amount", "Valor"), new("points", "Pontos")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle),
+                new("driverId", "Motorista", FieldKind.Driver),
+                new("date", "Data", FieldKind.Date),
+                new("amount", "Valor", FieldKind.Decimal),
+                new("points", "Pontos", FieldKind.Integer),
+                new("description", "Descrição", Required: false)]),
+        new("maintenance", "Manutenções", "queries/maintenance", "maintenance",
+            [new("id", "ID"), new("model", "Veículo"), new("date", "Data"),
+                new("amount", "Valor"), new("description", "Descrição")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle),
+                new("date", "Data", FieldKind.Date),
+                new("amount", "Valor", FieldKind.Decimal),
+                new("description", "Descrição", Required: false)]),
+        new("vehicle-statuses", "Situações dos veículos", "queries/vehicle-statuses", "vehicle-statuses",
+            [new("id", "ID"), new("model", "Veículo"), new("startUtc", "Início"),
+                new("endUtc", "Fim"), new("description", "Descrição")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle),
+                new("startUtc", "Início", FieldKind.DateTime),
+                new("endUtc", "Fim", FieldKind.DateTime, false),
+                new("description", "Descrição")]),
+        new("license-expirations", "Vencimentos de CNH", "queries/license-expirations", "license-expirations",
+            [new("id", "ID"), new("name", "Motorista"), new("date", "Data"),
+                new("expired", "Vencida")],
+            [new("driverId", "Motorista", FieldKind.Driver),
+                new("date", "Data", FieldKind.Date),
+                new("expired", "Vencida", FieldKind.Boolean)]),
+        new("reservations", "Reservas", "reservations", "reservations",
+            [new("id", "ID"), new("plate", "Placa"), new("driverName", "Motorista"),
+                new("startUtc", "Início"), new("endUtc", "Fim"),
+                new("purpose", "Finalidade"), new("status", "Situação")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle),
+                new("driverId", "Motorista", FieldKind.Driver),
+                new("startUtc", "Início", FieldKind.DateTime),
+                new("endUtc", "Fim", FieldKind.DateTime),
+                new("purpose", "Finalidade")], CanDelete: false),
+        new("maintenance-plans", "Manutenção preventiva", "maintenance-plans", "maintenance-plans",
+            [new("id", "ID"), new("vehicleId", "Veículo ID"), new("name", "Serviço"),
+                new("nextDueDate", "Próxima data"), new("nextDueMileage", "Próximo KM"),
+                new("isActive", "Ativo")],
+            [new("vehicleId", "Veículo", FieldKind.Vehicle), new("name", "Serviço"),
+                new("intervalDays", "Intervalo em dias", FieldKind.Integer, false),
+                new("intervalMileage", "Intervalo em KM", FieldKind.Integer, false),
+                new("nextDueDate", "Próxima data", FieldKind.Date, false),
+                new("nextDueMileage", "Próximo KM", FieldKind.Integer, false),
+                new("isActive", "Ativo", FieldKind.Boolean)], CanDelete: false)
+    ];
+
+    public static IReadOnlyList<ResourceDefinition> All => Items;
+    public static IReadOnlyList<ResourceDefinition> Reports => Items;
+    public static ResourceDefinition Get(string key) => Items.First(x => x.Key == key);
+}

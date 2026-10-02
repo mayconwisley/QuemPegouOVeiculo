@@ -19,19 +19,19 @@ O contexto EF usa os schemas `registrations`, `operations` e `security`. Índice
 
 Os casos de uso retornam `Result` ou `Result<T>` para falhas esperadas. A camada de aplicação converte violações do domínio, ausência de registros e conflitos de persistência em erros explícitos; exceções inesperadas continuam sendo tratadas pelo middleware global. Os endpoints mapeiam esses erros para `ProblemDetails` com `code` (`validation`, `not_found`, `conflict`) e status 400, 404 ou 409. As respostas de sucesso mantêm os contratos 200, 201 e 204 usados pelo desktop.
 
-Não existe projeto de conversão do Firebird. O WinForms usa a API por `HttpClient`, sem credenciais PostgreSQL no executável. A URL da API é configurada em `FleetManagement/App.config` ou pela variável `FLEET_MANAGEMENT_API_URL`. A variável antiga `QUEMPEGOU_API_URL` continua aceita para instalações existentes.
+Não existe projeto de conversão do Firebird. O WPF usa a API por `HttpClient`, sem credenciais PostgreSQL no executável. A URL da API é definida por `FLEET_MANAGEMENT_API_URL`, com `http://localhost:5000` como padrão local. O WinForms legado continua aceitando `FleetManagement/App.config` e a variável antiga `QUEMPEGOU_API_URL`.
 
 A migration histórica `InitialCreate` permanece intacta. `StandardizeEnglishSchema` renomeia schemas, tabelas, colunas, índices e restrições do PostgreSQL, preservando os registros caso o banco local já tenha sido criado. Em um banco novo, aplique as duas migrations na ordem padrão do EF Core.
 
 `AddAccessAudit` cria usuários e auditoria no schema `security`; `AddSecurityVersion` revoga tokens antigos após mudanças de acesso. `AddOperationsPlanning` cria planos preventivos e checklists e adiciona a previsão de retorno às movimentações. As alterações de dados e os registros de auditoria são confirmados na mesma transação. CPF, RG, hash de senha e versão de segurança não são copiados para o JSON de auditoria.
 
-A organização dos projetos WinForms, cliente HTTP e modelos está descrita no [README principal](../README.md).
+A organização do WPF e dos projetos legados está descrita no [README principal](../README.md).
 
 ## Executar com o desktop
 
-No Visual Studio, selecione o perfil da solução `Desktop + API (Development)` e inicie a depuração. Ele inicia primeiro a API e depois o WinForms. O perfil HTTP da API e o `ApiBaseUrl` do desktop usam `http://localhost:5000`. Mantenha o serviço PostgreSQL local em execução e aplique a migration de Development antes de abrir os cadastros.
+No Visual Studio, selecione o perfil da solução `WPF + API (Development)` e inicie a depuração. Ele inicia a API e o WPF. Ambos usam `http://localhost:5000` por padrão. Mantenha o serviço PostgreSQL local em execução e aplique as migrations de Development antes de abrir os cadastros.
 
-Para executar o `.exe` do desktop isoladamente, inicie a API em outro terminal e mantenha o processo aberto:
+Para executar o `.exe` WPF isoladamente, inicie a API em outro terminal e mantenha o processo aberto:
 
 ```powershell
 $env:ASPNETCORE_ENVIRONMENT = 'Development'
@@ -39,7 +39,7 @@ $env:ASPNETCORE_URLS = 'http://localhost:5000'
 dotnet run --no-launch-profile --project Api/FleetManagement.Api
 ```
 
-Confirme `http://localhost:5000/health/ready` antes de usar o desktop. Crie o primeiro administrador conforme a seção de acesso abaixo. Se a API estiver em outro endereço, ajuste `FLEET_MANAGEMENT_API_URL` ou `ApiBaseUrl` no arquivo `.exe.config` gerado junto ao executável.
+Confirme `http://localhost:5000/health/ready` antes de usar o desktop. Crie o primeiro administrador conforme a seção de acesso abaixo. Se a API estiver em outro endereço, defina `FLEET_MANAGEMENT_API_URL` no processo do WPF.
 
 ## Tipos e contrato
 
@@ -119,7 +119,7 @@ Base `/api/v1`. Os recursos `drivers`, `vehicles`, `movements`, `refuelings`, `f
 
 O documento OpenAPI fica em `/openapi/v1.json` apenas no ambiente `Development`. `/health/live` verifica o processo e `/health/ready` verifica o PostgreSQL.
 
-As consultas usadas pelo desktop estão em `/api/v1/queries/{resource}`. Elas aceitam `search`, `vehicleId`, `driverId`, `active`, `isOpen`, `fromDate`, `toDate`, `startUtc`, `endUtc`, `dateField`, `page` e `pageSize`, conforme o recurso. Para períodos de horários, `endUtc` é exclusivo. A última quilometragem está em `/api/v1/queries/vehicles/{id}/latest-mileage?source=movement|refueling`. A integração com o desktop foi validada em Development para os oito CRUDs, filtros, conclusão de movimentação, última quilometragem, erros HTTP e sete relatórios RDLC.
+As consultas usadas pelo desktop estão em `/api/v1/queries/{resource}`. Elas aceitam `search`, `vehicleId`, `driverId`, `active`, `isOpen`, `fromDate`, `toDate`, `startUtc`, `endUtc`, `dateField`, `page` e `pageSize`, conforme o recurso. Para períodos de horários, `endUtc` é exclusivo. A última quilometragem está em `/api/v1/queries/vehicles/{id}/latest-mileage?source=movement|refueling`. A validação anterior dos sete RDLC refere-se ao WinForms legado; o WPF usa impressão própria.
 
 ## Planejamento operacional
 
