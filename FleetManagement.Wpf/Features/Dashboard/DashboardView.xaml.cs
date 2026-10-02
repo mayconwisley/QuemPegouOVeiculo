@@ -3,7 +3,6 @@ using System.Text.Json.Nodes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using FleetManagement.Wpf.Features.Shared;
 using FleetManagement.Wpf.Infrastructure.Api;
 
@@ -24,6 +23,7 @@ public partial class DashboardView : UserControl
     {
         try
         {
+            EmptyState.Visibility = Visibility.Collapsed;
             StatusText.Text = "Atualizando painel...";
             var data = await _api.GetAsync("dashboard");
             MetricsPanel.Children.Clear();
@@ -43,10 +43,13 @@ public partial class DashboardView : UserControl
                     x["description"]?.ToString() ?? "",
                     FormatDate(x)))
                 .ToArray() ?? [];
+            EmptyState.Visibility = AttentionGrid.Items.Count == 0
+                ? Visibility.Visible : Visibility.Collapsed;
             StatusText.Text = $"Atualizado em {DateTime.Now:dd/MM/yyyy HH:mm}";
         }
         catch (Exception ex)
         {
+            EmptyState.Visibility = Visibility.Collapsed;
             StatusText.Text = "Não foi possível carregar o painel.";
             UiErrors.Show(ex, "Painel operacional");
         }
@@ -54,22 +57,25 @@ public partial class DashboardView : UserControl
 
     private void AddMetric(string label, JsonObject data, string key)
     {
-        var panel = new StackPanel
+        var card = new Border
         {
-            Width = 175, Margin = new Thickness(0, 0, 10, 10),
-            Background = Brushes.White
+            Width = 184, Margin = new Thickness(0, 0, 12, 12),
+            Style = (Style)FindResource("CardStyle")
         };
+        var panel = new StackPanel();
         panel.Children.Add(new TextBlock
         {
-            Text = label, Foreground = Brushes.DimGray, Margin = new Thickness(12, 10, 8, 0)
+            Text = label, TextWrapping = TextWrapping.Wrap, MinHeight = 34
         });
-        panel.Children.Add(new TextBlock
+        var count = new TextBlock
         {
             Text = data[key]?.ToString() ?? "0", FontSize = 25, FontWeight = FontWeights.Bold,
-            Foreground = new SolidColorBrush(Color.FromRgb(23, 92, 211)),
-            Margin = new Thickness(12, 1, 8, 12)
-        });
-        MetricsPanel.Children.Add(panel);
+            Margin = new Thickness(0, 5, 0, 0)
+        };
+        count.SetResourceReference(TextBlock.ForegroundProperty, "AccentBrush");
+        panel.Children.Add(count);
+        card.Child = panel;
+        MetricsPanel.Children.Add(card);
     }
 
     private static string KindLabel(string? kind) => kind switch

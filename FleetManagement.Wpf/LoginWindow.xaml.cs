@@ -11,6 +11,7 @@ public partial class LoginWindow : Window
     public LoginWindow(FleetApiClient api)
     {
         InitializeComponent();
+        (Application.Current as App)?.ThemeManager?.AttachWindow(this);
         _api = api;
         UsernameBox.Focus();
     }

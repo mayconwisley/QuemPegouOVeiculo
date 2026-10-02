@@ -1,7 +1,8 @@
 <UserControl x:Class="FleetManagement.Wpf.Features.Shared.ResourceView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Margin="24">
+    <Grid Background="{DynamicResource CanvasBrush}">
+      <Grid x:Name="ListContent" Margin="24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -9,36 +10,50 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock x:Name="TitleText" FontSize="25" FontWeight="SemiBold" />
-            <TextBlock Text="Consulte e gerencie os registros da frota" Foreground="#667085"
-                       Margin="0,4,0,0" />
+            <TextBlock x:Name="TitleText" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="Consulte e gerencie os registros da frota"
+                       Style="{StaticResource PageSubtitleStyle}" />
         </StackPanel>
-        <WrapPanel Grid.Row="1" Margin="0,20,0,14" VerticalAlignment="Center">
+        <Grid Grid.Row="1" Margin="0,20,0,14">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <WrapPanel Grid.Row="0" Margin="0,0,0,10">
             <TextBox x:Name="SearchBox" Width="260" Margin="0,0,8,0"
                      ToolTip="Buscar por nome, placa ou descrição" KeyDown="Search_KeyDown" />
             <ComboBox x:Name="StateFilter" Width="150" Margin="0,0,8,0"
                       Visibility="Collapsed" SelectionChanged="State_Changed" />
             <Button x:Name="SearchButton" Content="Buscar" Click="Search_Click" />
             <Button Content="Atualizar" Click="Refresh_Click" />
+          </WrapPanel>
+          <WrapPanel Grid.Row="1">
             <Button x:Name="NewButton" Content="Novo" Click="New_Click"
-                    Background="#175CD3" BorderBrush="#175CD3" Foreground="White" />
+                    Style="{StaticResource PrimaryButtonStyle}" />
             <Button x:Name="DetailsButton" Content="Detalhes" Click="Details_Click" />
             <Button x:Name="EditButton" Content="Editar" Click="Edit_Click" />
-            <Button x:Name="DeleteButton" Content="Excluir" Click="Delete_Click" />
+            <Button x:Name="DeleteButton" Content="Excluir" Click="Delete_Click"
+                    Style="{StaticResource DangerButtonStyle}" />
             <Button x:Name="ActionButton" Visibility="Collapsed" Click="Action_Click" />
             <Button x:Name="SecondaryActionButton" Visibility="Collapsed"
                     Click="SecondaryAction_Click" />
             <Button x:Name="ThirdActionButton" Visibility="Collapsed"
                     Click="ThirdAction_Click" />
-        </WrapPanel>
-        <DataGrid x:Name="ResultsGrid" Grid.Row="2" SelectionChanged="Selection_Changed"
-                  Background="White" BorderBrush="#D0D5DD" />
+          </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <DataGrid x:Name="ResultsGrid" SelectionChanged="Selection_Changed" />
+            <TextBlock x:Name="EmptyState" Text="Nenhum registro encontrado. Ajuste os filtros ou crie um novo cadastro."
+                       Style="{StaticResource EmptyStateStyle}" IsHitTestVisible="False" />
+        </Grid>
         <DockPanel Grid.Row="3" Margin="0,12,0,0">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="PreviousButton" Content="Anterior" Click="Previous_Click" />
                 <Button x:Name="NextButton" Content="Próxima" Click="Next_Click" />
             </StackPanel>
-            <TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="#667085" />
+            <TextBlock x:Name="StatusText" Style="{StaticResource StatusTextStyle}" />
         </DockPanel>
+      </Grid>
+      <ContentControl x:Name="EditorHost" Visibility="Collapsed" />
     </Grid>
 </UserControl>

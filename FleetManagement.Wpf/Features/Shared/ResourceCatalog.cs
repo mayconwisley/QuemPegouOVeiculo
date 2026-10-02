@@ -105,6 +105,5 @@ public static class ResourceCatalog
     ];
 
     public static IReadOnlyList<ResourceDefinition> All => Items;
-    public static IReadOnlyList<ResourceDefinition> Reports => Items;
     public static ResourceDefinition Get(string key) => Items.First(x => x.Key == key);
 }

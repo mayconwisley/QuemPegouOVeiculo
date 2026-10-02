@@ -15,6 +15,7 @@ public partial class LookupDialog : Window
     public LookupDialog(FleetApiClient api, bool vehicles)
     {
         InitializeComponent();
+        (Application.Current as App)?.ThemeManager?.AttachWindow(this);
         _api = api;
         _vehicles = vehicles;
         Title = vehicles ? "Selecionar veículo" : "Selecionar motorista";

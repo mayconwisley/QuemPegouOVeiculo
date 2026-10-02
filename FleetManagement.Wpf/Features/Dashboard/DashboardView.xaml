@@ -10,9 +10,9 @@
         <DockPanel Grid.Row="0">
             <Button Content="Atualizar" DockPanel.Dock="Right" Click="Refresh_Click" />
             <StackPanel>
-                <TextBlock Text="Painel operacional" FontSize="25" FontWeight="SemiBold" />
-                <TextBlock x:Name="StatusText" Text="Carregando..." Foreground="#667085"
-                           Margin="0,4,0,0" />
+                <TextBlock Text="Painel operacional" Style="{StaticResource PageTitleStyle}" />
+                <TextBlock x:Name="StatusText" Text="Carregando..."
+                           Style="{StaticResource PageSubtitleStyle}" />
             </StackPanel>
         </DockPanel>
         <WrapPanel x:Name="MetricsPanel" Grid.Row="1" Margin="0,22,0,18" />
@@ -23,14 +23,17 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Pendências que exigem atenção" FontSize="17"
                        FontWeight="SemiBold" Margin="0,0,0,10" />
-            <DataGrid x:Name="AttentionGrid" Grid.Row="1" Background="White"
-                      MouseDoubleClick="Attention_DoubleClick">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" Width="190" />
-                    <DataGridTextColumn Header="Registro" Binding="{Binding Description}" Width="*" />
-                    <DataGridTextColumn Header="Data" Binding="{Binding Date}" Width="170" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="AttentionGrid" MouseDoubleClick="Attention_DoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" Width="190" />
+                        <DataGridTextColumn Header="Registro" Binding="{Binding Description}" Width="*" />
+                        <DataGridTextColumn Header="Data" Binding="{Binding Date}" Width="170" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock x:Name="EmptyState" Text="Tudo em dia. Não há pendências que exigem atenção."
+                           Style="{StaticResource EmptyStateStyle}" IsHitTestVisible="False" />
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

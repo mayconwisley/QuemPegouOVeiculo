@@ -6,7 +6,7 @@ using FleetManagement.Wpf.Infrastructure.Api;
 
 namespace FleetManagement.Wpf.Features.Shared;
 
-public partial class EditDialog : Window
+public partial class ResourceEditorView : UserControl
 {
     private static readonly CultureInfo PtBr = CultureInfo.GetCultureInfo("pt-BR");
     private readonly FleetApiClient _api;
@@ -14,10 +14,13 @@ public partial class EditDialog : Window
     private readonly JsonObject? _original;
     private readonly string? _resourceKey;
     private readonly bool _readOnly;
+    private readonly Func<JsonObject, Task>? _submit;
+    private readonly Action _close;
     private readonly Dictionary<string, Control> _controls = [];
 
-    public EditDialog(FleetApiClient api, string title, IReadOnlyList<Field> fields,
-        JsonObject? original = null, string? resourceKey = null, bool readOnly = false)
+    public ResourceEditorView(FleetApiClient api, string title, IReadOnlyList<Field> fields,
+        Func<JsonObject, Task>? submit, Action close, JsonObject? original = null,
+        string? resourceKey = null, bool readOnly = false)
     {
         InitializeComponent();
         _api = api;
@@ -25,11 +28,16 @@ public partial class EditDialog : Window
         _original = original;
         _resourceKey = resourceKey;
         _readOnly = readOnly;
-        Title = title;
+        _submit = submit;
+        _close = close;
+        TitleText.Text = title;
+        DescriptionText.Text = readOnly ? "Dados do registro selecionado" :
+            "Preencha os campos obrigatórios marcados com *";
         BuildFields();
         if (_readOnly)
         {
             SaveButton.Visibility = Visibility.Collapsed;
+            CancelButton.Content = "Voltar";
             foreach (var control in _controls.Values)
             {
                 if (control is TextBox text)
@@ -43,17 +51,16 @@ public partial class EditDialog : Window
             vehicle.IsEnabled = false;
     }
 
-    public JsonObject? Value { get; private set; }
-
     private void BuildFields()
     {
         foreach (var field in _fields)
         {
             var label = new TextBlock
             {
-                Text = field.Label + (field.Required ? " *" : ""),
-                Margin = new Thickness(0, 12, 0, 4),
-                FontWeight = FontWeights.SemiBold
+                Text = field.Label + (field.Required ? " *" : "") +
+                    (field.Kind == FieldKind.Date ? " · dd/MM/aaaa" :
+                     field.Kind == FieldKind.DateTime ? " · dd/MM/aaaa HH:mm" : ""),
+                Style = (Style)FindResource("FieldLabelStyle")
             };
             var raw = _original?[field.Key]?.ToString();
             Control control = field.Kind switch
@@ -63,11 +70,6 @@ public partial class EditDialog : Window
                     IsChecked = raw is null ? field.Key is "active" or "isActive" :
                         bool.TryParse(raw, out var value) && value,
                     Content = "Sim", Margin = new Thickness(0, 7, 0, 7)
-                },
-                FieldKind.Date => new DatePicker
-                {
-                    SelectedDate = DateTime.TryParse(raw, out var date) ? date :
-                        field.Required ? DateTime.Today : null
                 },
                 FieldKind.Vehicle or FieldKind.Driver => CreateLookupButton(field, raw),
                 _ => new TextBox { Text = InitialText(field, raw) }
@@ -89,7 +91,7 @@ public partial class EditDialog : Window
         button.Click += async (_, _) =>
         {
             var picker = new LookupDialog(_api, field.Kind == FieldKind.Vehicle)
-            { Owner = this };
+            { Owner = Window.GetWindow(this) };
             if (picker.ShowDialog() != true) return;
             button.Tag = picker.SelectedId;
             button.Content = picker.SelectedLabel;
@@ -124,8 +126,14 @@ public partial class EditDialog : Window
     private static string InitialText(Field field, string? raw)
     {
         if (raw is null)
-            return field.Kind == FieldKind.DateTime && field.Required
-                ? DateTime.Now.ToString("dd/MM/yyyy HH:mm", PtBr) : "";
+            return field.Required ? field.Kind switch
+            {
+                FieldKind.Date => DateTime.Today.ToString("dd/MM/yyyy", PtBr),
+                FieldKind.DateTime => DateTime.Now.ToString("dd/MM/yyyy HH:mm", PtBr),
+                _ => ""
+            } : "";
+        if (field.Kind == FieldKind.Date && DateOnly.TryParse(raw, out var date))
+            return date.ToString("dd/MM/yyyy", PtBr);
         if (field.Kind == FieldKind.DateTime && DateTimeOffset.TryParse(raw, out var utc))
             return utc.ToLocalTime().ToString("dd/MM/yyyy HH:mm", PtBr);
         if (field.Kind == FieldKind.Decimal && decimal.TryParse(raw,
@@ -134,21 +142,34 @@ public partial class EditDialog : Window
         return raw;
     }
 
-    private void Save_Click(object sender, RoutedEventArgs e)
+    private async void Save_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             var value = new JsonObject();
             foreach (var field in _fields)
                 value[field.Key] = Read(field);
-            Value = value;
-            DialogResult = true;
+            if (_submit is null) return;
+            SaveButton.IsEnabled = false;
+            ErrorText.Visibility = Visibility.Collapsed;
+            await _submit(value);
+            _close();
         }
         catch (FormatException ex)
         {
             ShowError(ex.Message);
         }
+        catch (Exception ex)
+        {
+            ShowError(ex.Message);
+        }
+        finally
+        {
+            SaveButton.IsEnabled = true;
+        }
     }
+
+    private void Cancel_Click(object sender, RoutedEventArgs e) => _close();
 
     private JsonNode? Read(Field field)
     {
@@ -161,15 +182,6 @@ public partial class EditDialog : Window
                 return JsonValue.Create(id);
             throw new FormatException($"Selecione {field.Label.ToLower(PtBr)}.");
         }
-        if (control is DatePicker picker)
-        {
-            if (picker.SelectedDate is DateTime date)
-                return JsonValue.Create(DateOnly.FromDateTime(date).ToString("yyyy-MM-dd"));
-            if (!field.Required)
-                return null;
-            throw new FormatException($"Informe {field.Label.ToLower(PtBr)}.");
-        }
-
         var raw = ((TextBox)control).Text.Trim();
         if (raw.Length == 0)
         {
@@ -184,6 +196,10 @@ public partial class EditDialog : Window
                 ? JsonValue.Create(integer) : throw new FormatException($"{field.Label}: número inteiro inválido."),
             FieldKind.Decimal => decimal.TryParse(raw, NumberStyles.Number, PtBr, out var number)
                 ? JsonValue.Create(number) : throw new FormatException($"{field.Label}: valor inválido."),
+            FieldKind.Date => DateOnly.TryParseExact(raw, "dd/MM/yyyy", PtBr,
+                DateTimeStyles.None, out var date)
+                ? JsonValue.Create(date.ToString("yyyy-MM-dd"))
+                : throw new FormatException($"{field.Label}: use dd/MM/aaaa."),
             FieldKind.DateTime => DateTime.TryParseExact(raw,
                 ["dd/MM/yyyy HH:mm", "dd/MM/yyyy HH:mm:ss"], PtBr, DateTimeStyles.None, out var local)
                 ? JsonValue.Create(DateTime.SpecifyKind(local, DateTimeKind.Local).ToUniversalTime()

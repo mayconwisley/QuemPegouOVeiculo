@@ -23,12 +23,18 @@ public partial class AuditView : UserControl
     {
         try
         {
+            EmptyState.Visibility = Visibility.Collapsed;
             var page = await _api.GetPageAsync($"audit?page={_page}&pageSize=50");
             _total = page.Total;
             AuditGrid.ItemsSource = page.Items.Select(x => new GridRow(x)).ToArray();
+            EmptyState.Visibility = page.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             StatusText.Text = $"{_total:N0} evento(s) · página {_page}";
         }
-        catch (Exception ex) { UiErrors.Show(ex, "Auditoria"); }
+        catch (Exception ex)
+        {
+            EmptyState.Visibility = Visibility.Collapsed;
+            UiErrors.Show(ex, "Auditoria");
+        }
     }
 
     private async void Refresh_Click(object sender, RoutedEventArgs e) => await LoadAsync();

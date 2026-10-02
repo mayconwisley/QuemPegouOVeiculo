@@ -8,6 +8,7 @@ Aplicação desktop WPF em .NET 10 com API ASP.NET Core 10 e PostgreSQL. O deskt
 FleetManagement.Wpf/       Aplicação desktop atual (.NET 10)
   Features/                 Telas por área de negócio
   Features/Shared/          Formulário, grade e seleção reutilizáveis
+  Themes/                   Paletas e estilos WPF compartilhados
   Infrastructure/Api/       Cliente HTTP, autenticação e erros da API
 Api/                       Domínio, casos de uso, persistência e endpoints
 FleetManagement/           WinForms .NET Framework 4.8, mantido temporariamente
@@ -43,6 +44,10 @@ dotnet publish FleetManagement.Wpf/FleetManagement.Wpf.csproj -c Release -r win-
 
 O computador cliente precisa do runtime **.NET Desktop 10** correspondente. Nenhum pacote ReportViewer ou conexão direta ao PostgreSQL é necessário no WPF.
 
+## Aparência
+
+No topo da janela principal, **Aparência** oferece **Automático**, **Claro** e **Escuro**. O modo Automático é o padrão e acompanha a preferência de aplicativos do Windows, inclusive quando ela muda com o sistema aberto. A escolha manual fica salva em `%LOCALAPPDATA%\FleetManagement\settings.json` para o usuário do Windows. As paletas em `FleetManagement.Wpf/Themes/` são aplicadas a todas as telas e diálogos sem reiniciar o aplicativo.
+
 ## Funcionalidades
 
 | Área | Fluxos no WPF |
@@ -52,11 +57,11 @@ O computador cliente precisa do runtime **.NET Desktop 10** correspondente. Nenh
 | Operação | Movimentações, chegada, previsão de retorno, checklists, abastecimentos, multas, manutenções e situações de veículos |
 | Planejamento | Reservas (criar, editar, iniciar, cancelar) e planos preventivos (criar, editar, registrar execução) |
 | Painel | Indicadores e pendências com navegação para o recurso correspondente |
-| Relatórios | Visualização paginada e impressão redesenhada; exportação CSV dos dez recursos da API |
+| Relatórios | Sete modelos operacionais herdados do WinForms, mais três consultas; visualização paginada, impressão e exportação CSV |
 
-Os sete relatórios RDLC do WinForms foram substituídos por uma visualização WPF com impressão pelo sistema operacional. O CSV continua sendo gerado pela API, com os mesmos filtros e limite de 10.000 linhas. Os formulários de veículo e motorista usam busca paginada ao selecionar referências, sem carregar o cadastro inteiro ao abrir uma tela.
+Os sete modelos de relatório do WinForms (motoristas, veículos, situações, movimentações, manutenções, abastecimentos e multas) foram recriados na tela WPF com seus títulos, colunas e totais aplicáveis. A impressão usa o sistema operacional; o CSV continua sendo gerado pela API, com os mesmos filtros e limite de 10.000 linhas. Os cadastros são editados dentro da janela principal. A seleção de veículo e motorista usa busca paginada, sem carregar o cadastro inteiro ao abrir uma tela.
 
-Datas sem horário seguem o calendário local. Horários digitados no WPF usam `dd/MM/aaaa HH:mm` e são enviados à API em UTC. Horários recebidos da API são exibidos no fuso local do Windows.
+Datas digitadas no WPF usam `dd/MM/aaaa`; horários usam `dd/MM/aaaa HH:mm` e são enviados à API em UTC. Horários recebidos da API são exibidos no fuso local do Windows.
 
 ## Validação
 

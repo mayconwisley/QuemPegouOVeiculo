@@ -3,16 +3,21 @@ using System.Windows.Controls;
 
 namespace FleetManagement.Wpf.Features.Access;
 
-public partial class UserDialog : Window
+public partial class UserEditorView : UserControl
 {
     private readonly bool _requireUsername;
     private readonly bool _requirePassword;
+    private readonly Func<UserEditorView, Task> _submit;
+    private readonly Action _close;
 
-    public UserDialog(string title, string? username = null, string? role = null,
-        bool isActive = true, bool requireUsername = false, bool requirePassword = false)
+    public UserEditorView(string title, Func<UserEditorView, Task> submit, Action close,
+        string? username = null, string? role = null, bool isActive = true,
+        bool requireUsername = false, bool requirePassword = false)
     {
         InitializeComponent();
-        Title = title;
+        TitleText.Text = title;
+        _submit = submit;
+        _close = close;
         _requireUsername = requireUsername;
         _requirePassword = requirePassword;
         UsernameBox.Text = username ?? "";
@@ -34,7 +39,7 @@ public partial class UserDialog : Window
     public string Role => (RoleBox.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "Viewer";
     public bool AccountIsActive => ActiveBox.IsChecked == true;
 
-    private void Save_Click(object sender, RoutedEventArgs e)
+    private async void Save_Click(object sender, RoutedEventArgs e)
     {
         if (_requireUsername && Username.Length == 0)
         {
@@ -46,8 +51,24 @@ public partial class UserDialog : Window
             ShowError("Informe a senha.");
             return;
         }
-        DialogResult = true;
+        try
+        {
+            SaveButton.IsEnabled = false;
+            ErrorText.Visibility = Visibility.Collapsed;
+            await _submit(this);
+            _close();
+        }
+        catch (Exception ex)
+        {
+            ShowError(ex.Message);
+        }
+        finally
+        {
+            SaveButton.IsEnabled = true;
+        }
     }
+
+    private void Cancel_Click(object sender, RoutedEventArgs e) => _close();
 
     private void ShowError(string message)
     {

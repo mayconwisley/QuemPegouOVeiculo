@@ -1,43 +1,112 @@
 <UserControl x:Class="FleetManagement.Wpf.Features.Reports.ReportsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Margin="24">
+    <Grid Margin="24" Background="{DynamicResource CanvasBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock Text="Relatórios e exportação" FontSize="25" FontWeight="SemiBold" />
-            <TextBlock Text="Filtre, visualize, imprima ou exporte os dados da API"
-                       Foreground="#667085" Margin="0,4,0,0" />
+            <TextBlock Text="Relatórios e exportação" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="Filtre, visualize, imprima ou exporte os dados da frota"
+                       Style="{StaticResource PageSubtitleStyle}" />
         </StackPanel>
-        <WrapPanel Grid.Row="1" Margin="0,18,0,14" VerticalAlignment="Center">
-            <ComboBox x:Name="ReportBox" Width="195" DisplayMemberPath="Title"
-                      SelectionChanged="Report_Changed" Margin="0,0,8,0" />
-            <TextBox x:Name="SearchBox" Width="180" Margin="0,0,8,0"
-                     ToolTip="Busca por nome, placa ou descrição" />
-            <Button x:Name="VehicleButton" Content="Veículo: todos" Click="Vehicle_Click" />
-            <Button x:Name="DriverButton" Content="Motorista: todos" Click="Driver_Click" />
-            <ComboBox x:Name="StateBox" Width="145" Margin="0,0,8,0"
-                      Visibility="Collapsed" />
-            <ComboBox x:Name="DateFieldBox" Width="150" Margin="0,0,8,0"
-                      Visibility="Collapsed" />
-            <DatePicker x:Name="FromDate" Width="135" Margin="0,0,8,0" />
-            <DatePicker x:Name="ToDate" Width="135" Margin="0,0,8,0" />
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="16"
+                Margin="0,18,0,0">
+            <StackPanel>
+              <WrapPanel>
+                <StackPanel Margin="0,0,12,12">
+                    <TextBlock Text="Modelo de relatório" Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5" />
+                    <ComboBox x:Name="ReportBox" Width="240" DisplayMemberPath="Title"
+                              SelectionChanged="Report_Changed" />
+                </StackPanel>
+                <StackPanel Margin="0,0,12,12">
+                    <TextBlock Text="Buscar" Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5" />
+                    <TextBox x:Name="SearchBox" Width="190"
+                             ToolTip="Nome, placa ou descrição" />
+                </StackPanel>
+                <StackPanel x:Name="VehiclePanel" Margin="0,0,12,12">
+                    <TextBlock Text="Veículo" Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5" />
+                    <Button x:Name="VehicleButton" Content="Todos" Click="Vehicle_Click"
+                            Margin="0" />
+                </StackPanel>
+                <StackPanel x:Name="DriverPanel" Margin="0,0,12,12">
+                    <TextBlock Text="Motorista" Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5" />
+                    <Button x:Name="DriverButton" Content="Todos" Click="Driver_Click"
+                            Margin="0" />
+                </StackPanel>
+                <StackPanel x:Name="StatePanel" Margin="0,0,12,12">
+                    <TextBlock Text="Situação" Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5" />
+                    <ComboBox x:Name="StateBox" Width="160" />
+                </StackPanel>
+                <StackPanel x:Name="DateFieldPanel" Margin="0,0,12,12">
+                    <TextBlock Text="Data de referência" Style="{StaticResource FieldLabelStyle}"
+                               Margin="0,0,0,5" />
+                    <ComboBox x:Name="DateFieldBox" Width="150" />
+                </StackPanel>
+                <StackPanel x:Name="DateRangePanel" Orientation="Horizontal">
+                    <StackPanel Margin="0,0,12,12">
+                        <TextBlock Text="De · dd/MM/aaaa" Style="{StaticResource FieldLabelStyle}"
+                                   Margin="0,0,0,5" />
+                        <TextBox x:Name="FromDate" Width="150" ToolTip="Data inicial: dd/MM/aaaa" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,12,12">
+                        <TextBlock Text="Até · dd/MM/aaaa" Style="{StaticResource FieldLabelStyle}"
+                                   Margin="0,0,0,5" />
+                        <TextBox x:Name="ToDate" Width="150" ToolTip="Data final: dd/MM/aaaa" />
+                    </StackPanel>
+                </StackPanel>
+              </WrapPanel>
+              <TextBlock x:Name="FilterErrorText" Style="{StaticResource ErrorTextStyle}"
+                         Visibility="Collapsed" />
+            </StackPanel>
+        </Border>
+        <WrapPanel Grid.Row="2" Margin="0,16,0,14">
+            <Button Content="Visualizar" Click="Preview_Click"
+                    Style="{StaticResource PrimaryButtonStyle}" />
             <Button Content="Limpar filtros" Click="Clear_Click" />
-            <Button Content="Visualizar" Click="Preview_Click" />
             <Button Content="Imprimir" Click="Print_Click" />
             <Button Content="Exportar CSV" Click="Export_Click" />
         </WrapPanel>
-        <DataGrid x:Name="PreviewGrid" Grid.Row="2" Background="White" />
-        <DockPanel Grid.Row="3" Margin="0,12,0,0">
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border Padding="20,15" BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="0,0,0,1">
+                    <StackPanel>
+                        <TextBlock x:Name="ReportTitleText" FontSize="19" FontWeight="SemiBold" />
+                        <TextBlock x:Name="ReportDescriptionText"
+                                   Style="{StaticResource PageSubtitleStyle}" />
+                        <TextBlock x:Name="ReportSummaryText" Margin="0,8,0,0"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource AccentBrush}" />
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1">
+                    <DataGrid x:Name="PreviewGrid" BorderThickness="0" />
+                    <TextBlock x:Name="EmptyState"
+                               Text="Nenhum registro corresponde aos filtros do relatório."
+                               Style="{StaticResource EmptyStateStyle}" IsHitTestVisible="False" />
+                </Grid>
+            </Grid>
+        </Border>
+        <DockPanel Grid.Row="4" Margin="0,12,0,0">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <Button Content="Anterior" Click="Previous_Click" />
-                <Button Content="Próxima" Click="Next_Click" />
+                <Button x:Name="PreviousButton" Content="Anterior" Click="Previous_Click" />
+                <Button x:Name="NextButton" Content="Próxima" Click="Next_Click" />
             </StackPanel>
-            <TextBlock x:Name="StatusText" Foreground="#667085" VerticalAlignment="Center" />
+            <TextBlock x:Name="StatusText" Style="{StaticResource StatusTextStyle}" />
         </DockPanel>
     </Grid>
 </UserControl>

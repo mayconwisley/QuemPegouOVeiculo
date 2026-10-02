@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Width="620" Height="520" WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False">
-    <Grid Margin="18">
+    <Grid Margin="18" Background="{DynamicResource CanvasBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -14,7 +14,7 @@
             <TextBox x:Name="SearchBox" KeyDown="Search_KeyDown"
                      ToolTip="Digite nome, placa ou modelo" />
         </DockPanel>
-        <DataGrid x:Name="OptionsGrid" Grid.Row="1" Background="White"
+        <DataGrid x:Name="OptionsGrid" Grid.Row="1"
                   MouseDoubleClick="Options_DoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70" />
@@ -26,9 +26,9 @@
                 <Button Content="Anterior" Click="Previous_Click" />
                 <Button Content="Próxima" Click="Next_Click" />
                 <Button Content="Selecionar" Click="Select_Click"
-                        Background="#175CD3" Foreground="White" BorderBrush="#175CD3" />
+                        Style="{StaticResource PrimaryButtonStyle}" />
             </StackPanel>
-            <TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="#667085" />
+            <TextBlock x:Name="StatusText" Style="{StaticResource StatusTextStyle}" />
         </DockPanel>
     </Grid>
 </Window>

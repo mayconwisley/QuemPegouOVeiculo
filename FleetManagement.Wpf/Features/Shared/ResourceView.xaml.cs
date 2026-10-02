@@ -37,6 +37,9 @@ public partial class ResourceView : UserControl
             });
 
         var canWrite = _api.User?.CanWrite == true;
+        EmptyState.Text = canWrite
+            ? "Nenhum registro encontrado. Ajuste os filtros ou crie um novo cadastro."
+            : "Nenhum registro encontrado. Ajuste os filtros da consulta.";
         NewButton.Visibility = EditButton.Visibility = canWrite ? Visibility.Visible : Visibility.Collapsed;
         DeleteButton.Visibility = canWrite && resource.CanDelete ? Visibility.Visible : Visibility.Collapsed;
         ConfigureActions(canWrite);
@@ -46,6 +49,23 @@ public partial class ResourceView : UserControl
     }
 
     private GridRow? Selected => ResultsGrid.SelectedItem as GridRow;
+
+    private void ShowEditor(string title, IReadOnlyList<Field> fields,
+        JsonObject? original, Func<JsonObject, Task>? submit,
+        string? resourceKey = null, bool readOnly = false)
+    {
+        EditorHost.Content = new ResourceEditorView(_api, title, fields, submit,
+            CloseEditor, original, resourceKey, readOnly);
+        ListContent.Visibility = Visibility.Collapsed;
+        EditorHost.Visibility = Visibility.Visible;
+    }
+
+    private void CloseEditor()
+    {
+        EditorHost.Content = null;
+        EditorHost.Visibility = Visibility.Collapsed;
+        ListContent.Visibility = Visibility.Visible;
+    }
 
     private void ConfigureFilter()
     {
@@ -118,6 +138,7 @@ public partial class ResourceView : UserControl
         _load = new CancellationTokenSource();
         try
         {
+            EmptyState.Visibility = Visibility.Collapsed;
             StatusText.Text = "Carregando...";
             var search = SearchBox.Visibility == Visibility.Visible ? SearchBox.Text.Trim() : null;
             var path = _resource.ListPath + FleetApiClient.Query(
@@ -126,6 +147,7 @@ public partial class ResourceView : UserControl
             var data = await _api.GetPageAsync(path, _load.Token);
             _total = data.Total;
             ResultsGrid.ItemsSource = data.Items.Select(x => new GridRow(x)).ToArray();
+            EmptyState.Visibility = data.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             StatusText.Text = $"{_total:N0} registro(s) · página {_page} de {Math.Max(1, (_total + 49) / 50)}";
             PreviousButton.IsEnabled = _page > 1;
             NextButton.IsEnabled = _page * 50 < _total;
@@ -133,6 +155,7 @@ public partial class ResourceView : UserControl
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
+            EmptyState.Visibility = Visibility.Collapsed;
             StatusText.Text = "Falha ao carregar os registros.";
             UiErrors.Show(ex, _resource.Title);
         }
@@ -212,10 +235,8 @@ public partial class ResourceView : UserControl
             var current = _resource.Key is "reservations" or "maintenance-plans"
                 ? await _api.GetAsync($"{_resource.CommandPath}/{row.Id}")
                 : row.Source;
-            var dialog = new EditDialog(_api, $"Detalhes · {_resource.Title}",
-                _resource.Fields, current, _resource.Key, readOnly: true)
-            { Owner = Window.GetWindow(this) };
-            dialog.ShowDialog();
+            ShowEditor($"Detalhes · {_resource.Title}", _resource.Fields,
+                current, null, _resource.Key, readOnly: true);
         }
         catch (Exception ex) { UiErrors.Show(ex, "Consultar registro"); }
     }
@@ -227,14 +248,14 @@ public partial class ResourceView : UserControl
             JsonObject? current = row?.Source;
             if (row is not null && _resource.Key is "reservations" or "maintenance-plans")
                 current = await _api.GetAsync($"{_resource.CommandPath}/{row.Id}");
-            var dialog = new EditDialog(_api, row is null ? $"Novo · {_resource.Title}" :
-                $"Editar · {_resource.Title}", _resource.Fields, current, _resource.Key)
-            { Owner = Window.GetWindow(this) };
-            if (dialog.ShowDialog() != true || dialog.Value is null)
-                return;
             var path = row is null ? _resource.CommandPath : $"{_resource.CommandPath}/{row.Id}";
-            await _api.SendAsync(row is null ? HttpMethod.Post : HttpMethod.Put, path, dialog.Value);
-            await RefreshAsync();
+            ShowEditor(row is null ? $"Novo · {_resource.Title}" :
+                $"Editar · {_resource.Title}", _resource.Fields, current,
+                async value =>
+                {
+                    await _api.SendAsync(row is null ? HttpMethod.Post : HttpMethod.Put, path, value);
+                    await RefreshAsync();
+                }, _resource.Key);
         }
         catch (Exception ex) { UiErrors.Show(ex, "Salvar registro"); }
     }
@@ -253,25 +274,25 @@ public partial class ResourceView : UserControl
         catch (Exception ex) { UiErrors.Show(ex, "Excluir registro"); }
     }
 
-    private async void Action_Click(object sender, RoutedEventArgs e)
+    private void Action_Click(object sender, RoutedEventArgs e)
     {
         if (Selected is not { } row) return;
         switch (_resource.Key)
         {
             case "movements":
-                await RunDialogActionAsync(row, "Registrar chegada",
+                ShowActionEditor(row, "Registrar chegada",
                     [new("arrivalUtc", "Chegada", FieldKind.DateTime),
                      new("finalMileage", "KM final", FieldKind.Integer)],
                     $"movements/{row.Id}/complete", HttpMethod.Post);
                 break;
             case "reservations":
-                await RunDialogActionAsync(row, "Iniciar viagem",
+                ShowActionEditor(row, "Iniciar viagem",
                     [new("initialMileage", "KM inicial", FieldKind.Integer),
                      new("description", "Descrição", Required: false)],
                     $"reservations/{row.Id}/start", HttpMethod.Post);
                 break;
             case "maintenance-plans":
-                await RunDialogActionAsync(row, "Registrar execução",
+                ShowActionEditor(row, "Registrar execução",
                     [new("date", "Data", FieldKind.Date),
                      new("mileage", "KM", FieldKind.Integer),
                      new("amount", "Valor", FieldKind.Decimal),
@@ -304,7 +325,7 @@ public partial class ResourceView : UserControl
                         "Checklist", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
-                var dialog = new EditDialog(_api, phase == "departure" ?
+                ShowEditor(phase == "departure" ?
                     "Checklist de saída" : "Checklist de chegada",
                     [new("tiresOk", "Pneus OK", FieldKind.Boolean),
                      new("lightsOk", "Luzes OK", FieldKind.Boolean),
@@ -312,12 +333,12 @@ public partial class ResourceView : UserControl
                      new("bodyOk", "Lataria OK", FieldKind.Boolean),
                      new("notes", "Observações", Required: false),
                      new("checkedAtUtc", "Conferido em", FieldKind.DateTime)], current,
-                     readOnly: _api.User?.CanWrite != true)
-                { Owner = Window.GetWindow(this) };
-                if (dialog.ShowDialog() != true || dialog.Value is null) return;
-                await _api.SendAsync(HttpMethod.Put,
-                    $"movements/{row.Id}/checklists/{phase}", dialog.Value);
-                await RefreshAsync();
+                    _api.User?.CanWrite == true ? async value =>
+                    {
+                        await _api.SendAsync(HttpMethod.Put,
+                            $"movements/{row.Id}/checklists/{phase}", value);
+                        await RefreshAsync();
+                    } : null, readOnly: _api.User?.CanWrite != true);
             }
             catch (Exception ex) { UiErrors.Show(ex, "Salvar checklist"); }
         }
@@ -334,25 +355,21 @@ public partial class ResourceView : UserControl
         }
     }
 
-    private async void ThirdAction_Click(object sender, RoutedEventArgs e)
+    private void ThirdAction_Click(object sender, RoutedEventArgs e)
     {
         if (Selected is { } row)
-            await RunDialogActionAsync(row, "Previsão de retorno",
+            ShowActionEditor(row, "Previsão de retorno",
                 [new("expectedReturnUtc", "Retorno previsto", FieldKind.DateTime, false)],
                 $"movements/{row.Id}/expected-return", HttpMethod.Put);
     }
 
-    private async Task RunDialogActionAsync(GridRow row, string title, IReadOnlyList<Field> fields,
+    private void ShowActionEditor(GridRow row, string title, IReadOnlyList<Field> fields,
         string path, HttpMethod method)
     {
-        var dialog = new EditDialog(_api, title, fields, row.Source)
-        { Owner = Window.GetWindow(this) };
-        if (dialog.ShowDialog() != true || dialog.Value is null) return;
-        try
+        ShowEditor(title, fields, row.Source, async value =>
         {
-            await _api.SendAsync(method, path, dialog.Value);
+            await _api.SendAsync(method, path, value);
             await RefreshAsync();
-        }
-        catch (Exception ex) { UiErrors.Show(ex, title); }
+        });
     }
 }
