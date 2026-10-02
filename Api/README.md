@@ -51,7 +51,7 @@ Confirme `http://localhost:5000/health/ready` antes de usar o desktop. Crie o pr
 
 ## PostgreSQL por ambiente
 
-A API monta a connection string com `QVeiculoUser` e `QVeiculoPass` do ambiente. No Windows, lê as variáveis do processo e, se ausentes, as variáveis de sistema. As credenciais não ficam nos arquivos JSON nem no executável desktop.
+A API monta a connection string com `FleetUser` e `FleetPass` do ambiente. No Windows, lê as variáveis do processo e, se ausentes, as variáveis de sistema. As credenciais não ficam nos arquivos JSON nem no executável desktop.
 
 | Ambiente | Host | Porta | Banco | SSL |
 | --- | --- | --- | --- | --- |
@@ -63,8 +63,8 @@ Os valores estão em `appsettings.Development.json` e `appsettings.Production.js
 No PostgreSQL local do Windows, crie o banco de desenvolvimento uma vez com `createdb` (substitua o caminho do executável se necessário):
 
 ```powershell
-$env:PGPASSWORD = [Environment]::GetEnvironmentVariable('QVeiculoPass', 'Machine')
-$postgresUser = [Environment]::GetEnvironmentVariable('QVeiculoUser', 'Machine')
+$env:PGPASSWORD = [Environment]::GetEnvironmentVariable('FleetPass', 'Machine')
+$postgresUser = [Environment]::GetEnvironmentVariable('FleetUser', 'Machine')
 & 'C:\Programas\PostgreSQL\18\bin\createdb.exe' -h localhost -p 5432 -U $postgresUser qveiculo_dev
 Remove-Item Env:PGPASSWORD
 ```
@@ -83,8 +83,8 @@ dotnet run --no-launch-profile --project Api/FleetManagement.Api
 O Compose é opcional e publica o PostgreSQL em `localhost:5433` para não conflitar com o serviço local. Nesse caso, exporte as credenciais também para o processo do terminal antes de subir o container:
 
 ```powershell
-$env:QVeiculoUser = [Environment]::GetEnvironmentVariable('QVeiculoUser', 'Machine')
-$env:QVeiculoPass = [Environment]::GetEnvironmentVariable('QVeiculoPass', 'Machine')
+$env:FleetUser = [Environment]::GetEnvironmentVariable('FleetUser', 'Machine')
+$env:FleetPass = [Environment]::GetEnvironmentVariable('FleetPass', 'Machine')
 docker compose -f Api/compose.yaml up -d --wait
 $env:Postgres__Port = '5433'
 ```
@@ -101,24 +101,15 @@ dotnet ef migrations script --idempotent --project Api/FleetManagement.Infrastru
 
 A API exige autenticação em `/api/v1`, exceto `POST /api/v1/auth/login`. O login tem limite de cinco tentativas por minuto por endereço IP. Os perfis são `Administrator` (todas as operações, usuários e auditoria), `Operator` (leitura e gravação dos recursos de frota) e `Viewer` (leitura, painel e relatórios). A API valida a situação e o perfil do usuário no banco em cada requisição; alterações de acesso revogam tokens antigos. O token expira em oito horas e o desktop o mantém somente em memória.
 
-Depois das migrations, crie **uma vez** o administrador inicial em um banco sem usuários. Defina `ASPNETCORE_ENVIRONMENT` e `FLEET_BOOTSTRAP_USERNAME` no processo. O exemplo abaixo lê a senha sem mostrá-la no terminal e remove as variáveis após o comando:
+Depois das migrations, crie **uma vez** o administrador inicial em um banco sem usuários. No terminal PowerShell ou no Console do Gerenciador de Pacotes do Visual Studio, a partir da raiz da solução, execute **uma única linha**:
 
 ```powershell
-$env:ASPNETCORE_ENVIRONMENT = 'Development'
-$env:FLEET_BOOTSTRAP_USERNAME = 'admin'
-$securePassword = Read-Host 'Senha inicial (mínimo de 12 caracteres)' -AsSecureString
-$pointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
-try {
-    $env:FLEET_BOOTSTRAP_PASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($pointer)
-    dotnet run --no-launch-profile --project Api/FleetManagement.Api -- --bootstrap-admin
-}
-finally {
-    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointer)
-    Remove-Item Env:FLEET_BOOTSTRAP_PASSWORD, Env:FLEET_BOOTSTRAP_USERNAME -ErrorAction SilentlyContinue
-}
+& .\scripts\Bootstrap-Admin.ps1
 ```
 
-Em `Production`, configure `FLEET_JWT_KEY` com pelo menos 32 bytes UTF-8, gere-a aleatoriamente e mantenha o valor estável entre reinicializações. Em `Development`, a ausência dessa variável gera uma chave temporária por processo, invalidando sessões após reiniciar a API. Ao disponibilizar a API fora do computador local, publique-a somente por HTTPS e configure a URL HTTPS no desktop. A futura interface web deverá receber CORS restrito à sua origem conhecida.
+O script solicita a senha de forma protegida, cria `admin` em `Development` e limpa as variáveis temporárias mesmo se houver erro. Para outro usuário ou ambiente, use `-Username` e `-Environment`. No `Read-Host`, o texto antes de `-AsSecureString` é apenas o **rótulo do prompt**; digite a senha quando o prompt aparecer, sem incluí-la no comando.
+
+Em `Production`, configure `FLEET_JWT_KEY` com pelo menos 32 bytes UTF-8, gere-a aleatoriamente e mantenha o valor estável entre reinicializações. No Windows, a API lê essa variável do processo ou, se ausente, das variáveis de sistema. Em `Development`, a ausência dessa variável gera uma chave temporária por processo, invalidando sessões após reiniciar a API. Ao disponibilizar a API fora do computador local, publique-a somente por HTTPS e configure a URL HTTPS no desktop. A futura interface web deverá receber CORS restrito à sua origem conhecida.
 
 `GET /api/v1/dashboard` retorna contadores e itens de atenção; `GET /api/v1/audit?page=1&pageSize=50` é paginado e exclusivo do administrador. `GET /api/v1/users`, `POST /api/v1/users`, `PUT /api/v1/users/{id}` e `PUT /api/v1/users/{id}/password` administram contas sem expor hashes. A aplicação impede a remoção do próprio acesso administrativo e a desativação do último administrador.
 

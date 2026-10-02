@@ -12,11 +12,14 @@ public sealed class PostgresSettings
 
 public static class PostgresConnectionString
 {
+    private const string UserVariable = "FleetUser";
+    private const string PasswordVariable = "FleetPass";
+
     public static string Create(IConfiguration configuration)
     {
         var settings = configuration.GetSection("Postgres").Get<PostgresSettings>()
             ?? throw new InvalidOperationException("Configure a seção Postgres para o ambiente atual.");
-        return Create(settings, ReadCredential("QVeiculoUser"), ReadCredential("QVeiculoPass"));
+        return Create(settings, ReadCredential(UserVariable), ReadCredential(PasswordVariable));
     }
 
     public static string Create(PostgresSettings settings, string? user, string? password)
@@ -26,7 +29,7 @@ public static class PostgresConnectionString
             throw new InvalidOperationException("Configure Postgres:Host, Postgres:Port e Postgres:Database.");
 
         if (string.IsNullOrWhiteSpace(user) || string.IsNullOrEmpty(password))
-            throw new InvalidOperationException("Configure QVeiculoUser e QVeiculoPass nas variáveis de ambiente.");
+            throw new InvalidOperationException("Configure FleetUser e FleetPass nas variáveis de ambiente.");
 
         if (!Enum.TryParse<SslMode>(settings.SslMode, true, out var sslMode))
             throw new InvalidOperationException("Postgres:SslMode inválido.");

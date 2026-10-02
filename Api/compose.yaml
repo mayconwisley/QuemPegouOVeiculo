@@ -3,8 +3,8 @@ services:
     image: postgres:17
     environment:
       POSTGRES_DB: qveiculo_dev
-      POSTGRES_USER: ${QVeiculoUser:?Defina QVeiculoUser no ambiente do processo}
-      POSTGRES_PASSWORD: ${QVeiculoPass:?Defina QVeiculoPass no ambiente do processo}
+      POSTGRES_USER: ${FleetUser:?Defina FleetUser no ambiente do processo}
+      POSTGRES_PASSWORD: ${FleetPass:?Defina FleetPass no ambiente do processo}
     ports:
       - "127.0.0.1:5433:5432"
     volumes:

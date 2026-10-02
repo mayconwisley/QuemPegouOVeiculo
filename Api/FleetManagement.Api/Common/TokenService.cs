@@ -14,7 +14,10 @@ internal sealed class TokenSettings
 
     public TokenSettings(IHostEnvironment environment)
     {
-        var configured = Environment.GetEnvironmentVariable("FLEET_JWT_KEY");
+        var configured = Environment.GetEnvironmentVariable("FLEET_JWT_KEY")
+            ?? (OperatingSystem.IsWindows()
+                ? Environment.GetEnvironmentVariable("FLEET_JWT_KEY", EnvironmentVariableTarget.Machine)
+                : null);
         if (string.IsNullOrEmpty(configured) && !environment.IsDevelopment())
             throw new InvalidOperationException("FLEET_JWT_KEY é obrigatório fora de Development.");
         Key = string.IsNullOrEmpty(configured)
