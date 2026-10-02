@@ -70,7 +70,8 @@ internal sealed class FleetReadRepository(FleetDbContext db) : IFleetReadReposit
         return PaginateAsync(query.OrderByDescending(x => x.item.DepartureUtc).ThenBy(x => x.driver.Name)
             .Select(x => new MovementQuery(x.item.Id, x.item.VehicleId, x.vehicle.Model,
                 x.item.DriverId, x.driver.Name, x.item.DepartureUtc, x.item.ArrivalUtc,
-                x.item.Description, x.item.InitialMileage, x.item.FinalMileage)), page, ct);
+                x.item.Description, x.item.InitialMileage, x.item.FinalMileage,
+                x.item.ExpectedReturnUtc, x.vehicle.Plate)), page, ct);
     }
 
     public Task<PagedResult<RefuelingQuery>> RefuelingsAsync(FleetQueryFilter filter, PageRequest page, CancellationToken ct)

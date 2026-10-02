@@ -25,9 +25,13 @@ internal sealed class EfCommandRepository<TEntity>(FleetDbContext db) : ICommand
         }
         catch (DbUpdateException ex) when (ex.InnerException is PostgresException
             { SqlState: PostgresErrorCodes.UniqueViolation or PostgresErrorCodes.ForeignKeyViolation
-                or PostgresErrorCodes.CheckViolation })
+                or PostgresErrorCodes.CheckViolation or PostgresErrorCodes.ExclusionViolation })
         {
             throw new BusinessConflictException("O registro viola uma regra de unicidade ou referência.", ex);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            throw new BusinessConflictException("O registro foi alterado por outro usuário. Recarregue e tente novamente.", ex);
         }
     }
 }

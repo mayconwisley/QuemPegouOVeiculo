@@ -13,9 +13,12 @@ public sealed class Maintenance : IEntity
 
     public int Id { get; private set; }
     public int VehicleId { get; private set; }
+    public int? PlanId { get; private set; }
     public DateOnly Date { get; private set; }
     public decimal Amount { get; private set; }
     public string Description { get; private set; } = "";
+
+    public void LinkToPlan(int planId) => PlanId = Guard.PositiveId(planId, "Plano preventivo");
 
     public void Update(int vehicleId, DateOnly date, decimal amount, string? description)
     {

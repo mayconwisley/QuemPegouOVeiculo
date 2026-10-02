@@ -16,6 +16,7 @@ public sealed class FleetQueryParameters
     public DateTime? StartUtc { get; set; }
     public DateTime? EndUtc { get; set; }
     public string? DateField { get; set; }
+    public string? Status { get; set; }
     public int? Page { get; set; }
     public int? PageSize { get; set; }
 

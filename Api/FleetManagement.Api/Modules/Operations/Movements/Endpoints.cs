@@ -38,6 +38,18 @@ public static class Endpoints
             return (await commands.ConcludeAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
+        group.MapPut("/{id:int:min(1)}/expected-return", async (int id, ExpectedReturnInput input,
+            MovementCommands commands, CancellationToken cancellationToken) =>
+            (await commands.ScheduleReturnAsync(id, input.ExpectedReturnUtc, cancellationToken)).ToHttpResult());
+
+        group.MapGet("/{id:int:min(1)}/checklists", async (int id, ChecklistService checklists,
+            CancellationToken cancellationToken) =>
+            (await checklists.ListAsync(id, cancellationToken)).ToHttpResult());
+
+        group.MapPut("/{id:int:min(1)}/checklists/{phase}", async (int id, string phase,
+            ChecklistInput input, ChecklistService checklists, CancellationToken cancellationToken) =>
+            (await checklists.SaveAsync(id, phase, input, cancellationToken)).ToHttpResult());
+
         group.MapDelete("/{id:int:min(1)}", async (int id, MovementCommands commands,
             CancellationToken cancellationToken) =>
         {
@@ -45,3 +57,5 @@ public static class Endpoints
         });
     }
 }
+
+public sealed record ExpectedReturnInput(DateTime? ExpectedReturnUtc);

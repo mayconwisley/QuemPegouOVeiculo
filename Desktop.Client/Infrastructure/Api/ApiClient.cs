@@ -4,7 +4,9 @@ using System.Configuration;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ namespace FleetManagement.Desktop.Client.Infrastructure.Api
     internal static class ApiClient
     {
         private static readonly HttpClient Http = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
+        private static readonly HttpClient DownloadHttp = new HttpClient { Timeout = TimeSpan.FromMinutes(5) };
         private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
         private static readonly string BaseUrl = (Environment.GetEnvironmentVariable("FLEET_MANAGEMENT_API_URL")
             ?? Environment.GetEnvironmentVariable("QUEMPEGOU_API_URL")
@@ -88,6 +91,77 @@ namespace FleetManagement.Desktop.Client.Infrastructure.Api
             return true;
         }
 
+        internal static async Task<object> PostAnonymousAsync(string path, Dictionary<string, object> body,
+            CancellationToken cancellationToken) =>
+            await EnviarAsync(HttpMethod.Post, path, body, cancellationToken).ConfigureAwait(false);
+
+        internal static async Task<object> GetAsync(string path, CancellationToken cancellationToken) =>
+            await EnviarAsync(HttpMethod.Get, path, null, cancellationToken).ConfigureAwait(false);
+
+        internal static async Task<object> PostAsync(string path, Dictionary<string, object> body,
+            CancellationToken cancellationToken) =>
+            await EnviarAsync(HttpMethod.Post, path, body, cancellationToken).ConfigureAwait(false);
+
+        internal static async Task PutAsync(string path, Dictionary<string, object> body,
+            CancellationToken cancellationToken) =>
+            await EnviarAsync(HttpMethod.Put, path, body, cancellationToken).ConfigureAwait(false);
+
+        internal static async Task DownloadAsync(string path, string destination,
+            CancellationToken cancellationToken)
+        {
+            var directory = Path.GetDirectoryName(Path.GetFullPath(destination));
+            var temporary = Path.Combine(directory, ".fleet-export-" + Guid.NewGuid().ToString("N") + ".tmp");
+            try
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Get, BaseUrl + "/api/v1/" + path))
+                {
+                    if (AccessClient.Token != null)
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessClient.Token);
+                    using (var response = await DownloadHttp.SendAsync(request,
+                        HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false))
+                    {
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            {
+                                AccessClient.Expire();
+                                throw new InvalidOperationException("Sessão inválida ou expirada. Entre novamente no sistema.");
+                            }
+                            if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                                throw new InvalidOperationException("Seu perfil não permite esta operação.");
+                            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            var detail = "Falha na exportação: " + (int)response.StatusCode + ".";
+                            try
+                            {
+                                var problem = (Dictionary<string, object>)new JavaScriptSerializer()
+                                    .DeserializeObject(content);
+                                detail = Convert.ToString(problem.ContainsKey("detail") ? problem["detail"]
+                                    : problem.ContainsKey("title") ? problem["title"] : detail, Invariant);
+                            }
+                            catch (Exception) { }
+                            throw new InvalidOperationException(detail);
+                        }
+                        using (var source = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                        using (var file = new FileStream(temporary, FileMode.CreateNew, FileAccess.Write,
+                            FileShare.None, 81920, true))
+                            await source.CopyToAsync(file, 81920, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+                if (File.Exists(destination))
+                    File.Replace(temporary, destination, null);
+                else
+                    File.Move(temporary, destination);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new InvalidOperationException("Não foi possível conectar à API em " + BaseUrl + ".", ex);
+            }
+            finally
+            {
+                if (File.Exists(temporary)) File.Delete(temporary);
+            }
+        }
+
         internal static bool CompleteMovement(int id, DateTime? arrival, string finalMileage)
         {
             if (!arrival.HasValue)
@@ -127,6 +201,8 @@ namespace FleetManagement.Desktop.Client.Infrastructure.Api
         {
             using (var request = new HttpRequestMessage(method, BaseUrl + "/api/v1/" + path))
             {
+                if (path != "auth/login" && AccessClient.Token != null)
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessClient.Token);
                 if (body != null)
                     request.Content = new StringContent(
                         new JavaScriptSerializer { MaxJsonLength = int.MaxValue }.Serialize(body),
@@ -156,6 +232,17 @@ namespace FleetManagement.Desktop.Client.Infrastructure.Api
                     var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (!response.IsSuccessStatusCode)
                     {
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        {
+                            if (path == "auth/login")
+                                throw new InvalidOperationException("Usuário ou senha inválidos.");
+                            AccessClient.Expire();
+                            throw new InvalidOperationException("Sessão inválida ou expirada. Entre novamente no sistema.");
+                        }
+                        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                            throw new InvalidOperationException("Seu perfil não permite esta operação.");
+                        if ((int)response.StatusCode == 429 && path == "auth/login")
+                            throw new InvalidOperationException("Muitas tentativas de acesso. Aguarde um minuto e tente novamente.");
                         var detail = "Falha na API: " + (int)response.StatusCode + ".";
                         try
                         {

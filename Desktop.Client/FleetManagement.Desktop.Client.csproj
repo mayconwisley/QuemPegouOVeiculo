@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\Api\ApiClient.cs" />
+    <Compile Include="Infrastructure\Api\AccessClient.cs" />
+    <Compile Include="Infrastructure\Api\OperationsPlanningClient.cs" />
+    <Compile Include="Infrastructure\Api\ReservationClient.cs" />
+    <Compile Include="Infrastructure\Api\ExportClient.cs" />
     <Compile Include="Infrastructure\Api\LegacyTableMapper.cs" />
     <Compile Include="Infrastructure\Api\RequestBodies.cs" />
     <Compile Include="Features\Registrations\Drivers\Commands.cs" />

@@ -5,7 +5,8 @@ using FleetManagement.Domain.Modules.Operations;
 namespace FleetManagement.Application.Modules.Operations.MaintenanceRecords;
 
 public sealed record MaintenanceInput(int VehicleId, DateOnly Date, decimal Amount, string? Description);
-public sealed record MaintenanceView(int Id, int VehicleId, DateOnly Date, decimal Amount, string Description);
+public sealed record MaintenanceView(int Id, int VehicleId, DateOnly Date, decimal Amount,
+    string Description, int? PlanId);
 
 public sealed class MaintenanceCommands(ICommandRepository<Maintenance> repository)
 {
@@ -27,6 +28,9 @@ public sealed class MaintenanceCommands(ICommandRepository<Maintenance> reposito
             var item = await repository.GetByIdAsync(id, cancellationToken);
             if (item is null)
                 return Result.Failure(Error.NotFound("Manutenção", id));
+            if (item.PlanId is not null && (input.VehicleId != item.VehicleId || input.Date != item.Date))
+                return Result.Failure(Error.Conflict(
+                    "Veículo e data de uma manutenção preventiva concluída não podem ser alterados."));
             item.Update(input.VehicleId, input.Date, input.Amount, input.Description);
             await repository.SaveChangesAsync(cancellationToken);
             return Result.Success();
@@ -40,6 +44,9 @@ public sealed class MaintenanceCommands(ICommandRepository<Maintenance> reposito
             var item = await repository.GetByIdAsync(id, cancellationToken);
             if (item is null)
                 return Result.Failure(Error.NotFound("Manutenção", id));
+            if (item.PlanId is not null)
+                return Result.Failure(Error.Conflict(
+                    "Uma manutenção preventiva concluída não pode ser excluída."));
             repository.Remove(item);
             await repository.SaveChangesAsync(cancellationToken);
             return Result.Success();
@@ -50,7 +57,7 @@ public sealed class MaintenanceCommands(ICommandRepository<Maintenance> reposito
 public sealed class MaintenanceQueries(IQueryRepository<Maintenance> repository)
 {
     private static readonly Expression<Func<Maintenance, MaintenanceView>> Projection = x =>
-        new MaintenanceView(x.Id, x.VehicleId, x.Date, x.Amount, x.Description);
+        new MaintenanceView(x.Id, x.VehicleId, x.Date, x.Amount, x.Description, x.PlanId);
 
     public async Task<Result<MaintenanceView>> GetAsync(int id, CancellationToken cancellationToken)
     {

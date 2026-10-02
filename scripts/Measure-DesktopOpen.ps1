@@ -25,7 +25,14 @@ if (-not (Test-Path -LiteralPath $applicationPath)) {
 
 Add-Type -AssemblyName System.Windows.Forms
 $assembly = [System.Reflection.Assembly]::LoadFrom($applicationPath)
+Add-Type -Path (Join-Path $outputDirectory 'FleetManagement.Desktop.Client.dll')
 [System.Windows.Forms.Application]::EnableVisualStyles()
+$username = $env:FLEET_MEASURE_USERNAME
+$password = $env:FLEET_MEASURE_PASSWORD
+if ([string]::IsNullOrWhiteSpace($username) -or [string]::IsNullOrWhiteSpace($password)) {
+    throw 'Defina FLEET_MEASURE_USERNAME e FLEET_MEASURE_PASSWORD para medir telas autenticadas.'
+}
+[FleetManagement.Desktop.Client.Infrastructure.Api.AccessClient]::LoginAsync($username, $password).GetAwaiter().GetResult() | Out-Null
 
 function Find-Grid([System.Windows.Forms.Control]$root) {
     foreach ($child in $root.Controls) {

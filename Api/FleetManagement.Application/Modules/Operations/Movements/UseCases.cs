@@ -2,38 +2,48 @@ using System.Linq.Expressions;
 using FleetManagement.Application.Common;
 using FleetManagement.Application.Modules.Operations;
 using FleetManagement.Domain.Modules.Operations;
+using FleetManagement.Application.Modules.Operations.Reservations;
 
 namespace FleetManagement.Application.Modules.Operations.Movements;
 
 public sealed record MovementInput(int VehicleId, int DriverId, DateTime DepartureUtc,
-    DateTime? ArrivalUtc, int InitialMileage, int? FinalMileage, string? Description);
+    DateTime? ArrivalUtc, int InitialMileage, int? FinalMileage, string? Description,
+    DateTime? ExpectedReturnUtc = null);
 
 public sealed record CompleteMovementInput(DateTime ArrivalUtc, int FinalMileage);
 
 public sealed record MovementView(int Id, int VehicleId, int DriverId, DateTime DepartureUtc,
-    DateTime? ArrivalUtc, int InitialMileage, int? FinalMileage, string Description, bool IsOpen);
+    DateTime? ArrivalUtc, int InitialMileage, int? FinalMileage, string Description, bool IsOpen,
+    DateTime? ExpectedReturnUtc, int? ReservationId);
 
 public sealed class MovementCommands(
     ICommandRepository<VehicleMovement> repository,
-    IRegistrationStatusReader registrations)
+    IRegistrationStatusReader registrations,
+    IMovementChecklistStore checklists,
+    ICommandRepository<VehicleReservation> reservations,
+    IReservationAvailabilityReader availability,
+    IVehicleScheduleGuard guard)
 {
-    public async Task<Result<int>> CreateAsync(MovementInput input, CancellationToken cancellationToken)
-    {
-        return await Result.CaptureValueAsync<int>(async () =>
+    public Task<Result<int>> CreateAsync(MovementInput input, CancellationToken cancellationToken) =>
+        Result.CaptureValueAsync(() => guard.ExecuteAsync(input.VehicleId, async () =>
         {
             var movement = new VehicleMovement(input.VehicleId, input.DriverId,
                 input.DepartureUtc, input.InitialMileage, input.Description);
             movement.Update(input.VehicleId, input.DriverId, input.DepartureUtc,
                 input.ArrivalUtc, input.InitialMileage, input.FinalMileage, input.Description);
+            movement.ScheduleReturn(input.ExpectedReturnUtc);
             var references = await EnsureReferencesActiveAsync(input.VehicleId, input.DriverId, cancellationToken);
             if (!references.IsSuccess)
                 return Result<int>.Failure(references.Error);
+            if (await availability.HasReservationConflictAsync(input.VehicleId, input.DepartureUtc,
+                    input.ArrivalUtc ?? input.ExpectedReturnUtc, null, cancellationToken))
+                return Result<int>.Failure(Error.Conflict(
+                    "Existe uma reserva confirmada para o veículo nesse período."));
 
             await repository.AddAsync(movement, cancellationToken);
             await repository.SaveChangesAsync(cancellationToken);
             return Result<int>.Success(movement.Id);
-        });
-    }
+        }, cancellationToken));
 
     public async Task<Result> UpdateAsync(int id, MovementInput input, CancellationToken cancellationToken)
     {
@@ -42,13 +52,28 @@ public sealed class MovementCommands(
             var movement = await repository.GetByIdAsync(id, cancellationToken);
             if (movement is null)
                 return Result.Failure(Error.NotFound("Movimentação", id));
-            movement.Update(input.VehicleId, input.DriverId, input.DepartureUtc,
-                input.ArrivalUtc, input.InitialMileage, input.FinalMileage, input.Description);
-            var references = await EnsureReferencesActiveAsync(input.VehicleId, input.DriverId, cancellationToken);
-            if (!references.IsSuccess)
-                return references;
-            await repository.SaveChangesAsync(cancellationToken);
-            return Result.Success();
+            return await guard.ExecuteAsync(input.VehicleId, async () =>
+            {
+                if (movement.ReservationId is not null &&
+                    (input.VehicleId != movement.VehicleId || input.DriverId != movement.DriverId ||
+                     input.DepartureUtc != movement.DepartureUtc || input.ArrivalUtc != movement.ArrivalUtc))
+                    return Result.Failure(Error.Conflict(
+                        "A saída vinculada à reserva só permite alterar quilometragem e descrição."));
+                movement.Update(input.VehicleId, input.DriverId, input.DepartureUtc,
+                    input.ArrivalUtc, input.InitialMileage, input.FinalMileage, input.Description);
+                if (input.ExpectedReturnUtc is not null && movement.ReservationId is null)
+                    movement.ScheduleReturn(input.ExpectedReturnUtc);
+                var references = await EnsureReferencesActiveAsync(input.VehicleId, input.DriverId, cancellationToken);
+                if (!references.IsSuccess)
+                    return references;
+                if (movement.ReservationId is null && await availability.HasReservationConflictAsync(
+                        input.VehicleId, input.DepartureUtc,
+                        input.ArrivalUtc ?? movement.ExpectedReturnUtc, null, cancellationToken))
+                    return Result.Failure(Error.Conflict(
+                        "Existe uma reserva confirmada para o veículo nesse período."));
+                await repository.SaveChangesAsync(cancellationToken);
+                return Result.Success();
+            }, cancellationToken);
         });
     }
 
@@ -60,10 +85,39 @@ public sealed class MovementCommands(
             if (movement is null)
                 return Result.Failure(Error.NotFound("Movimentação", id));
             movement.Complete(input.ArrivalUtc, input.FinalMileage);
+            if (movement.ReservationId is int reservationId)
+            {
+                var reservation = await reservations.GetByIdAsync(reservationId, cancellationToken);
+                if (reservation is null)
+                    return Result.Failure(Error.NotFound("Reserva", reservationId));
+                reservation.Complete();
+            }
             await repository.SaveChangesAsync(cancellationToken);
             return Result.Success();
         });
     }
+
+    public Task<Result> ScheduleReturnAsync(int id, DateTime? expectedReturnUtc, CancellationToken ct) =>
+        Result.CaptureAsync(async () =>
+        {
+            var movement = await repository.GetByIdAsync(id, ct);
+            if (movement is null)
+                return Result.Failure(Error.NotFound("Movimentação", id));
+            if (!movement.IsOpen)
+                return Result.Failure(Error.Conflict("A movimentação já foi concluída."));
+            if (movement.ReservationId is not null)
+                return Result.Failure(Error.Conflict("A previsão está definida pela reserva vinculada."));
+            return await guard.ExecuteAsync(movement.VehicleId, async () =>
+            {
+                movement.ScheduleReturn(expectedReturnUtc);
+                if (await availability.HasReservationConflictAsync(movement.VehicleId,
+                        movement.DepartureUtc, expectedReturnUtc, null, ct))
+                    return Result.Failure(Error.Conflict(
+                        "Existe uma reserva confirmada para o veículo nesse período."));
+                await repository.SaveChangesAsync(ct);
+                return Result.Success();
+            }, ct);
+        });
 
     public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
     {
@@ -72,6 +126,9 @@ public sealed class MovementCommands(
             var item = await repository.GetByIdAsync(id, cancellationToken);
             if (item is null)
                 return Result.Failure(Error.NotFound("Movimentação", id));
+            if (item.ReservationId is not null)
+                return Result.Failure(Error.Conflict("Uma saída vinculada à reserva não pode ser excluída."));
+            await checklists.DeleteForMovementAsync(id, cancellationToken);
             repository.Remove(item);
             await repository.SaveChangesAsync(cancellationToken);
             return Result.Success();
@@ -98,7 +155,8 @@ public sealed class MovementQueries(IQueryRepository<VehicleMovement> repository
 {
     private static readonly Expression<Func<VehicleMovement, MovementView>> Projection = x =>
         new MovementView(x.Id, x.VehicleId, x.DriverId, x.DepartureUtc, x.ArrivalUtc,
-            x.InitialMileage, x.FinalMileage, x.Description, x.ArrivalUtc == null);
+            x.InitialMileage, x.FinalMileage, x.Description, x.ArrivalUtc == null,
+            x.ExpectedReturnUtc, x.ReservationId);
 
     public async Task<Result<MovementView>> GetAsync(int id, CancellationToken cancellationToken)
     {

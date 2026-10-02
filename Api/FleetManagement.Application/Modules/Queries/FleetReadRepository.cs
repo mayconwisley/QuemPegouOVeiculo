@@ -34,7 +34,8 @@ public sealed record DriverQuery(int Id, string Name, string LicenseNumber, Date
     string LicenseCategory, string Cpf, string Rg, bool Active);
 public sealed record VehicleQuery(int Id, string Plate, string Model, string Chassis, string Renavam, bool Active);
 public sealed record MovementQuery(int Id, int VehicleId, string Model, int DriverId, string Name,
-    DateTime DepartureUtc, DateTime? ArrivalUtc, string Description, int InitialMileage, int? FinalMileage);
+    DateTime DepartureUtc, DateTime? ArrivalUtc, string Description, int InitialMileage, int? FinalMileage,
+    DateTime? ExpectedReturnUtc, string Plate);
 public sealed record RefuelingQuery(int Id, int VehicleId, string Model, int DriverId, string Name,
     int Mileage, DateOnly Date, decimal Amount, decimal Liters, string Description);
 public sealed record FineQuery(int Id, int VehicleId, string Model, int DriverId, string Name,

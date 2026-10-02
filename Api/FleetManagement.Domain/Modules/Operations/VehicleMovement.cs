@@ -14,8 +14,10 @@ public sealed class VehicleMovement : IEntity
     public int Id { get; private set; }
     public int VehicleId { get; private set; }
     public int DriverId { get; private set; }
+    public int? ReservationId { get; private set; }
     public DateTime DepartureUtc { get; private set; }
     public DateTime? ArrivalUtc { get; private set; }
+    public DateTime? ExpectedReturnUtc { get; private set; }
     public int InitialMileage { get; private set; }
     public int? FinalMileage { get; private set; }
     public string Description { get; private set; } = "";
@@ -45,6 +47,8 @@ public sealed class VehicleMovement : IEntity
             throw new DomainException("Chegada deve ser posterior à saída.");
         if (validatedFinalMileage < validatedInitialMileage)
             throw new DomainException("Quilometragem final deve ser maior ou igual à inicial.");
+        if (ExpectedReturnUtc < validatedDeparture)
+            throw new DomainException("A previsão de retorno deve ser posterior à saída.");
 
         VehicleId = validatedVehicleId;
         DriverId = validatedDriverId;
@@ -53,5 +57,19 @@ public sealed class VehicleMovement : IEntity
         InitialMileage = validatedInitialMileage;
         FinalMileage = validatedFinalMileage;
         Description = validatedDescription;
+    }
+
+    public void ScheduleReturn(DateTime? expectedReturnUtc)
+    {
+        if (expectedReturnUtc is not null && Guard.Utc(expectedReturnUtc.Value, "Previsão de retorno") < DepartureUtc)
+            throw new DomainException("A previsão de retorno deve ser posterior à saída.");
+        ExpectedReturnUtc = expectedReturnUtc;
+    }
+
+    public void LinkToReservation(int reservationId)
+    {
+        if (ReservationId is not null)
+            throw new DomainException("A movimentação já está vinculada a uma reserva.");
+        ReservationId = Guard.PositiveId(reservationId, "Reserva");
     }
 }
