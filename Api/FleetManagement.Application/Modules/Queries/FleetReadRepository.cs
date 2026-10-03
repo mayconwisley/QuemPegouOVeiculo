@@ -5,8 +5,8 @@ namespace FleetManagement.Application.Modules.Queries;
 
 public sealed record FleetQueryFilter(
     string? Search = null,
-    int? VehicleId = null,
-    int? DriverId = null,
+    Guid? VehicleId = null,
+    Guid? DriverId = null,
     bool? Active = null,
     bool? IsOpen = null,
     DateOnly? FromDate = null,
@@ -17,8 +17,8 @@ public sealed record FleetQueryFilter(
 {
     public FleetQueryFilter Validate()
     {
-        if (VehicleId is <= 0 || DriverId is <= 0)
-            throw new DomainException("Os identificadores dos filtros devem ser positivos.");
+        if (VehicleId == Guid.Empty || DriverId == Guid.Empty)
+            throw new DomainException("Os identificadores dos filtros devem ser válidos.");
         if (FromDate > ToDate || StartUtc > EndUtc)
             throw new DomainException("O início do período deve ser anterior ao fim.");
         if (StartUtc.HasValue && StartUtc.Value.Kind != DateTimeKind.Utc
@@ -30,21 +30,21 @@ public sealed record FleetQueryFilter(
     }
 }
 
-public sealed record DriverQuery(int Id, string Name, string LicenseNumber, DateOnly LicenseExpiration,
+public sealed record DriverQuery(Guid Id, string Name, string LicenseNumber, DateOnly LicenseExpiration,
     string LicenseCategory, string Cpf, string Rg, bool Active);
-public sealed record VehicleQuery(int Id, string Plate, string Model, string Chassis, string Renavam, bool Active);
-public sealed record MovementQuery(int Id, int VehicleId, string Model, int DriverId, string Name,
+public sealed record VehicleQuery(Guid Id, string Plate, string Model, string Chassis, string Renavam, bool Active);
+public sealed record MovementQuery(Guid Id, Guid VehicleId, string Model, Guid DriverId, string Name,
     DateTime DepartureUtc, DateTime? ArrivalUtc, string Description, int InitialMileage, int? FinalMileage,
     DateTime? ExpectedReturnUtc, string Plate);
-public sealed record RefuelingQuery(int Id, int VehicleId, string Model, int DriverId, string Name,
+public sealed record RefuelingQuery(Guid Id, Guid VehicleId, string Model, Guid DriverId, string Name,
     int Mileage, DateOnly Date, decimal Amount, decimal Liters, string Description);
-public sealed record FineQuery(int Id, int VehicleId, string Model, int DriverId, string Name,
+public sealed record FineQuery(Guid Id, Guid VehicleId, string Model, Guid DriverId, string Name,
     DateOnly Date, decimal Amount, int Points, string Description);
-public sealed record MaintenanceQuery(int Id, int VehicleId, string Model, DateOnly Date,
+public sealed record MaintenanceQuery(Guid Id, Guid VehicleId, string Model, DateOnly Date,
     decimal Amount, string Description);
-public sealed record VehicleStatusQuery(int Id, int VehicleId, string Model,
+public sealed record VehicleStatusQuery(Guid Id, Guid VehicleId, string Model,
     DateTime StartUtc, DateTime? EndUtc, string Description);
-public sealed record LicenseExpirationQuery(int Id, int DriverId, string Name, DateOnly Date, bool Expired);
+public sealed record LicenseExpirationQuery(Guid Id, Guid DriverId, string Name, DateOnly Date, bool Expired);
 
 public interface IFleetReadRepository
 {
@@ -56,5 +56,5 @@ public interface IFleetReadRepository
     Task<PagedResult<MaintenanceQuery>> MaintenanceAsync(FleetQueryFilter filter, PageRequest page, CancellationToken ct);
     Task<PagedResult<VehicleStatusQuery>> VehicleStatusesAsync(FleetQueryFilter filter, PageRequest page, CancellationToken ct);
     Task<PagedResult<LicenseExpirationQuery>> LicenseExpirationsAsync(FleetQueryFilter filter, PageRequest page, CancellationToken ct);
-    Task<int?> LatestMileageAsync(int vehicleId, string source, CancellationToken ct);
+    Task<int?> LatestMileageAsync(Guid vehicleId, string source, CancellationToken ct);
 }

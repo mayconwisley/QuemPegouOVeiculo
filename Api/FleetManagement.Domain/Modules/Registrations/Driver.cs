@@ -11,7 +11,7 @@ public sealed class Driver : IEntity
         Update(name, licenseNumber, licenseExpiration, licenseCategory, cpf, rg, active);
     }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
     public string Name { get; private set; } = "";
     public string LicenseNumber { get; private set; } = "";
     public DateOnly LicenseExpiration { get; private set; }

@@ -14,7 +14,7 @@ public static class Endpoints
             CancellationToken cancellationToken = default) =>
             (await queries.ListAsync(new PageRequest(page, pageSize), cancellationToken)).ToHttpResult());
 
-        group.MapGet("/{id:int:min(1)}", async (int id, FineQueries queries, CancellationToken cancellationToken) =>
+        group.MapGet("/{id:guid}", async (Guid id, FineQueries queries, CancellationToken cancellationToken) =>
         {
             return (await queries.GetAsync(id, cancellationToken)).ToHttpResult();
         });
@@ -25,13 +25,13 @@ public static class Endpoints
                 .ToCreatedHttpResult("/api/v1/fines");
         });
 
-        group.MapPut("/{id:int:min(1)}", async (int id, FineInput input, FineCommands commands,
+        group.MapPut("/{id:guid}", async (Guid id, FineInput input, FineCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.UpdateAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
-        group.MapDelete("/{id:int:min(1)}", async (int id, FineCommands commands, CancellationToken cancellationToken) =>
+        group.MapDelete("/{id:guid}", async (Guid id, FineCommands commands, CancellationToken cancellationToken) =>
         {
             return (await commands.DeleteAsync(id, cancellationToken)).ToHttpResult();
         });

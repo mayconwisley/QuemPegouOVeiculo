@@ -14,28 +14,28 @@ public sealed class VehicleReservation : IEntity
 {
     private VehicleReservation() { }
 
-    public VehicleReservation(int vehicleId, int driverId, DateTime startUtc, DateTime endUtc,
+    public VehicleReservation(Guid vehicleId, Guid driverId, DateTime startUtc, DateTime endUtc,
         string? purpose)
     {
-        VehicleId = Guard.PositiveId(vehicleId, "Veículo");
+        VehicleId = Guard.ValidId(vehicleId, "Veículo");
         UpdateSchedule(driverId, startUtc, endUtc, purpose);
         Status = ReservationStatuses.Confirmed;
     }
 
-    public int Id { get; private set; }
-    public int VehicleId { get; private set; }
-    public int DriverId { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
+    public Guid VehicleId { get; private set; }
+    public Guid DriverId { get; private set; }
     public DateTime StartUtc { get; private set; }
     public DateTime EndUtc { get; private set; }
     public string Purpose { get; private set; } = "";
     public string Status { get; private set; } = "";
     public int Revision { get; private set; }
 
-    public void UpdateSchedule(int driverId, DateTime startUtc, DateTime endUtc, string? purpose)
+    public void UpdateSchedule(Guid driverId, DateTime startUtc, DateTime endUtc, string? purpose)
     {
         if (Status is not ("" or ReservationStatuses.Confirmed))
             throw new DomainException("Somente reservas confirmadas podem ser alteradas.");
-        var validatedDriverId = Guard.PositiveId(driverId, "Motorista");
+        var validatedDriverId = Guard.ValidId(driverId, "Motorista");
         var validatedStart = Guard.Utc(startUtc, "Início da reserva");
         var validatedEnd = Guard.Utc(endUtc, "Fim da reserva");
         if (validatedEnd <= validatedStart)

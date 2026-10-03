@@ -4,12 +4,12 @@ using FleetManagement.Domain.Modules.Operations;
 
 namespace FleetManagement.Application.Modules.Operations.LicenseExpirations;
 
-public sealed record LicenseExpirationInput(int DriverId, DateOnly Date, bool Expired);
-public sealed record LicenseExpirationView(int Id, int DriverId, DateOnly Date, bool Expired);
+public sealed record LicenseExpirationInput(Guid DriverId, DateOnly Date, bool Expired);
+public sealed record LicenseExpirationView(Guid Id, Guid DriverId, DateOnly Date, bool Expired);
 
 public sealed class LicenseExpirationCommands(ICommandRepository<LicenseExpiration> repository)
 {
-    public async Task<Result<int>> CreateAsync(LicenseExpirationInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(LicenseExpirationInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -20,7 +20,7 @@ public sealed class LicenseExpirationCommands(ICommandRepository<LicenseExpirati
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, LicenseExpirationInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, LicenseExpirationInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -33,7 +33,7 @@ public sealed class LicenseExpirationCommands(ICommandRepository<LicenseExpirati
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -52,7 +52,7 @@ public sealed class LicenseExpirationQueries(IQueryRepository<LicenseExpiration>
     private static readonly Expression<Func<LicenseExpiration, LicenseExpirationView>> Projection = x =>
         new LicenseExpirationView(x.Id, x.DriverId, x.Date, x.Expired);
 
-    public async Task<Result<LicenseExpirationView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<LicenseExpirationView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;
 
 namespace FleetManagement.Wpf.Infrastructure.Api;
 
-public sealed record CurrentUser(int Id, string Username, string Role, bool IsActive)
+public sealed record CurrentUser(Guid Id, string Username, string Role, bool IsActive)
 {
     public bool CanWrite => Role is "Administrator" or "Operator";
     public bool IsAdmin => Role == "Administrator";

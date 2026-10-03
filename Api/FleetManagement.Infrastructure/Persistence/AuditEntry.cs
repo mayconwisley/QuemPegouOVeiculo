@@ -2,18 +2,18 @@ namespace FleetManagement.Infrastructure.Persistence;
 
 public sealed class AuditEntry
 {
-    public long Id { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
     public DateTime OccurredAtUtc { get; private set; }
-    public int? ActorUserId { get; private set; }
+    public Guid? ActorUserId { get; private set; }
     public string ActorUsername { get; private set; } = "";
     public string EntityName { get; private set; } = "";
-    public int EntityId { get; private set; }
+    public Guid EntityId { get; private set; }
     public string Action { get; private set; } = "";
     public string ChangesJson { get; private set; } = "";
 
     private AuditEntry() { }
 
-    public AuditEntry(int? actorUserId, string actorUsername, string entityName, int entityId,
+    public AuditEntry(Guid? actorUserId, string actorUsername, string entityName, Guid entityId,
         string action, string changesJson)
     {
         OccurredAtUtc = DateTime.UtcNow;

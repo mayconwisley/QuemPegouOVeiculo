@@ -7,8 +7,8 @@ namespace FleetManagement.Api.Modules.Queries;
 public sealed class FleetQueryParameters
 {
     public string? Search { get; set; }
-    public int? VehicleId { get; set; }
-    public int? DriverId { get; set; }
+    public Guid? VehicleId { get; set; }
+    public Guid? DriverId { get; set; }
     public bool? Active { get; set; }
     public bool? IsOpen { get; set; }
     public DateOnly? FromDate { get; set; }
@@ -56,8 +56,8 @@ public static class Endpoints
             CancellationToken ct) =>
             (await queries.LicenseExpirationsAsync(p.Filter, p.Pagination, ct)).ToHttpResult());
 
-        group.MapGet("/vehicles/{id:int:min(1)}/latest-mileage",
-            async (int id, string source, FleetQueries queries, CancellationToken ct) =>
+        group.MapGet("/vehicles/{id:guid}/latest-mileage",
+            async (Guid id, string source, FleetQueries queries, CancellationToken ct) =>
                 (await queries.LatestMileageAsync(id, source, ct)).ToHttpResult());
     }
 }

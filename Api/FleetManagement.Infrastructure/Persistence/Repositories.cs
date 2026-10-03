@@ -9,7 +9,7 @@ namespace FleetManagement.Infrastructure.Persistence;
 internal sealed class EfCommandRepository<TEntity>(FleetDbContext db) : ICommandRepository<TEntity>
     where TEntity : class, IEntity
 {
-    public Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
+    public Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
         db.Set<TEntity>().FindAsync([id], cancellationToken).AsTask();
 
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken) =>
@@ -39,7 +39,7 @@ internal sealed class EfCommandRepository<TEntity>(FleetDbContext db) : ICommand
 internal sealed class EfQueryRepository<TEntity>(FleetDbContext db) : IQueryRepository<TEntity>
     where TEntity : class, IEntity
 {
-    public Task<TResult?> GetByIdAsync<TResult>(int id, Expression<Func<TEntity, TResult>> projection,
+    public Task<TResult?> GetByIdAsync<TResult>(Guid id, Expression<Func<TEntity, TResult>> projection,
         CancellationToken cancellationToken) =>
         db.Set<TEntity>().AsNoTracking().Where(x => x.Id == id)
             .Select(projection).SingleOrDefaultAsync(cancellationToken);

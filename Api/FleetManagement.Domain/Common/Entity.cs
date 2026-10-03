@@ -2,7 +2,7 @@ namespace FleetManagement.Domain.Common;
 
 public interface IEntity
 {
-    int Id { get; }
+    Guid Id { get; }
 }
 
 public sealed class DomainException(string message) : Exception(message);

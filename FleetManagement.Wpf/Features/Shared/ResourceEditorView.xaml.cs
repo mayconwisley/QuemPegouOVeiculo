@@ -84,8 +84,8 @@ public partial class ResourceEditorView : UserControl
     {
         var button = new Button
         {
-            Content = int.TryParse(raw, out var id) ? $"Selecionado: #{id}" : "Selecionar...",
-            Tag = int.TryParse(raw, out var selectedId) ? selectedId : null,
+            Content = Guid.TryParse(raw, out var id) ? $"Selecionado: {id:D}" : "Selecionar...",
+            Tag = Guid.TryParse(raw, out var selectedId) ? selectedId : null,
             HorizontalContentAlignment = HorizontalAlignment.Left
         };
         button.Click += (_, _) =>
@@ -112,7 +112,7 @@ public partial class ResourceEditorView : UserControl
         EditorContent.Visibility = Visibility.Visible;
     }
 
-    private async Task PrefillMileageAsync(int vehicleId)
+    private async Task PrefillMileageAsync(Guid vehicleId)
     {
         if (_original is not null) return;
         var (key, source) = _resourceKey switch
@@ -189,7 +189,7 @@ public partial class ResourceEditorView : UserControl
             return JsonValue.Create(check.IsChecked == true);
         if (control is Button button)
         {
-            if (button.Tag is int id)
+            if (button.Tag is Guid id)
                 return JsonValue.Create(id);
             throw new FormatException($"Selecione {field.Label.ToLower(PtBr)}.");
         }

@@ -10,7 +10,7 @@ internal sealed class DriverConfiguration : IEntityTypeConfiguration<Driver>
     {
         builder.ToTable("drivers", "registrations");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.Name).HasColumnName("name").HasMaxLength(150).IsRequired();
         builder.Property(x => x.LicenseNumber).HasColumnName("license_number").HasMaxLength(20).IsRequired();
         builder.Property(x => x.LicenseExpiration).HasColumnName("license_expiration").HasColumnType("date");
@@ -28,7 +28,7 @@ internal sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
     {
         builder.ToTable("vehicles", "registrations");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.Plate).HasColumnName("plate").HasMaxLength(7).IsRequired();
         builder.Property(x => x.Model).HasColumnName("model").HasMaxLength(150).IsRequired();
         builder.Property(x => x.Chassis).HasColumnName("chassis").HasMaxLength(30).IsRequired();

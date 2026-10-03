@@ -4,14 +4,14 @@ using FleetManagement.Domain.Modules.Access;
 
 namespace FleetManagement.Application.Modules.Access;
 
-public sealed record UserView(int Id, string Username, string Role, bool IsActive);
+public sealed record UserView(Guid Id, string Username, string Role, bool IsActive);
 public sealed record UserInput(string Username, string Password, string Role);
 public sealed record UserUpdate(string Role, bool IsActive);
 
 public interface IUserAccountStore
 {
     Task<UserAccount?> FindByUsernameAsync(string username, CancellationToken ct);
-    Task<UserAccount?> FindByIdAsync(int id, CancellationToken ct);
+    Task<UserAccount?> FindByIdAsync(Guid id, CancellationToken ct);
     Task<IReadOnlyList<UserView>> ListAsync(CancellationToken ct);
     Task<int> ActiveAdministratorsAsync(CancellationToken ct);
     Task AddAsync(UserAccount user, CancellationToken ct);
@@ -52,7 +52,7 @@ public sealed class AccessService(IUserAccountStore store, IPasswordService pass
             return Result<UserView>.Success(new UserView(user.Id, user.Username, user.Role, user.IsActive));
         });
 
-    public Task<Result> UpdateAsync(int id, UserUpdate input, int actorId, CancellationToken ct) =>
+    public Task<Result> UpdateAsync(Guid id, UserUpdate input, Guid actorId, CancellationToken ct) =>
         Result.CaptureAsync(async () =>
         {
             var user = await store.FindByIdAsync(id, ct);
@@ -72,7 +72,7 @@ public sealed class AccessService(IUserAccountStore store, IPasswordService pass
             return Result.Success();
         });
 
-    public Task<Result> ResetPasswordAsync(int id, string password, CancellationToken ct) =>
+    public Task<Result> ResetPasswordAsync(Guid id, string password, CancellationToken ct) =>
         Result.CaptureAsync(async () =>
         {
             ValidatePassword(password);

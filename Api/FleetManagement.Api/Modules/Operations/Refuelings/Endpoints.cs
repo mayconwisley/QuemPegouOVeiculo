@@ -14,7 +14,7 @@ public static class Endpoints
             CancellationToken cancellationToken = default) =>
             (await queries.ListAsync(new PageRequest(page, pageSize), cancellationToken)).ToHttpResult());
 
-        group.MapGet("/{id:int:min(1)}", async (int id, RefuelingQueries queries, CancellationToken cancellationToken) =>
+        group.MapGet("/{id:guid}", async (Guid id, RefuelingQueries queries, CancellationToken cancellationToken) =>
         {
             return (await queries.GetAsync(id, cancellationToken)).ToHttpResult();
         });
@@ -26,13 +26,13 @@ public static class Endpoints
                 .ToCreatedHttpResult("/api/v1/refuelings");
         });
 
-        group.MapPut("/{id:int:min(1)}", async (int id, RefuelingInput input, RefuelingCommands commands,
+        group.MapPut("/{id:guid}", async (Guid id, RefuelingInput input, RefuelingCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.UpdateAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
-        group.MapDelete("/{id:int:min(1)}", async (int id, RefuelingCommands commands,
+        group.MapDelete("/{id:guid}", async (Guid id, RefuelingCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.DeleteAsync(id, cancellationToken)).ToHttpResult();

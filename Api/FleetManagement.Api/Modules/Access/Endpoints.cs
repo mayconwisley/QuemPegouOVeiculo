@@ -25,7 +25,7 @@ public static class Endpoints
 
         auth.MapGet("/me", (ClaimsPrincipal principal) => Results.Ok(new
         {
-            id = int.Parse(principal.FindFirstValue("sub")!),
+            id = Guid.Parse(principal.FindFirstValue("sub")!),
             username = principal.FindFirstValue("name"),
             role = principal.FindFirstValue("role")
         }));
@@ -35,10 +35,10 @@ public static class Endpoints
             Results.Ok(await access.ListAsync(ct)));
         users.MapPost("/", async (UserInput input, AccessService access, CancellationToken ct) =>
             (await access.CreateAsync(input, ct)).ToHttpResult());
-        users.MapPut("/{id:int:min(1)}", async (int id, UserUpdate input, ClaimsPrincipal principal,
+        users.MapPut("/{id:guid}", async (Guid id, UserUpdate input, ClaimsPrincipal principal,
             AccessService access, CancellationToken ct) =>
-            (await access.UpdateAsync(id, input, int.Parse(principal.FindFirstValue("sub")!), ct)).ToHttpResult());
-        users.MapPut("/{id:int:min(1)}/password", async (int id, PasswordInput input,
+            (await access.UpdateAsync(id, input, Guid.Parse(principal.FindFirstValue("sub")!), ct)).ToHttpResult());
+        users.MapPut("/{id:guid}/password", async (Guid id, PasswordInput input,
             AccessService access, CancellationToken ct) =>
             (await access.ResetPasswordAsync(id, input.Password, ct)).ToHttpResult());
 

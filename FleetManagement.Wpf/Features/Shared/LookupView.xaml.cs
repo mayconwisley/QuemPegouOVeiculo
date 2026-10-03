@@ -26,7 +26,7 @@ public partial class LookupView : UserControl
         DescriptionText.Text = vehicles
             ? "Busque um veículo cadastrado para continuar."
             : "Busque um motorista cadastrado para continuar.";
-        OptionsGrid.Columns[1].Header = vehicles ? "Placa e modelo" : "Nome";
+        OptionsGrid.Columns[0].Header = vehicles ? "Placa e modelo" : "Nome";
         PreviousButton.IsEnabled = NextButton.IsEnabled = false;
         Loaded += async (_, _) =>
         {
@@ -59,7 +59,7 @@ public partial class LookupView : UserControl
             var result = await _api.GetPageAsync(path, _load.Token);
             _total = result.Total;
             OptionsGrid.ItemsSource = result.Items.Select(item => new LookupRow(
-                item["id"]?.GetValue<int>() ?? 0,
+                Guid.TryParse(item["id"]?.ToString(), out var id) ? id : Guid.Empty,
                 _vehicles
                     ? $"{item["plate"]} · {item["model"]}"
                     : item["name"]?.ToString() ?? "")).ToArray();
@@ -122,5 +122,5 @@ public partial class LookupView : UserControl
             _select(row);
     }
 
-    public sealed record LookupRow(int Id, string Label);
+    public sealed record LookupRow(Guid Id, string Label);
 }

@@ -13,18 +13,18 @@ public sealed class MovementChecklist : IEntity
 {
     private MovementChecklist() { }
 
-    public MovementChecklist(int movementId, string phase, bool tiresOk, bool lightsOk,
+    public MovementChecklist(Guid movementId, string phase, bool tiresOk, bool lightsOk,
         bool fluidsOk, bool bodyOk, string? notes, DateTime checkedAtUtc)
     {
-        MovementId = Guard.PositiveId(movementId, "Movimentação");
+        MovementId = Guard.ValidId(movementId, "Movimentação");
         if (!ChecklistPhases.IsValid(phase))
             throw new DomainException("Etapa do checklist inválida.");
         Phase = phase;
         Update(tiresOk, lightsOk, fluidsOk, bodyOk, notes, checkedAtUtc);
     }
 
-    public int Id { get; private set; }
-    public int MovementId { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
+    public Guid MovementId { get; private set; }
     public string Phase { get; private set; } = "";
     public bool TiresOk { get; private set; }
     public bool LightsOk { get; private set; }

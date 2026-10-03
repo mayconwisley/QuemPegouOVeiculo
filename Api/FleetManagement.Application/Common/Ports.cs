@@ -5,7 +5,7 @@ namespace FleetManagement.Application.Common;
 
 public interface ICommandRepository<TEntity> where TEntity : class, IEntity
 {
-    Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     Task AddAsync(TEntity entity, CancellationToken cancellationToken);
     void Remove(TEntity entity);
     Task SaveChangesAsync(CancellationToken cancellationToken);
@@ -13,7 +13,7 @@ public interface ICommandRepository<TEntity> where TEntity : class, IEntity
 
 public interface IQueryRepository<TEntity> where TEntity : class, IEntity
 {
-    Task<TResult?> GetByIdAsync<TResult>(int id, Expression<Func<TEntity, TResult>> projection,
+    Task<TResult?> GetByIdAsync<TResult>(Guid id, Expression<Func<TEntity, TResult>> projection,
         CancellationToken cancellationToken);
     Task<PagedResult<TResult>> ListAsync<TResult>(PageRequest page, Expression<Func<TEntity, TResult>> projection,
         CancellationToken cancellationToken);

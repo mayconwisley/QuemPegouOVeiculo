@@ -6,22 +6,22 @@ namespace FleetManagement.Application.Modules.Operations.Movements;
 public sealed record ChecklistInput(bool TiresOk, bool LightsOk, bool FluidsOk,
     bool BodyOk, string? Notes, DateTime CheckedAtUtc);
 
-public sealed record ChecklistView(int Id, int MovementId, string Phase, bool TiresOk,
+public sealed record ChecklistView(Guid Id, Guid MovementId, string Phase, bool TiresOk,
     bool LightsOk, bool FluidsOk, bool BodyOk, string Notes, DateTime CheckedAtUtc);
 
 public interface IMovementChecklistStore
 {
-    Task<MovementChecklist?> FindAsync(int movementId, string phase, CancellationToken ct);
-    Task<IReadOnlyList<ChecklistView>> ListAsync(int movementId, CancellationToken ct);
+    Task<MovementChecklist?> FindAsync(Guid movementId, string phase, CancellationToken ct);
+    Task<IReadOnlyList<ChecklistView>> ListAsync(Guid movementId, CancellationToken ct);
     Task AddAsync(MovementChecklist checklist, CancellationToken ct);
-    Task DeleteForMovementAsync(int movementId, CancellationToken ct);
+    Task DeleteForMovementAsync(Guid movementId, CancellationToken ct);
     Task SaveAsync(CancellationToken ct);
 }
 
 public sealed class ChecklistService(IMovementChecklistStore store,
     ICommandRepository<VehicleMovement> movements)
 {
-    public Task<Result<IReadOnlyList<ChecklistView>>> ListAsync(int movementId, CancellationToken ct) =>
+    public Task<Result<IReadOnlyList<ChecklistView>>> ListAsync(Guid movementId, CancellationToken ct) =>
         Result.CaptureValueAsync(async () =>
         {
             if (await movements.GetByIdAsync(movementId, ct) is null)
@@ -29,7 +29,7 @@ public sealed class ChecklistService(IMovementChecklistStore store,
             return Result<IReadOnlyList<ChecklistView>>.Success(await store.ListAsync(movementId, ct));
         });
 
-    public Task<Result> SaveAsync(int movementId, string phase, ChecklistInput input, CancellationToken ct) =>
+    public Task<Result> SaveAsync(Guid movementId, string phase, ChecklistInput input, CancellationToken ct) =>
         Result.CaptureAsync(async () =>
         {
             if (!ChecklistPhases.IsValid(phase))

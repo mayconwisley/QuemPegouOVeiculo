@@ -7,7 +7,7 @@ namespace FleetManagement.Infrastructure.Persistence;
 
 internal sealed class ReservationReadRepository(FleetDbContext db) : IReservationReadRepository
 {
-    public Task<ReservationView?> GetAsync(int id, CancellationToken ct) =>
+    public Task<ReservationView?> GetAsync(Guid id, CancellationToken ct) =>
         Project(db.Reservations.AsNoTracking().Where(x => x.Id == id))
             .SingleOrDefaultAsync(ct);
 
@@ -16,7 +16,7 @@ internal sealed class ReservationReadRepository(FleetDbContext db) : IReservatio
     {
         var offset = page.Offset;
         var query = db.Reservations.AsNoTracking();
-        if (filter.VehicleId is int vehicleId)
+        if (filter.VehicleId is Guid vehicleId)
             query = query.Where(x => x.VehicleId == vehicleId);
         if (filter.Status is not null)
             query = query.Where(x => x.Status == filter.Status);
@@ -39,5 +39,5 @@ internal sealed class ReservationReadRepository(FleetDbContext db) : IReservatio
             reservation.StartUtc, reservation.EndUtc, reservation.Purpose, reservation.Status,
             vehicle.Plate, vehicle.Model, driver.Name,
             db.Movements.Where(x => x.ReservationId == reservation.Id)
-                .Select(x => (int?)x.Id).FirstOrDefault());
+                .Select(x => (Guid?)x.Id).FirstOrDefault());
 }

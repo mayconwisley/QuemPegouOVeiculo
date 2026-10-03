@@ -10,7 +10,7 @@ internal sealed class UserAccountConfiguration : IEntityTypeConfiguration<UserAc
     {
         builder.ToTable("users", "security");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.Username).HasColumnName("username").HasMaxLength(80).IsRequired();
         builder.Property(x => x.PasswordHash).HasColumnName("password_hash").HasMaxLength(500).IsRequired();
         builder.Property(x => x.SecurityVersion).HasColumnName("security_version").HasMaxLength(32).IsRequired();
@@ -26,7 +26,7 @@ internal sealed class AuditEntryConfiguration : IEntityTypeConfiguration<AuditEn
     {
         builder.ToTable("audit_entries", "security");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.OccurredAtUtc).HasColumnName("occurred_at_utc").IsRequired();
         builder.Property(x => x.ActorUserId).HasColumnName("actor_user_id");
         builder.Property(x => x.ActorUsername).HasColumnName("actor_username").HasMaxLength(80).IsRequired();

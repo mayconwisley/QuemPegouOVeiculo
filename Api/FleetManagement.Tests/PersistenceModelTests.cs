@@ -1,5 +1,6 @@
 using FleetManagement.Domain.Modules.Operations;
 using FleetManagement.Domain.Modules.Registrations;
+using FleetManagement.Domain.Modules.Access;
 using FleetManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -39,6 +40,37 @@ public sealed class PersistenceModelTests
 
         Assert.NotNull(property);
         Assert.Equal("license_number", property.GetColumnName(StoreObjectIdentifier.Table("drivers", "registrations")));
+    }
+
+    [Fact]
+    public void AllPersistedEntitiesUseApplicationGeneratedUuidKeysAndUuidReferences()
+    {
+        using var context = CreateContext();
+
+        foreach (var entity in context.Model.GetEntityTypes())
+        {
+            var key = Assert.Single(entity.FindPrimaryKey()!.Properties);
+            Assert.Equal(typeof(Guid), key.ClrType);
+            Assert.Equal(ValueGenerated.Never, key.ValueGenerated);
+
+            foreach (var property in entity.GetProperties().Where(p => p.Name.EndsWith("Id", StringComparison.Ordinal)))
+            {
+                var actualType = Nullable.GetUnderlyingType(property.ClrType) ?? property.ClrType;
+                Assert.Equal(typeof(Guid), actualType);
+            }
+        }
+    }
+
+    [Fact]
+    public void NewEntitiesHaveVersionSevenIdsBeforePersistence()
+    {
+        var vehicle = new Vehicle("ABC1D23", "Sedan", null, null, true);
+        var user = new UserAccount("admin", "hash", UserRoles.Administrator);
+
+        Assert.Equal('7', vehicle.Id.ToString("D")[14]);
+        Assert.Equal('7', user.Id.ToString("D")[14]);
+        Assert.NotEqual(Guid.Empty, vehicle.Id);
+        Assert.NotEqual(Guid.Empty, user.Id);
     }
 
     private static FleetDbContext CreateContext()

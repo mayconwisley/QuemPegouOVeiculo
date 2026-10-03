@@ -40,7 +40,7 @@ internal sealed class TokenService(TokenSettings settings)
         var expires = DateTime.UtcNow.AddHours(8);
         var claims = new[]
         {
-            new Claim("sub", user.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+            new Claim("sub", user.Id.ToString("D")),
             new Claim("name", user.Username),
             new Claim("role", user.Role),
             new Claim("stamp", settings.SecurityStamp(user))

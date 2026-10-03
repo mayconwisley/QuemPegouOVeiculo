@@ -4,15 +4,15 @@ using FleetManagement.Domain.Modules.Operations;
 
 namespace FleetManagement.Application.Modules.Operations.Refuelings;
 
-public sealed record RefuelingInput(int VehicleId, int DriverId, int Mileage,
+public sealed record RefuelingInput(Guid VehicleId, Guid DriverId, int Mileage,
     DateOnly Date, decimal Amount, decimal Liters, string? Description);
 
-public sealed record RefuelingView(int Id, int VehicleId, int DriverId, int Mileage,
+public sealed record RefuelingView(Guid Id, Guid VehicleId, Guid DriverId, int Mileage,
     DateOnly Date, decimal Amount, decimal Liters, string Description);
 
 public sealed class RefuelingCommands(ICommandRepository<Refueling> repository)
 {
-    public async Task<Result<int>> CreateAsync(RefuelingInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(RefuelingInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -24,7 +24,7 @@ public sealed class RefuelingCommands(ICommandRepository<Refueling> repository)
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, RefuelingInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, RefuelingInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -38,7 +38,7 @@ public sealed class RefuelingCommands(ICommandRepository<Refueling> repository)
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -58,7 +58,7 @@ public sealed class RefuelingQueries(IQueryRepository<Refueling> repository)
         new RefuelingView(x.Id, x.VehicleId, x.DriverId, x.Mileage,
             x.Date, x.Amount, x.Liters, x.Description);
 
-    public async Task<Result<RefuelingView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<RefuelingView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

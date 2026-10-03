@@ -5,10 +5,10 @@ using FleetManagement.Domain.Modules.Operations;
 
 namespace FleetManagement.Application.Modules.Operations.MaintenanceRecords;
 
-public sealed record MaintenancePlanInput(int VehicleId, string Name, int? IntervalDays,
+public sealed record MaintenancePlanInput(Guid VehicleId, string Name, int? IntervalDays,
     int? IntervalMileage, DateOnly? NextDueDate, int? NextDueMileage, bool IsActive);
 
-public sealed record MaintenancePlanView(int Id, int VehicleId, string Name, int? IntervalDays,
+public sealed record MaintenancePlanView(Guid Id, Guid VehicleId, string Name, int? IntervalDays,
     int? IntervalMileage, DateOnly? NextDueDate, int? NextDueMileage,
     DateOnly? LastCompletedOn, int? LastCompletedMileage, bool IsActive);
 
@@ -16,14 +16,14 @@ public sealed record CompletePlanInput(DateOnly Date, int Mileage, decimal Amoun
 
 public interface IVehicleMileageReader
 {
-    Task<int> ReadMaximumAsync(int vehicleId, CancellationToken ct);
+    Task<int> ReadMaximumAsync(Guid vehicleId, CancellationToken ct);
 }
 
 public sealed class MaintenancePlanCommands(ICommandRepository<MaintenancePlan> plans,
     ICommandRepository<Maintenance> records, IRegistrationStatusReader registrations,
     IVehicleMileageReader mileageReader)
 {
-    public Task<Result<int>> CreateAsync(MaintenancePlanInput input, CancellationToken ct) =>
+    public Task<Result<Guid>> CreateAsync(MaintenancePlanInput input, CancellationToken ct) =>
         Result.CaptureValueAsync(async () =>
         {
             var plan = new MaintenancePlan(input.VehicleId, input.Name, input.IntervalDays,
@@ -32,13 +32,13 @@ public sealed class MaintenancePlanCommands(ICommandRepository<MaintenancePlan> 
                 plan.Update(input.VehicleId, input.Name, input.IntervalDays,
                     input.IntervalMileage, input.NextDueDate, input.NextDueMileage, false);
             if (await registrations.IsVehicleActiveAsync(input.VehicleId, ct) is not true)
-                return Result<int>.Failure(Error.Conflict("O veículo deve existir e estar ativo."));
+                return Result<Guid>.Failure(Error.Conflict("O veículo deve existir e estar ativo."));
             await plans.AddAsync(plan, ct);
             await plans.SaveChangesAsync(ct);
-            return Result<int>.Success(plan.Id);
+            return Result<Guid>.Success(plan.Id);
         });
 
-    public Task<Result> UpdateAsync(int id, MaintenancePlanInput input, CancellationToken ct) =>
+    public Task<Result> UpdateAsync(Guid id, MaintenancePlanInput input, CancellationToken ct) =>
         Result.CaptureAsync(async () =>
         {
             var plan = await plans.GetByIdAsync(id, ct);
@@ -55,7 +55,7 @@ public sealed class MaintenancePlanCommands(ICommandRepository<MaintenancePlan> 
             return Result.Success();
         });
 
-    public Task<Result> CompleteAsync(int id, CompletePlanInput input, CancellationToken ct) =>
+    public Task<Result> CompleteAsync(Guid id, CompletePlanInput input, CancellationToken ct) =>
         Result.CaptureAsync(async () =>
         {
             var plan = await plans.GetByIdAsync(id, ct);
@@ -80,7 +80,7 @@ public sealed class MaintenancePlanQueries(IQueryRepository<MaintenancePlan> pla
         new MaintenancePlanView(x.Id, x.VehicleId, x.Name, x.IntervalDays, x.IntervalMileage,
             x.NextDueDate, x.NextDueMileage, x.LastCompletedOn, x.LastCompletedMileage, x.IsActive);
 
-    public Task<Result<MaintenancePlanView>> GetAsync(int id, CancellationToken ct) =>
+    public Task<Result<MaintenancePlanView>> GetAsync(Guid id, CancellationToken ct) =>
         Result.CaptureValueAsync(async () =>
         {
             var plan = await plans.GetByIdAsync(id, Projection, ct);

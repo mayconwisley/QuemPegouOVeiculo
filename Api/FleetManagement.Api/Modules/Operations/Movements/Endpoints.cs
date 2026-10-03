@@ -14,7 +14,7 @@ public static class Endpoints
             CancellationToken cancellationToken = default) =>
             (await queries.ListAsync(new PageRequest(page, pageSize), cancellationToken)).ToHttpResult());
 
-        group.MapGet("/{id:int:min(1)}", async (int id, MovementQueries queries, CancellationToken cancellationToken) =>
+        group.MapGet("/{id:guid}", async (Guid id, MovementQueries queries, CancellationToken cancellationToken) =>
         {
             return (await queries.GetAsync(id, cancellationToken)).ToHttpResult();
         });
@@ -26,31 +26,31 @@ public static class Endpoints
                 .ToCreatedHttpResult("/api/v1/movements");
         });
 
-        group.MapPut("/{id:int:min(1)}", async (int id, MovementInput input, MovementCommands commands,
+        group.MapPut("/{id:guid}", async (Guid id, MovementInput input, MovementCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.UpdateAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
-        group.MapPost("/{id:int:min(1)}/complete", async (int id, CompleteMovementInput input,
+        group.MapPost("/{id:guid}/complete", async (Guid id, CompleteMovementInput input,
             MovementCommands commands, CancellationToken cancellationToken) =>
         {
             return (await commands.ConcludeAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
-        group.MapPut("/{id:int:min(1)}/expected-return", async (int id, ExpectedReturnInput input,
+        group.MapPut("/{id:guid}/expected-return", async (Guid id, ExpectedReturnInput input,
             MovementCommands commands, CancellationToken cancellationToken) =>
             (await commands.ScheduleReturnAsync(id, input.ExpectedReturnUtc, cancellationToken)).ToHttpResult());
 
-        group.MapGet("/{id:int:min(1)}/checklists", async (int id, ChecklistService checklists,
+        group.MapGet("/{id:guid}/checklists", async (Guid id, ChecklistService checklists,
             CancellationToken cancellationToken) =>
             (await checklists.ListAsync(id, cancellationToken)).ToHttpResult());
 
-        group.MapPut("/{id:int:min(1)}/checklists/{phase}", async (int id, string phase,
+        group.MapPut("/{id:guid}/checklists/{phase}", async (Guid id, string phase,
             ChecklistInput input, ChecklistService checklists, CancellationToken cancellationToken) =>
             (await checklists.SaveAsync(id, phase, input, cancellationToken)).ToHttpResult());
 
-        group.MapDelete("/{id:int:min(1)}", async (int id, MovementCommands commands,
+        group.MapDelete("/{id:guid}", async (Guid id, MovementCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.DeleteAsync(id, cancellationToken)).ToHttpResult();

@@ -16,7 +16,7 @@ internal sealed class MovementConfiguration : IEntityTypeConfiguration<VehicleMo
             table.HasCheckConstraint("ck_vehicle_movements_expected_return", "expected_return_utc IS NULL OR expected_return_utc >= departure_utc");
         });
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.DriverId).HasColumnName("driver_id");
         builder.Property(x => x.ReservationId).HasColumnName("reservation_id");
@@ -50,7 +50,7 @@ internal sealed class ReservationConfiguration : IEntityTypeConfiguration<Vehicl
             table.HasCheckConstraint("ck_vehicle_reservations_revision", "revision > 0");
         });
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.DriverId).HasColumnName("driver_id");
         builder.Property(x => x.StartUtc).HasColumnName("start_utc").HasColumnType("timestamp with time zone");
@@ -72,7 +72,7 @@ internal sealed class MovementChecklistConfiguration : IEntityTypeConfiguration<
         builder.ToTable("movement_checklists", "operations", table =>
             table.HasCheckConstraint("ck_movement_checklists_phase", "phase IN ('departure', 'arrival')"));
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.MovementId).HasColumnName("movement_id");
         builder.Property(x => x.Phase).HasColumnName("phase").HasMaxLength(12).IsRequired();
         builder.Property(x => x.TiresOk).HasColumnName("tires_ok");
@@ -93,7 +93,7 @@ internal sealed class RefuelingConfiguration : IEntityTypeConfiguration<Refuelin
         builder.ToTable("refuelings", "operations", table =>
             table.HasCheckConstraint("ck_refuelings_values", "mileage >= 0 AND amount >= 0 AND liters > 0"));
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.DriverId).HasColumnName("driver_id");
         builder.Property(x => x.Mileage).HasColumnName("mileage");
@@ -114,7 +114,7 @@ internal sealed class FineConfiguration : IEntityTypeConfiguration<Fine>
         builder.ToTable("fines", "operations", table =>
             table.HasCheckConstraint("ck_fines_values", "amount >= 0 AND points >= 0"));
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.DriverId).HasColumnName("driver_id");
         builder.Property(x => x.Date).HasColumnName("date").HasColumnType("date");
@@ -134,7 +134,7 @@ internal sealed class MaintenanceConfiguration : IEntityTypeConfiguration<Mainte
         builder.ToTable("maintenance_records", "operations", table =>
             table.HasCheckConstraint("ck_maintenance_records_amount", "amount >= 0"));
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.PlanId).HasColumnName("plan_id");
         builder.Property(x => x.Date).HasColumnName("date").HasColumnType("date");
@@ -156,7 +156,7 @@ internal sealed class MaintenancePlanConfiguration : IEntityTypeConfiguration<Ma
             table.HasCheckConstraint("ck_maintenance_plans_revision", "revision > 0");
         });
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.Name).HasColumnName("name").HasMaxLength(120).IsRequired();
         builder.Property(x => x.IntervalDays).HasColumnName("interval_days");
@@ -180,7 +180,7 @@ internal sealed class VehicleStatusConfiguration : IEntityTypeConfiguration<Vehi
         builder.ToTable("vehicle_statuses", "operations", table =>
             table.HasCheckConstraint("ck_vehicle_statuses_dates", "end_utc IS NULL OR end_utc >= start_utc"));
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.VehicleId).HasColumnName("vehicle_id");
         builder.Property(x => x.StartUtc).HasColumnName("start_utc").HasColumnType("timestamp with time zone");
         builder.Property(x => x.EndUtc).HasColumnName("end_utc").HasColumnType("timestamp with time zone");
@@ -196,7 +196,7 @@ internal sealed class LicenseExpirationConfiguration : IEntityTypeConfiguration<
     {
         builder.ToTable("license_expirations", "operations");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.Id).HasColumnName("id").ValueGeneratedNever();
         builder.Property(x => x.DriverId).HasColumnName("driver_id");
         builder.Property(x => x.Date).HasColumnName("date").HasColumnType("date");
         builder.Property(x => x.Expired).HasColumnName("expired");

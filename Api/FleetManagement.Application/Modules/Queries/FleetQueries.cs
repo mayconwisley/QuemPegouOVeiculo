@@ -39,7 +39,7 @@ public sealed class FleetQueries(IFleetReadRepository queries)
         Result.TryAsync(() => queries.LicenseExpirationsAsync(filter.Validate(), page, cancellationToken));
 
     public Task<Result<LatestMileageView>> LatestMileageAsync(
-        int vehicleId, string source, CancellationToken cancellationToken) =>
+        Guid vehicleId, string source, CancellationToken cancellationToken) =>
         Result.TryAsync(async () => new LatestMileageView(
             await queries.LatestMileageAsync(vehicleId, source, cancellationToken)));
 }

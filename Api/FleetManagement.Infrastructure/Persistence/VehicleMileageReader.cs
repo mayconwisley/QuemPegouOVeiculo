@@ -5,7 +5,7 @@ namespace FleetManagement.Infrastructure.Persistence;
 
 internal sealed class VehicleMileageReader(FleetDbContext db) : IVehicleMileageReader
 {
-    public async Task<int> ReadMaximumAsync(int vehicleId, CancellationToken ct)
+    public async Task<int> ReadMaximumAsync(Guid vehicleId, CancellationToken ct)
     {
         var movement = await db.Movements.AsNoTracking().Where(x => x.VehicleId == vehicleId)
             .MaxAsync(x => (int?)(x.FinalMileage ?? x.InitialMileage), ct) ?? 0;

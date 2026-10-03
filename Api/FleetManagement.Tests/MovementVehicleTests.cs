@@ -10,7 +10,7 @@ public sealed class MovementVehicleTests
     [Fact]
     public void Complete_RequiresConsistentArrivalAndMileage()
     {
-        var movement = new VehicleMovement(1, 2, Departure, 100, null);
+        var movement = new VehicleMovement(TestIds.Vehicle, TestIds.Driver, Departure, 100, null);
 
         Assert.Throws<DomainException>(() => movement.Complete(Departure.AddMinutes(-1), 110));
         Assert.Throws<DomainException>(() => movement.Complete(Departure.AddMinutes(1), 99));
@@ -19,7 +19,7 @@ public sealed class MovementVehicleTests
     [Fact]
     public void Complete_RejectsSecondCompletion()
     {
-        var movement = new VehicleMovement(1, 2, Departure, 100, null);
+        var movement = new VehicleMovement(TestIds.Vehicle, TestIds.Driver, Departure, 100, null);
 
         movement.Complete(Departure.AddHours(1), 120);
 
@@ -30,10 +30,10 @@ public sealed class MovementVehicleTests
     [Fact]
     public void Update_RequiresArrivalAndFinalMileageTogether()
     {
-        var movement = new VehicleMovement(1, 2, Departure, 100, null);
+        var movement = new VehicleMovement(TestIds.Vehicle, TestIds.Driver, Departure, 100, null);
 
-        Assert.Throws<DomainException>(() => movement.Update(1, 2, Departure, Departure.AddHours(1), 100, null, null));
-        Assert.Throws<DomainException>(() => movement.Update(1, 2, Departure, null, 100, 120, null));
+        Assert.Throws<DomainException>(() => movement.Update(TestIds.Vehicle, TestIds.Driver, Departure, Departure.AddHours(1), 100, null, null));
+        Assert.Throws<DomainException>(() => movement.Update(TestIds.Vehicle, TestIds.Driver, Departure, null, 100, 120, null));
         Assert.True(movement.IsOpen);
         Assert.Null(movement.FinalMileage);
     }
@@ -43,6 +43,6 @@ public sealed class MovementVehicleTests
     {
         var horarioLocal = DateTime.SpecifyKind(Departure, DateTimeKind.Local);
 
-        Assert.Throws<DomainException>(() => new VehicleMovement(1, 2, horarioLocal, 100, null));
+        Assert.Throws<DomainException>(() => new VehicleMovement(TestIds.Vehicle, TestIds.Driver, horarioLocal, 100, null));
     }
 }

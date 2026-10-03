@@ -193,7 +193,7 @@ internal sealed class FleetReadRepository(FleetDbContext db) : IFleetReadReposit
                 x.driver.Name, x.item.Date, x.item.Expired)), page, ct);
     }
 
-    public Task<int?> LatestMileageAsync(int vehicleId, string source, CancellationToken ct) => source switch
+    public Task<int?> LatestMileageAsync(Guid vehicleId, string source, CancellationToken ct) => source switch
     {
         "refueling" => db.Refuelings.AsNoTracking().Where(x => x.VehicleId == vehicleId)
             .OrderByDescending(x => x.Id).Select(x => (int?)x.Mileage).FirstOrDefaultAsync(ct),

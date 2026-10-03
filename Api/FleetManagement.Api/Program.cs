@@ -65,7 +65,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     {
         OnTokenValidated = async context =>
         {
-            if (!int.TryParse(context.Principal?.FindFirstValue("sub"), out var id))
+            if (!Guid.TryParse(context.Principal?.FindFirstValue("sub"), out var id)
+                || id == Guid.Empty)
             {
                 context.Fail("Sessão inválida.");
                 return;

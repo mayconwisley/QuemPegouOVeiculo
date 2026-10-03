@@ -24,7 +24,7 @@ public sealed class UserAccount : IEntity
         IsActive = true;
     }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
     public string Username { get; private set; } = "";
     public string PasswordHash { get; private set; } = "";
     public string Role { get; private set; } = "";

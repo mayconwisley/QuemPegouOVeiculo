@@ -6,15 +6,15 @@ using FleetManagement.Application.Modules.Operations.Reservations;
 
 namespace FleetManagement.Application.Modules.Operations.Movements;
 
-public sealed record MovementInput(int VehicleId, int DriverId, DateTime DepartureUtc,
+public sealed record MovementInput(Guid VehicleId, Guid DriverId, DateTime DepartureUtc,
     DateTime? ArrivalUtc, int InitialMileage, int? FinalMileage, string? Description,
     DateTime? ExpectedReturnUtc = null);
 
 public sealed record CompleteMovementInput(DateTime ArrivalUtc, int FinalMileage);
 
-public sealed record MovementView(int Id, int VehicleId, int DriverId, DateTime DepartureUtc,
+public sealed record MovementView(Guid Id, Guid VehicleId, Guid DriverId, DateTime DepartureUtc,
     DateTime? ArrivalUtc, int InitialMileage, int? FinalMileage, string Description, bool IsOpen,
-    DateTime? ExpectedReturnUtc, int? ReservationId);
+    DateTime? ExpectedReturnUtc, Guid? ReservationId);
 
 public sealed class MovementCommands(
     ICommandRepository<VehicleMovement> repository,
@@ -24,7 +24,7 @@ public sealed class MovementCommands(
     IReservationAvailabilityReader availability,
     IVehicleScheduleGuard guard)
 {
-    public Task<Result<int>> CreateAsync(MovementInput input, CancellationToken cancellationToken) =>
+    public Task<Result<Guid>> CreateAsync(MovementInput input, CancellationToken cancellationToken) =>
         Result.CaptureValueAsync(() => guard.ExecuteAsync(input.VehicleId, async () =>
         {
             var movement = new VehicleMovement(input.VehicleId, input.DriverId,
@@ -34,18 +34,18 @@ public sealed class MovementCommands(
             movement.ScheduleReturn(input.ExpectedReturnUtc);
             var references = await EnsureReferencesActiveAsync(input.VehicleId, input.DriverId, cancellationToken);
             if (!references.IsSuccess)
-                return Result<int>.Failure(references.Error);
+                return Result<Guid>.Failure(references.Error);
             if (await availability.HasReservationConflictAsync(input.VehicleId, input.DepartureUtc,
                     input.ArrivalUtc ?? input.ExpectedReturnUtc, null, cancellationToken))
-                return Result<int>.Failure(Error.Conflict(
+                return Result<Guid>.Failure(Error.Conflict(
                     "Existe uma reserva confirmada para o veículo nesse período."));
 
             await repository.AddAsync(movement, cancellationToken);
             await repository.SaveChangesAsync(cancellationToken);
-            return Result<int>.Success(movement.Id);
+            return Result<Guid>.Success(movement.Id);
         }, cancellationToken));
 
-    public async Task<Result> UpdateAsync(int id, MovementInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, MovementInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -77,7 +77,7 @@ public sealed class MovementCommands(
         });
     }
 
-    public async Task<Result> ConcludeAsync(int id, CompleteMovementInput input, CancellationToken cancellationToken)
+    public async Task<Result> ConcludeAsync(Guid id, CompleteMovementInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -85,7 +85,7 @@ public sealed class MovementCommands(
             if (movement is null)
                 return Result.Failure(Error.NotFound("Movimentação", id));
             movement.Complete(input.ArrivalUtc, input.FinalMileage);
-            if (movement.ReservationId is int reservationId)
+            if (movement.ReservationId is Guid reservationId)
             {
                 var reservation = await reservations.GetByIdAsync(reservationId, cancellationToken);
                 if (reservation is null)
@@ -97,7 +97,7 @@ public sealed class MovementCommands(
         });
     }
 
-    public Task<Result> ScheduleReturnAsync(int id, DateTime? expectedReturnUtc, CancellationToken ct) =>
+    public Task<Result> ScheduleReturnAsync(Guid id, DateTime? expectedReturnUtc, CancellationToken ct) =>
         Result.CaptureAsync(async () =>
         {
             var movement = await repository.GetByIdAsync(id, ct);
@@ -119,7 +119,7 @@ public sealed class MovementCommands(
             }, ct);
         });
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -135,7 +135,7 @@ public sealed class MovementCommands(
         });
     }
 
-    private async Task<Result> EnsureReferencesActiveAsync(int vehicleId, int driverId,
+    private async Task<Result> EnsureReferencesActiveAsync(Guid vehicleId, Guid driverId,
         CancellationToken cancellationToken)
     {
         var vehicleActive = await registrations.IsVehicleActiveAsync(vehicleId, cancellationToken);
@@ -158,7 +158,7 @@ public sealed class MovementQueries(IQueryRepository<VehicleMovement> repository
             x.InitialMileage, x.FinalMileage, x.Description, x.ArrivalUtc == null,
             x.ExpectedReturnUtc, x.ReservationId);
 
-    public async Task<Result<MovementView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<MovementView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

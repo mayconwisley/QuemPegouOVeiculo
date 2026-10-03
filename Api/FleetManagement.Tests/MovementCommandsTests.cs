@@ -13,7 +13,7 @@ public sealed class MovementCommandsTests
     {
         var repository = new FakeRepository();
         var commands = CreateCommands(repository, false, true);
-        var input = new MovementInput(1, 2,
+        var input = new MovementInput(TestIds.Vehicle, TestIds.Driver,
             new DateTime(2026, 9, 27, 12, 0, 0, DateTimeKind.Utc), null, 100, null, null);
 
         var result = await commands.CreateAsync(input, CancellationToken.None);
@@ -29,13 +29,13 @@ public sealed class MovementCommandsTests
         var repository = new FakeRepository();
         var commands = CreateCommands(repository, true, true);
 
-        var result = await commands.ConcludeAsync(99,
+        var result = await commands.ConcludeAsync(TestIds.Missing,
             new CompleteMovementInput(new DateTime(2026, 9, 27, 13, 0, 0, DateTimeKind.Utc), 120),
             CancellationToken.None);
 
         Assert.False(result.IsSuccess);
         Assert.Equal(ErrorType.NotFound, result.Error.Type);
-        Assert.Equal("Movimentação 99 não encontrado.", result.Error.Message);
+        Assert.Equal($"Movimentação {TestIds.Missing} não encontrado.", result.Error.Message);
     }
 
     [Fact]
@@ -43,23 +43,23 @@ public sealed class MovementCommandsTests
     {
         var repository = new FakeRepository();
         var commands = CreateCommands(repository, null, true);
-        var input = new MovementInput(99, 2,
+        var input = new MovementInput(TestIds.Missing, TestIds.Driver,
             new DateTime(2026, 9, 27, 12, 0, 0, DateTimeKind.Utc), null, 100, null, null);
 
         var result = await commands.CreateAsync(input, CancellationToken.None);
 
         Assert.False(result.IsSuccess);
         Assert.Equal(ErrorType.NotFound, result.Error.Type);
-        Assert.Equal("Veículo 99 não encontrado.", result.Error.Message);
+        Assert.Equal($"Veículo {TestIds.Missing} não encontrado.", result.Error.Message);
         Assert.False(repository.AddCalled);
     }
 
     private sealed class FakeRegistrationsStatusReader(bool? vehicleActive, bool? driverActive) : IRegistrationStatusReader
     {
-        public Task<bool?> IsVehicleActiveAsync(int id, CancellationToken cancellationToken) =>
+        public Task<bool?> IsVehicleActiveAsync(Guid id, CancellationToken cancellationToken) =>
             Task.FromResult<bool?>(vehicleActive);
 
-        public Task<bool?> IsDriverActiveAsync(int id, CancellationToken cancellationToken) =>
+        public Task<bool?> IsDriverActiveAsync(Guid id, CancellationToken cancellationToken) =>
             Task.FromResult<bool?>(driverActive);
     }
 
@@ -69,7 +69,7 @@ public sealed class MovementCommandsTests
 
     private sealed class FakeReservationRepository : ICommandRepository<VehicleReservation>
     {
-        public Task<VehicleReservation?> GetByIdAsync(int id, CancellationToken ct) => Task.FromResult<VehicleReservation?>(null);
+        public Task<VehicleReservation?> GetByIdAsync(Guid id, CancellationToken ct) => Task.FromResult<VehicleReservation?>(null);
         public Task AddAsync(VehicleReservation entity, CancellationToken ct) => Task.CompletedTask;
         public void Remove(VehicleReservation entity) { }
         public Task SaveChangesAsync(CancellationToken ct) => Task.CompletedTask;
@@ -77,17 +77,17 @@ public sealed class MovementCommandsTests
 
     private sealed class FakeAvailability : IReservationAvailabilityReader
     {
-        public Task<bool> HasOpenMovementConflictAsync(int vehicleId, DateTime startUtc,
+        public Task<bool> HasOpenMovementConflictAsync(Guid vehicleId, DateTime startUtc,
             DateTime endUtc, CancellationToken ct) => Task.FromResult(false);
-        public Task<bool> HasReservationConflictAsync(int vehicleId, DateTime startUtc,
-            DateTime? endUtc, int? excludeReservationId, CancellationToken ct) => Task.FromResult(false);
+        public Task<bool> HasReservationConflictAsync(Guid vehicleId, DateTime startUtc,
+            DateTime? endUtc, Guid? excludeReservationId, CancellationToken ct) => Task.FromResult(false);
     }
 
     private sealed class FakeScheduleGuard : IVehicleScheduleGuard
     {
-        public Task<Result<T>> ExecuteAsync<T>(int vehicleId, Func<Task<Result<T>>> operation,
+        public Task<Result<T>> ExecuteAsync<T>(Guid vehicleId, Func<Task<Result<T>>> operation,
             CancellationToken ct) => operation();
-        public Task<Result> ExecuteAsync(int vehicleId, Func<Task<Result>> operation,
+        public Task<Result> ExecuteAsync(Guid vehicleId, Func<Task<Result>> operation,
             CancellationToken ct) => operation();
     }
 
@@ -95,7 +95,7 @@ public sealed class MovementCommandsTests
     {
         public bool AddCalled { get; private set; }
 
-        public Task<VehicleMovement?> GetByIdAsync(int id, CancellationToken cancellationToken) =>
+        public Task<VehicleMovement?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
             Task.FromResult<VehicleMovement?>(null);
 
         public Task AddAsync(VehicleMovement entity, CancellationToken cancellationToken)
@@ -111,12 +111,12 @@ public sealed class MovementCommandsTests
 
     private sealed class FakeChecklistStore : IMovementChecklistStore
     {
-        public Task<MovementChecklist?> FindAsync(int movementId, string phase, CancellationToken ct) =>
+        public Task<MovementChecklist?> FindAsync(Guid movementId, string phase, CancellationToken ct) =>
             Task.FromResult<MovementChecklist?>(null);
-        public Task<IReadOnlyList<ChecklistView>> ListAsync(int movementId, CancellationToken ct) =>
+        public Task<IReadOnlyList<ChecklistView>> ListAsync(Guid movementId, CancellationToken ct) =>
             Task.FromResult<IReadOnlyList<ChecklistView>>([]);
         public Task AddAsync(MovementChecklist checklist, CancellationToken ct) => Task.CompletedTask;
-        public Task DeleteForMovementAsync(int movementId, CancellationToken ct) => Task.CompletedTask;
+        public Task DeleteForMovementAsync(Guid movementId, CancellationToken ct) => Task.CompletedTask;
         public Task SaveAsync(CancellationToken ct) => Task.CompletedTask;
     }
 }

@@ -8,10 +8,10 @@ namespace FleetManagement.Infrastructure.Persistence;
 
 internal sealed class MovementChecklistStore(FleetDbContext db) : IMovementChecklistStore
 {
-    public Task<MovementChecklist?> FindAsync(int movementId, string phase, CancellationToken ct) =>
+    public Task<MovementChecklist?> FindAsync(Guid movementId, string phase, CancellationToken ct) =>
         db.MovementChecklists.SingleOrDefaultAsync(x => x.MovementId == movementId && x.Phase == phase, ct);
 
-    public async Task<IReadOnlyList<ChecklistView>> ListAsync(int movementId, CancellationToken ct) =>
+    public async Task<IReadOnlyList<ChecklistView>> ListAsync(Guid movementId, CancellationToken ct) =>
         await db.MovementChecklists.AsNoTracking().Where(x => x.MovementId == movementId)
             .OrderBy(x => x.Phase)
             .Select(x => new ChecklistView(x.Id, x.MovementId, x.Phase, x.TiresOk, x.LightsOk,
@@ -20,7 +20,7 @@ internal sealed class MovementChecklistStore(FleetDbContext db) : IMovementCheck
     public async Task AddAsync(MovementChecklist checklist, CancellationToken ct) =>
         await db.MovementChecklists.AddAsync(checklist, ct);
 
-    public async Task DeleteForMovementAsync(int movementId, CancellationToken ct)
+    public async Task DeleteForMovementAsync(Guid movementId, CancellationToken ct)
     {
         var items = await db.MovementChecklists.Where(x => x.MovementId == movementId).ToListAsync(ct);
         db.MovementChecklists.RemoveRange(items);

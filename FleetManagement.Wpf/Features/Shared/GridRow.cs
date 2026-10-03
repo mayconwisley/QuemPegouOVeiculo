@@ -10,7 +10,7 @@ public sealed class GridRow
     public GridRow(JsonObject source) => Source = source;
 
     public JsonObject Source { get; }
-    public int Id => Source["id"]?.GetValue<int>() ?? 0;
+    public Guid Id => Guid.TryParse(Source["id"]?.ToString(), out var id) ? id : Guid.Empty;
 
     public string this[string key] => Format(Source[key], key);
 

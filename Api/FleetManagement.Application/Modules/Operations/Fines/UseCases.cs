@@ -4,15 +4,15 @@ using FleetManagement.Domain.Modules.Operations;
 
 namespace FleetManagement.Application.Modules.Operations.Fines;
 
-public sealed record FineInput(int VehicleId, int DriverId, DateOnly Date,
+public sealed record FineInput(Guid VehicleId, Guid DriverId, DateOnly Date,
     decimal Amount, int Points, string? Description);
 
-public sealed record FineView(int Id, int VehicleId, int DriverId, DateOnly Date,
+public sealed record FineView(Guid Id, Guid VehicleId, Guid DriverId, DateOnly Date,
     decimal Amount, int Points, string Description);
 
 public sealed class FineCommands(ICommandRepository<Fine> repository)
 {
-    public async Task<Result<int>> CreateAsync(FineInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(FineInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -24,7 +24,7 @@ public sealed class FineCommands(ICommandRepository<Fine> repository)
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, FineInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, FineInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -38,7 +38,7 @@ public sealed class FineCommands(ICommandRepository<Fine> repository)
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -57,7 +57,7 @@ public sealed class FineQueries(IQueryRepository<Fine> repository)
     private static readonly Expression<Func<Fine, FineView>> Projection = x =>
         new FineView(x.Id, x.VehicleId, x.DriverId, x.Date, x.Amount, x.Points, x.Description);
 
-    public async Task<Result<FineView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<FineView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

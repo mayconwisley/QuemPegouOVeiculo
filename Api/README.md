@@ -19,13 +19,11 @@ O contexto EF usa os schemas `registrations`, `operations` e `security`. Índice
 
 Os casos de uso retornam `Result` ou `Result<T>` para falhas esperadas. A camada de aplicação converte violações do domínio, ausência de registros e conflitos de persistência em erros explícitos; exceções inesperadas continuam sendo tratadas pelo middleware global. Os endpoints mapeiam esses erros para `ProblemDetails` com `code` (`validation`, `not_found`, `conflict`) e status 400, 404 ou 409. As respostas de sucesso mantêm os contratos 200, 201 e 204 usados pelo desktop.
 
-Não existe projeto de conversão do Firebird. O WPF usa a API por `HttpClient`, sem credenciais PostgreSQL no executável. A URL da API é definida por `FLEET_MANAGEMENT_API_URL`, com `http://localhost:5000` como padrão local. O WinForms legado continua aceitando `FleetManagement/App.config` e a variável antiga `QUEMPEGOU_API_URL`.
+Não existe projeto de conversão do Firebird. O WPF usa a API por `HttpClient`, sem credenciais PostgreSQL no executável. A URL da API é definida por `FLEET_MANAGEMENT_API_URL`, com `http://localhost:5000` como padrão local.
 
-A migration histórica `InitialCreate` permanece intacta. `StandardizeEnglishSchema` renomeia schemas, tabelas, colunas, índices e restrições do PostgreSQL, preservando os registros caso o banco local já tenha sido criado. Em um banco novo, aplique as duas migrations na ordem padrão do EF Core.
+A migration inicial `InitialUuidV7` cria todo o esquema atual. As chaves primárias e estrangeiras usam o tipo PostgreSQL `uuid`; os identificadores são gerados com `Guid.CreateVersion7()` no .NET antes da gravação. Não há conversão de bancos existentes: como o sistema ainda não possui dados nem clientes, um banco local criado com migrations antigas deve ser recriado vazio antes de aplicar esta baseline. Confirme o banco selecionado e preserve qualquer dado que venha a existir antes de excluí-lo. Em produção, crie um banco novo e revise o SQL gerado antes de aplicá-lo.
 
-`AddAccessAudit` cria usuários e auditoria no schema `security`; `AddSecurityVersion` revoga tokens antigos após mudanças de acesso. `AddOperationsPlanning` cria planos preventivos e checklists e adiciona a previsão de retorno às movimentações. As alterações de dados e os registros de auditoria são confirmados na mesma transação. CPF, RG, hash de senha e versão de segurança não são copiados para o JSON de auditoria.
-
-A organização do WPF e dos projetos legados está descrita no [README principal](../README.md).
+As alterações de dados e os registros de auditoria são confirmados na mesma transação. CPF, RG, hash de senha e versão de segurança não são copiados para o JSON de auditoria. A organização do WPF está descrita no [README principal](../README.md).
 
 ## Executar com o desktop
 
@@ -44,6 +42,7 @@ Confirme `http://localhost:5000/health/ready` antes de usar o desktop. Crie o pr
 ## Tipos e contrato
 
 - `DateOnly` representa datas sem horário, como vencimento da CNH, abastecimento, multa e manutenção.
+- `Guid` representa todas as chaves de entidades e referências entre entidades; a API serializa UUIDs em formato textual e as rotas aceitam GUIDs. Novos registros recebem UUID v7 no domínio.
 - `DateTime` em UTC representa horários de saída, chegada e períodos de status. Envie ISO 8601 com `Z`, por exemplo `2026-09-27T14:30:00Z`.
 - Quilometragem é `int`, valores monetários e litros são `decimal`.
 - CPF é normalizado para 11 dígitos, placa para maiúsculas. Motorista e veículo usam `active: bool`.
@@ -119,7 +118,7 @@ Base `/api/v1`. Os recursos `drivers`, `vehicles`, `movements`, `refuelings`, `f
 
 O documento OpenAPI fica em `/openapi/v1.json` apenas no ambiente `Development`. `/health/live` verifica o processo e `/health/ready` verifica o PostgreSQL.
 
-As consultas usadas pelo desktop estão em `/api/v1/queries/{resource}`. Elas aceitam `search`, `vehicleId`, `driverId`, `active`, `isOpen`, `fromDate`, `toDate`, `startUtc`, `endUtc`, `dateField`, `page` e `pageSize`, conforme o recurso. Para períodos de horários, `endUtc` é exclusivo. A última quilometragem está em `/api/v1/queries/vehicles/{id}/latest-mileage?source=movement|refueling`. A validação anterior dos sete RDLC refere-se ao WinForms legado; o WPF usa impressão própria.
+As consultas usadas pelo WPF estão em `/api/v1/queries/{resource}`. Elas aceitam `search`, `vehicleId`, `driverId`, `active`, `isOpen`, `fromDate`, `toDate`, `startUtc`, `endUtc`, `dateField`, `page` e `pageSize`, conforme o recurso. Para períodos de horários, `endUtc` é exclusivo. A última quilometragem está em `/api/v1/queries/vehicles/{id}/latest-mileage?source=movement|refueling`. O WPF usa impressão própria para os relatórios.
 
 ## Planejamento operacional
 
@@ -135,7 +134,7 @@ O painel calcula, sem persistir alertas duplicados, retornos vencidos, checklist
 
 `POST /api/v1/reservations/{id}/cancel` cancela uma reserva confirmada. `POST /api/v1/reservations/{id}/start` recebe `initialMileage` e `description`, cria a movimentação vinculada e usa o fim da reserva como retorno previsto. A saída pode começar no máximo 15 minutos antes do horário reservado e deve ocorrer antes do fim. A chegada é registrada no endpoint de movimentação existente e conclui a reserva vinculada. Uma movimentação vinculada não pode ser excluída, e sua previsão é controlada pela reserva.
 
-Reservas ativas do mesmo veículo usam intervalos `[início, fim)`: horários adjacentes são aceitos, sobreposições são recusadas. A aplicação verifica também movimentações abertas e serializa gravações por veículo. O PostgreSQL impõe a exclusão de intervalos sobrepostos com `btree_gist`; o usuário que aplica a migration precisa ter permissão para criar essa extensão. A migration `AddVehicleReservations` deve ser revisada e aplicada em cada ambiente antes de usar os endpoints. Não há migração de Firebird.
+Reservas ativas do mesmo veículo usam intervalos `[início, fim)`: horários adjacentes são aceitos, sobreposições são recusadas. A aplicação verifica também movimentações abertas e serializa gravações por veículo. O PostgreSQL impõe a exclusão de intervalos sobrepostos com `btree_gist`; o usuário que aplica a migration inicial precisa ter permissão para criar essa extensão. Não há migração de Firebird.
 
 `GET /api/v1/exports/{resource}.csv` exporta `drivers`, `vehicles`, `movements`, `refuelings`, `fines`, `maintenance`, `vehicle-statuses`, `license-expirations`, `reservations` ou `maintenance-plans`. Os filtros são os mesmos das consultas paginadas, conforme o recurso. O CSV usa UTF-8 com BOM, `;` como separador, campos entre aspas e proteção contra fórmulas de planilha. A resposta é gerada em fluxo e limitada a 10.000 linhas; acima disso retorna HTTP 413 antes de iniciar o arquivo. Os perfis de consulta podem exportar. Datas com horário são identificadas como UTC no cabeçalho.
 

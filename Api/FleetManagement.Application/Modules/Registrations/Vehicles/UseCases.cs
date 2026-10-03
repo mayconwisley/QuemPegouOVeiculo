@@ -5,11 +5,11 @@ using FleetManagement.Domain.Modules.Registrations;
 namespace FleetManagement.Application.Modules.Registrations.Vehicles;
 
 public sealed record VehicleInput(string Plate, string Model, string? Chassis, string? Renavam, bool Active);
-public sealed record VehicleView(int Id, string Plate, string Model, string Chassis, string Renavam, bool Active);
+public sealed record VehicleView(Guid Id, string Plate, string Model, string Chassis, string Renavam, bool Active);
 
 public sealed class VehicleCommands(ICommandRepository<Vehicle> repository)
 {
-    public async Task<Result<int>> CreateAsync(VehicleInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(VehicleInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -20,7 +20,7 @@ public sealed class VehicleCommands(ICommandRepository<Vehicle> repository)
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, VehicleInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, VehicleInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -33,7 +33,7 @@ public sealed class VehicleCommands(ICommandRepository<Vehicle> repository)
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -52,7 +52,7 @@ public sealed class VehicleQueries(IQueryRepository<Vehicle> repository)
     private static readonly Expression<Func<Vehicle, VehicleView>> Projection = x =>
         new VehicleView(x.Id, x.Plate, x.Model, x.Chassis, x.Renavam, x.Active);
 
-    public async Task<Result<VehicleView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<VehicleView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

@@ -14,7 +14,7 @@ public static class Endpoints
             CancellationToken cancellationToken = default) =>
             (await queries.ListAsync(new PageRequest(page, pageSize), cancellationToken)).ToHttpResult());
 
-        group.MapGet("/{id:int:min(1)}", async (int id, DriverQueries queries, CancellationToken cancellationToken) =>
+        group.MapGet("/{id:guid}", async (Guid id, DriverQueries queries, CancellationToken cancellationToken) =>
         {
             return (await queries.GetAsync(id, cancellationToken)).ToHttpResult();
         });
@@ -25,13 +25,13 @@ public static class Endpoints
                 .ToCreatedHttpResult("/api/v1/drivers");
         });
 
-        group.MapPut("/{id:int:min(1)}", async (int id, DriverInput input, DriverCommands commands,
+        group.MapPut("/{id:guid}", async (Guid id, DriverInput input, DriverCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.UpdateAsync(id, input, cancellationToken)).ToHttpResult();
         });
 
-        group.MapDelete("/{id:int:min(1)}", async (int id, DriverCommands commands,
+        group.MapDelete("/{id:guid}", async (Guid id, DriverCommands commands,
             CancellationToken cancellationToken) =>
         {
             return (await commands.DeleteAsync(id, cancellationToken)).ToHttpResult();

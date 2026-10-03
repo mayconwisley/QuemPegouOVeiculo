@@ -6,23 +6,23 @@ public sealed class Fine : IEntity
 {
     private Fine() { }
 
-    public Fine(int vehicleId, int driverId, DateOnly date, decimal amount, int points, string? description)
+    public Fine(Guid vehicleId, Guid driverId, DateOnly date, decimal amount, int points, string? description)
     {
         Update(vehicleId, driverId, date, amount, points, description);
     }
 
-    public int Id { get; private set; }
-    public int VehicleId { get; private set; }
-    public int DriverId { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
+    public Guid VehicleId { get; private set; }
+    public Guid DriverId { get; private set; }
     public DateOnly Date { get; private set; }
     public decimal Amount { get; private set; }
     public int Points { get; private set; }
     public string Description { get; private set; } = "";
 
-    public void Update(int vehicleId, int driverId, DateOnly date, decimal amount, int points, string? description)
+    public void Update(Guid vehicleId, Guid driverId, DateOnly date, decimal amount, int points, string? description)
     {
-        var validatedVehicleId = Guard.PositiveId(vehicleId, "Veículo");
-        var validatedDriverId = Guard.PositiveId(driverId, "Motorista");
+        var validatedVehicleId = Guard.ValidId(vehicleId, "Veículo");
+        var validatedDriverId = Guard.ValidId(driverId, "Motorista");
         var validatedDate = Guard.Date(date, "Data");
         var validatedAmount = Guard.NonNegative(amount, "Valor");
         var pointsValidados = Guard.NonNegative(points, "Pontos");

@@ -11,16 +11,14 @@ FleetManagement.Wpf/       Aplicação desktop atual (.NET 10)
   Themes/                   Paletas e estilos WPF compartilhados
   Infrastructure/Api/       Cliente HTTP, autenticação e erros da API
 Api/                       Domínio, casos de uso, persistência e endpoints
-FleetManagement/           WinForms .NET Framework 4.8, mantido temporariamente
-Desktop.Client/             Cliente HTTP usado pelo WinForms
-Desktop.Models/             Modelos usados pelo WinForms e seus RDLC
+FleetManagement.Wpf.Tests/  Testes de apresentação do WPF
 ```
 
 As regras de negócio, a autorização e a persistência ficam na API. O WPF mantém somente estado de tela, formatação local, seleção de registros e transporte HTTP. O token JWT fica na memória do processo. Quando a API revoga a sessão, o aplicativo solicita novo login.
 
 ## Executar
 
-1. Configure o PostgreSQL, aplique as migrations e crie o primeiro administrador conforme [a documentação da API](Api/README.md).
+1. Configure o PostgreSQL, aplique a migration inicial e crie o primeiro administrador conforme [a documentação da API](Api/README.md).
 2. No Visual Studio, abra `FleetManagement.sln` e escolha **WPF + API (Development)** no perfil de inicialização da solução.
 3. Inicie a depuração e entre com uma conta criada na API.
 
@@ -71,4 +69,4 @@ dotnet test FleetManagement.Wpf.Tests/FleetManagement.Wpf.Tests.csproj
 dotnet test Api/FleetManagement.Tests/FleetManagement.Tests.csproj
 ```
 
-O WinForms permanece no perfil **WinForms legado + API (Development)** enquanto a equivalência operacional é conferida com usuários reais. Seu projeto e os RDLC não são dependências do WPF e podem ser removidos depois da homologação. Não há projeto de migração de Firebird.
+O projeto desktop mantido é apenas o WPF. As chaves primárias e estrangeiras da API e do PostgreSQL usam UUID v7 gerado no domínio; o WPF transporta esses identificadores como GUIDs. Não há projeto de migração de Firebird.

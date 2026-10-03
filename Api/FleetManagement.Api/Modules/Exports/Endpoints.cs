@@ -66,7 +66,7 @@ public static class Endpoints
                     page => reservations.ListAsync(new ReservationFilter(p.VehicleId, p.Status,
                         p.StartUtc, p.EndUtc), new PageRequest(page, 100), ct),
                     x => [Id(x.Id), x.Plate, x.VehicleModel, x.DriverName, Utc(x.StartUtc),
-                        Utc(x.EndUtc), x.Purpose, Status(x.Status), x.MovementId?.ToString(PtBr)], ct),
+                        Utc(x.EndUtc), x.Purpose, Status(x.Status), x.MovementId?.ToString("D")], ct),
                 "maintenance-plans" => await WriteAsync(context, resource,
                     ["ID", "Veículo ID", "Serviço", "Intervalo dias", "Intervalo km",
                         "Próxima data", "Próximo km", "Ativo"],
@@ -129,6 +129,7 @@ public static class Endpoints
     }
 
     private static string Id(int value) => value.ToString(PtBr);
+    private static string Id(Guid value) => value.ToString("D");
     private static string Money(decimal value) => value.ToString("0.00", PtBr);
     private static string Date(DateOnly value) => value.ToString("dd/MM/yyyy", PtBr);
     private static string Utc(DateTime value) => value.ToString("O", CultureInfo.InvariantCulture);

@@ -6,15 +6,15 @@ public sealed class VehicleMovement : IEntity
 {
     private VehicleMovement() { }
 
-    public VehicleMovement(int vehicleId, int driverId, DateTime departureUtc, int initialMileage, string? description)
+    public VehicleMovement(Guid vehicleId, Guid driverId, DateTime departureUtc, int initialMileage, string? description)
     {
         Update(vehicleId, driverId, departureUtc, null, initialMileage, null, description);
     }
 
-    public int Id { get; private set; }
-    public int VehicleId { get; private set; }
-    public int DriverId { get; private set; }
-    public int? ReservationId { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
+    public Guid VehicleId { get; private set; }
+    public Guid DriverId { get; private set; }
+    public Guid? ReservationId { get; private set; }
     public DateTime DepartureUtc { get; private set; }
     public DateTime? ArrivalUtc { get; private set; }
     public DateTime? ExpectedReturnUtc { get; private set; }
@@ -30,11 +30,11 @@ public sealed class VehicleMovement : IEntity
         Update(VehicleId, DriverId, DepartureUtc, arrivalUtc, InitialMileage, finalMileage, Description);
     }
 
-    public void Update(int vehicleId, int driverId, DateTime departureUtc, DateTime? arrivalUtc,
+    public void Update(Guid vehicleId, Guid driverId, DateTime departureUtc, DateTime? arrivalUtc,
         int initialMileage, int? finalMileage, string? description)
     {
-        var validatedVehicleId = Guard.PositiveId(vehicleId, "Veículo");
-        var validatedDriverId = Guard.PositiveId(driverId, "Motorista");
+        var validatedVehicleId = Guard.ValidId(vehicleId, "Veículo");
+        var validatedDriverId = Guard.ValidId(driverId, "Motorista");
         var validatedDeparture = Guard.Utc(departureUtc, "Saída");
         DateTime? validatedArrival = arrivalUtc is null ? null : Guard.Utc(arrivalUtc.Value, "Chegada");
         var validatedInitialMileage = Guard.NonNegative(initialMileage, "Quilometragem inicial");
@@ -66,10 +66,10 @@ public sealed class VehicleMovement : IEntity
         ExpectedReturnUtc = expectedReturnUtc;
     }
 
-    public void LinkToReservation(int reservationId)
+    public void LinkToReservation(Guid reservationId)
     {
         if (ReservationId is not null)
             throw new DomainException("A movimentação já está vinculada a uma reserva.");
-        ReservationId = Guard.PositiveId(reservationId, "Reserva");
+        ReservationId = Guard.ValidId(reservationId, "Reserva");
     }
 }

@@ -22,10 +22,10 @@ public static class Guard
         return normalized;
     }
 
-    public static int PositiveId(int value, string field)
+    public static Guid ValidId(Guid value, string field)
     {
-        if (value <= 0)
-            throw new DomainException($"{field} deve ser maior que zero.");
+        if (value == Guid.Empty)
+            throw new DomainException($"{field} deve ter um identificador válido.");
         return value;
     }
 

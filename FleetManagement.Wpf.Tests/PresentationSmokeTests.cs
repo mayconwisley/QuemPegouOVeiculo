@@ -92,28 +92,30 @@ public sealed class PresentationSmokeTests
                 var purpose = (TextBox)fields.Children[9];
                 purpose.Text = "Visita técnica";
                 var vehicleButton = (Button)fields.Children[1];
+                var vehicleId = Guid.CreateVersion7();
                 vehicleButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 var lookupHost = (ContentControl)reservation.FindName("LookupHost")!;
                 Assert.Equal(Visibility.Visible, lookupHost.Visibility);
                 var vehicleLookup = Assert.IsType<LookupView>(lookupHost.Content);
                 var options = (DataGrid)vehicleLookup.FindName("OptionsGrid")!;
-                options.ItemsSource = new[] { new LookupView.LookupRow(12, "ABC1D23 · Sedan") };
+                options.ItemsSource = new[] { new LookupView.LookupRow(vehicleId, "ABC1D23 · Sedan") };
                 options.SelectedIndex = 0;
                 ((Button)vehicleLookup.FindName("SelectButton")!)
                     .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 Assert.Null(lookupHost.Content);
-                Assert.Equal(12, vehicleButton.Tag);
+                Assert.Equal(vehicleId, vehicleButton.Tag);
                 Assert.Equal("Visita técnica", purpose.Text);
 
                 var driverButton = (Button)fields.Children[3];
+                var driverId = Guid.CreateVersion7();
                 driverButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 var driverLookup = Assert.IsType<LookupView>(lookupHost.Content);
                 var drivers = (DataGrid)driverLookup.FindName("OptionsGrid")!;
-                drivers.ItemsSource = new[] { new LookupView.LookupRow(8, "Ana Souza") };
+                drivers.ItemsSource = new[] { new LookupView.LookupRow(driverId, "Ana Souza") };
                 drivers.SelectedIndex = 0;
                 ((Button)driverLookup.FindName("SelectButton")!)
                     .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                Assert.Equal(8, driverButton.Tag);
+                Assert.Equal(driverId, driverButton.Tag);
                 Assert.Equal("Visita técnica", purpose.Text);
 
                 ((ComboBox)reports.FindName("ReportBox")!).SelectedIndex = 3;
@@ -122,7 +124,7 @@ public sealed class PresentationSmokeTests
                 var reportHost = (ContentControl)reports.FindName("LookupHost")!;
                 var reportLookup = Assert.IsType<LookupView>(reportHost.Content);
                 var reportOptions = (DataGrid)reportLookup.FindName("OptionsGrid")!;
-                reportOptions.ItemsSource = new[] { new LookupView.LookupRow(12, "ABC1D23 · Sedan") };
+                reportOptions.ItemsSource = new[] { new LookupView.LookupRow(vehicleId, "ABC1D23 · Sedan") };
                 reportOptions.SelectedIndex = 0;
                 ((Button)reportLookup.FindName("SelectButton")!)
                     .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));

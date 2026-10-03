@@ -4,12 +4,12 @@ using FleetManagement.Domain.Modules.Operations;
 
 namespace FleetManagement.Application.Modules.Operations.VehicleStatuses;
 
-public sealed record VehicleStatusInput(int VehicleId, DateTime StartUtc, DateTime? EndUtc, string Description);
-public sealed record VehicleStatusView(int Id, int VehicleId, DateTime StartUtc, DateTime? EndUtc, string Description);
+public sealed record VehicleStatusInput(Guid VehicleId, DateTime StartUtc, DateTime? EndUtc, string Description);
+public sealed record VehicleStatusView(Guid Id, Guid VehicleId, DateTime StartUtc, DateTime? EndUtc, string Description);
 
 public sealed class VehicleStatusCommands(ICommandRepository<VehicleStatus> repository)
 {
-    public async Task<Result<int>> CreateAsync(VehicleStatusInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(VehicleStatusInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -20,7 +20,7 @@ public sealed class VehicleStatusCommands(ICommandRepository<VehicleStatus> repo
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, VehicleStatusInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, VehicleStatusInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -33,7 +33,7 @@ public sealed class VehicleStatusCommands(ICommandRepository<VehicleStatus> repo
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -52,7 +52,7 @@ public sealed class VehicleStatusQueries(IQueryRepository<VehicleStatus> reposit
     private static readonly Expression<Func<VehicleStatus, VehicleStatusView>> Projection = x =>
         new VehicleStatusView(x.Id, x.VehicleId, x.StartUtc, x.EndUtc, x.Description);
 
-    public async Task<Result<VehicleStatusView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<VehicleStatusView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

@@ -41,7 +41,7 @@ public sealed class ResultTests
     [Fact]
     public void ToHttpResult_PreservesSuccessContracts()
     {
-        var created = Result<int>.Success(42).ToCreatedHttpResult("/api/v1/vehicles");
+        var created = Result<Guid>.Success(TestIds.Vehicle).ToCreatedHttpResult("/api/v1/vehicles");
         var updated = Result.Success().ToHttpResult();
 
         Assert.Equal(201, Assert.IsAssignableFrom<IStatusCodeHttpResult>(created).StatusCode);

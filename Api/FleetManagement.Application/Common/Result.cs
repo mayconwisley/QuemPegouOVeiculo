@@ -12,7 +12,7 @@ public enum ErrorType
 public sealed record Error(ErrorType Type, string Code, string Message)
 {
     public static Error Validation(string message) => new(ErrorType.Validation, "validation", message);
-    public static Error NotFound(string entity, int id) =>
+    public static Error NotFound(string entity, Guid id) =>
         new(ErrorType.NotFound, "not_found", $"{entity} {id} não encontrado.");
     public static Error Conflict(string message) => new(ErrorType.Conflict, "conflict", message);
 }

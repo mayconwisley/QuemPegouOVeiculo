@@ -2,6 +2,6 @@ namespace FleetManagement.Application.Common;
 
 public interface IActorContext
 {
-    int? UserId { get; }
+    Guid? UserId { get; }
     string Username { get; }
 }

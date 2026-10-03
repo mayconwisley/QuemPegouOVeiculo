@@ -7,12 +7,12 @@ namespace FleetManagement.Application.Modules.Registrations.Drivers;
 public sealed record DriverInput(string Name, string LicenseNumber, DateOnly LicenseExpiration,
     string LicenseCategory, string Cpf, string? Rg, bool Active);
 
-public sealed record DriverView(int Id, string Name, string LicenseNumber, DateOnly LicenseExpiration,
+public sealed record DriverView(Guid Id, string Name, string LicenseNumber, DateOnly LicenseExpiration,
     string LicenseCategory, string Cpf, string Rg, bool Active);
 
 public sealed class DriverCommands(ICommandRepository<Driver> repository)
 {
-    public async Task<Result<int>> CreateAsync(DriverInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(DriverInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -24,7 +24,7 @@ public sealed class DriverCommands(ICommandRepository<Driver> repository)
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, DriverInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, DriverInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -38,7 +38,7 @@ public sealed class DriverCommands(ICommandRepository<Driver> repository)
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -57,7 +57,7 @@ public sealed class DriverQueries(IQueryRepository<Driver> repository)
     private static readonly Expression<Func<Driver, DriverView>> Projection = x =>
         new DriverView(x.Id, x.Name, x.LicenseNumber, x.LicenseExpiration, x.LicenseCategory, x.Cpf, x.Rg, x.Active);
 
-    public async Task<Result<DriverView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<DriverView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

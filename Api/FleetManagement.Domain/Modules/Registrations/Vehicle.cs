@@ -11,7 +11,7 @@ public sealed class Vehicle : IEntity
         Update(plate, model, chassis, renavam, active);
     }
 
-    public int Id { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
     public string Plate { get; private set; } = "";
     public string Model { get; private set; } = "";
     public string Chassis { get; private set; } = "";

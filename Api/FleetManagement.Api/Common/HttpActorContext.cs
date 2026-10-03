@@ -5,6 +5,7 @@ namespace FleetManagement.Api.Common;
 
 internal sealed class HttpActorContext(IHttpContextAccessor accessor) : IActorContext
 {
-    public int? UserId => int.TryParse(accessor.HttpContext?.User.FindFirstValue("sub"), out var id) ? id : null;
+    public Guid? UserId => Guid.TryParse(accessor.HttpContext?.User.FindFirstValue("sub"), out var id)
+        && id != Guid.Empty ? id : null;
     public string Username => accessor.HttpContext?.User.FindFirstValue("name") ?? "system";
 }

@@ -4,13 +4,13 @@ using FleetManagement.Domain.Modules.Operations;
 
 namespace FleetManagement.Application.Modules.Operations.MaintenanceRecords;
 
-public sealed record MaintenanceInput(int VehicleId, DateOnly Date, decimal Amount, string? Description);
-public sealed record MaintenanceView(int Id, int VehicleId, DateOnly Date, decimal Amount,
-    string Description, int? PlanId);
+public sealed record MaintenanceInput(Guid VehicleId, DateOnly Date, decimal Amount, string? Description);
+public sealed record MaintenanceView(Guid Id, Guid VehicleId, DateOnly Date, decimal Amount,
+    string Description, Guid? PlanId);
 
 public sealed class MaintenanceCommands(ICommandRepository<Maintenance> repository)
 {
-    public async Task<Result<int>> CreateAsync(MaintenanceInput input, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> CreateAsync(MaintenanceInput input, CancellationToken cancellationToken)
     {
         return await Result.TryAsync(async () =>
         {
@@ -21,7 +21,7 @@ public sealed class MaintenanceCommands(ICommandRepository<Maintenance> reposito
         });
     }
 
-    public async Task<Result> UpdateAsync(int id, MaintenanceInput input, CancellationToken cancellationToken)
+    public async Task<Result> UpdateAsync(Guid id, MaintenanceInput input, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -37,7 +37,7 @@ public sealed class MaintenanceCommands(ICommandRepository<Maintenance> reposito
         });
     }
 
-    public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Result.CaptureAsync(async () =>
         {
@@ -59,7 +59,7 @@ public sealed class MaintenanceQueries(IQueryRepository<Maintenance> repository)
     private static readonly Expression<Func<Maintenance, MaintenanceView>> Projection = x =>
         new MaintenanceView(x.Id, x.VehicleId, x.Date, x.Amount, x.Description, x.PlanId);
 
-    public async Task<Result<MaintenanceView>> GetAsync(int id, CancellationToken cancellationToken)
+    public async Task<Result<MaintenanceView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await repository.GetByIdAsync(id, Projection, cancellationToken);
         return item is null

@@ -30,7 +30,7 @@ public sealed class AccessServiceTests
         var store = new FakeStore { User = new UserAccount("admin", "hashed", UserRoles.Administrator) };
         var service = new AccessService(store, new FakePasswords());
 
-        var result = await service.UpdateAsync(0, new UserUpdate(UserRoles.Viewer, true), 42,
+        var result = await service.UpdateAsync(store.User.Id, new UserUpdate(UserRoles.Viewer, true), TestIds.OtherUser,
             CancellationToken.None);
 
         Assert.False(result.IsSuccess);
@@ -44,7 +44,7 @@ public sealed class AccessServiceTests
         var store = new FakeStore { User = new UserAccount("admin", "hashed", UserRoles.Administrator) };
         var service = new AccessService(store, new FakePasswords());
 
-        var result = await service.UpdateAsync(0, new UserUpdate(UserRoles.Administrator, false), 0,
+        var result = await service.UpdateAsync(store.User.Id, new UserUpdate(UserRoles.Administrator, false), store.User.Id,
             CancellationToken.None);
 
         Assert.False(result.IsSuccess);
@@ -87,7 +87,7 @@ public sealed class AccessServiceTests
         public UserAccount? User { get; set; }
         public Task<UserAccount?> FindByUsernameAsync(string username, CancellationToken ct) =>
             Task.FromResult(User?.Username == username ? User : null);
-        public Task<UserAccount?> FindByIdAsync(int id, CancellationToken ct) => Task.FromResult(User);
+        public Task<UserAccount?> FindByIdAsync(Guid id, CancellationToken ct) => Task.FromResult(User);
         public Task<IReadOnlyList<UserView>> ListAsync(CancellationToken ct) =>
             Task.FromResult<IReadOnlyList<UserView>>([]);
         public Task<int> ActiveAdministratorsAsync(CancellationToken ct) => Task.FromResult(1);

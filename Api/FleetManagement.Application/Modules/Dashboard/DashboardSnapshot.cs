@@ -1,6 +1,6 @@
 namespace FleetManagement.Application.Modules.Dashboard;
 
-public sealed record DashboardAttention(string Kind, int RecordId, string Description, DateTime? OccurredAtUtc,
+public sealed record DashboardAttention(string Kind, Guid RecordId, string Description, DateTime? OccurredAtUtc,
     DateOnly? DueDate);
 
 public sealed record DashboardSnapshot(int ActiveVehicles, int ActiveDrivers, int OpenMovements,

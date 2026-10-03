@@ -24,12 +24,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Access.UserAccount", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
@@ -69,12 +66,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.Fine", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasPrecision(18, 2)
@@ -91,16 +85,16 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("description");
 
-                    b.Property<int>("DriverId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
                         .HasColumnName("driver_id");
 
                     b.Property<int>("Points")
                         .HasColumnType("integer")
                         .HasColumnName("points");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -117,19 +111,16 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.LicenseExpiration", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date")
                         .HasColumnName("date");
 
-                    b.Property<int>("DriverId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
                         .HasColumnName("driver_id");
 
                     b.Property<bool>("Expired")
@@ -145,12 +136,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.Maintenance", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasPrecision(18, 2)
@@ -167,12 +155,12 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("description");
 
-                    b.Property<int?>("PlanId")
-                        .HasColumnType("integer")
+                    b.Property<Guid?>("PlanId")
+                        .HasColumnType("uuid")
                         .HasColumnName("plan_id");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -189,12 +177,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.MaintenancePlan", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("IntervalDays")
                         .HasColumnType("integer")
@@ -235,8 +220,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("revision");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -256,12 +241,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.MovementChecklist", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("BodyOk")
                         .HasColumnType("boolean")
@@ -279,8 +261,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("lights_ok");
 
-                    b.Property<int>("MovementId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("MovementId")
+                        .HasColumnType("uuid")
                         .HasColumnName("movement_id");
 
                     b.Property<string>("Notes")
@@ -312,12 +294,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.Refueling", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasPrecision(18, 2)
@@ -334,8 +313,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("description");
 
-                    b.Property<int>("DriverId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
                         .HasColumnName("driver_id");
 
                     b.Property<decimal>("Liters")
@@ -347,8 +326,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("mileage");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -365,12 +344,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.VehicleMovement", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("ArrivalUtc")
                         .HasColumnType("timestamp with time zone")
@@ -386,8 +362,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("description");
 
-                    b.Property<int>("DriverId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
                         .HasColumnName("driver_id");
 
                     b.Property<DateTime?>("ExpectedReturnUtc")
@@ -402,12 +378,12 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("initial_mileage");
 
-                    b.Property<int?>("ReservationId")
-                        .HasColumnType("integer")
+                    b.Property<Guid?>("ReservationId")
+                        .HasColumnType("uuid")
                         .HasColumnName("reservation_id");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -437,15 +413,12 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.VehicleReservation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DriverId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
                         .HasColumnName("driver_id");
 
                     b.Property<DateTime>("EndUtc")
@@ -473,8 +446,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(20)")
                         .HasColumnName("status");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -495,12 +468,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Operations.VehicleStatus", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -516,8 +486,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_utc");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("vehicle_id");
 
                     b.HasKey("Id");
@@ -532,12 +502,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Registrations.Driver", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("boolean")
@@ -587,12 +554,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Domain.Modules.Registrations.Vehicle", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("boolean")
@@ -632,12 +596,9 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("FleetManagement.Infrastructure.Persistence.AuditEntry", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Action")
                         .IsRequired()
@@ -645,8 +606,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(20)")
                         .HasColumnName("action");
 
-                    b.Property<int?>("ActorUserId")
-                        .HasColumnType("integer")
+                    b.Property<Guid?>("ActorUserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("actor_user_id");
 
                     b.Property<string>("ActorUsername")
@@ -660,8 +621,8 @@ namespace FleetManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("jsonb")
                         .HasColumnName("changes_json");
 
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid")
                         .HasColumnName("entity_id");
 
                     b.Property<string>("EntityName")

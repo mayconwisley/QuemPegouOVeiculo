@@ -13,7 +13,7 @@ internal sealed class UserAccountStore(FleetDbContext db) : IUserAccountStore
     public Task<UserAccount?> FindByUsernameAsync(string username, CancellationToken ct) =>
         db.UserAccounts.SingleOrDefaultAsync(x => x.Username == username, ct);
 
-    public Task<UserAccount?> FindByIdAsync(int id, CancellationToken ct) =>
+    public Task<UserAccount?> FindByIdAsync(Guid id, CancellationToken ct) =>
         db.UserAccounts.FindAsync([id], ct).AsTask();
 
     public async Task<IReadOnlyList<UserView>> ListAsync(CancellationToken ct) =>

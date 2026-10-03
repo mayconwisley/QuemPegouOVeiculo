@@ -11,11 +11,11 @@ public sealed class VehicleReservationTests
     {
         var start = new DateTime(2026, 10, 1, 12, 0, 0, DateTimeKind.Utc);
 
-        Assert.Throws<DomainException>(() => new VehicleReservation(1, 2,
+        Assert.Throws<DomainException>(() => new VehicleReservation(TestIds.Vehicle, TestIds.Driver,
             start, start, "Visita"));
-        Assert.Throws<DomainException>(() => new VehicleReservation(1, 2,
+        Assert.Throws<DomainException>(() => new VehicleReservation(TestIds.Vehicle, TestIds.Driver,
             DateTime.SpecifyKind(start, DateTimeKind.Local), start.AddHours(1), "Visita"));
-        Assert.Throws<DomainException>(() => new VehicleReservation(1, 2,
+        Assert.Throws<DomainException>(() => new VehicleReservation(TestIds.Vehicle, TestIds.Driver,
             start, start.AddHours(1), " "));
     }
 
@@ -23,7 +23,7 @@ public sealed class VehicleReservationTests
     public void Reservation_StartAndCompleteFollowLifecycle()
     {
         var start = new DateTime(2026, 10, 1, 12, 0, 0, DateTimeKind.Utc);
-        var reservation = new VehicleReservation(1, 2, start, start.AddHours(1), "Visita");
+        var reservation = new VehicleReservation(TestIds.Vehicle, TestIds.Driver, start, start.AddHours(1), "Visita");
 
         Assert.Throws<DomainException>(() => reservation.Start(start.AddMinutes(-16)));
         reservation.Start(start.AddMinutes(-15));
@@ -38,12 +38,12 @@ public sealed class VehicleReservationTests
     public void CancelledReservationCannotBeEditedOrStarted()
     {
         var start = new DateTime(2026, 10, 1, 12, 0, 0, DateTimeKind.Utc);
-        var reservation = new VehicleReservation(1, 2, start, start.AddHours(1), "Visita");
+        var reservation = new VehicleReservation(TestIds.Vehicle, TestIds.Driver, start, start.AddHours(1), "Visita");
 
         reservation.Cancel();
 
         Assert.Equal(ReservationStatuses.Cancelled, reservation.Status);
-        Assert.Throws<DomainException>(() => reservation.UpdateSchedule(2,
+        Assert.Throws<DomainException>(() => reservation.UpdateSchedule(TestIds.Driver,
             start.AddHours(1), start.AddHours(2), "Outro destino"));
         Assert.Throws<DomainException>(() => reservation.Start(start));
     }

@@ -6,14 +6,14 @@ public sealed class MaintenancePlan : IEntity
 {
     private MaintenancePlan() { }
 
-    public MaintenancePlan(int vehicleId, string name, int? intervalDays, int? intervalMileage,
+    public MaintenancePlan(Guid vehicleId, string name, int? intervalDays, int? intervalMileage,
         DateOnly? nextDueDate, int? nextDueMileage)
     {
         Update(vehicleId, name, intervalDays, intervalMileage, nextDueDate, nextDueMileage, true);
     }
 
-    public int Id { get; private set; }
-    public int VehicleId { get; private set; }
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
+    public Guid VehicleId { get; private set; }
     public string Name { get; private set; } = "";
     public int? IntervalDays { get; private set; }
     public int? IntervalMileage { get; private set; }
@@ -24,11 +24,11 @@ public sealed class MaintenancePlan : IEntity
     public bool IsActive { get; private set; }
     public int Revision { get; private set; }
 
-    public void Update(int vehicleId, string name, int? intervalDays, int? intervalMileage,
+    public void Update(Guid vehicleId, string name, int? intervalDays, int? intervalMileage,
         DateOnly? nextDueDate, int? nextDueMileage, bool isActive)
     {
-        var validatedVehicleId = Guard.PositiveId(vehicleId, "Veículo");
-        if (VehicleId != 0 && VehicleId != validatedVehicleId)
+        var validatedVehicleId = Guard.ValidId(vehicleId, "Veículo");
+        if (VehicleId != Guid.Empty && VehicleId != validatedVehicleId)
             throw new DomainException("O veículo do plano não pode ser alterado. Crie um novo plano.");
         var validatedName = Guard.Required(name, "Serviço preventivo", 120);
         if (intervalDays is not null && intervalDays <= 0 || intervalMileage is not null && intervalMileage <= 0)

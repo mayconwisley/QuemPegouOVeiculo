@@ -17,8 +17,8 @@ public partial class ReportsView : UserControl
     private readonly FleetApiClient _api;
     private int _page = 1;
     private int _total;
-    private int? _vehicleId;
-    private int? _driverId;
+    private Guid? _vehicleId;
+    private Guid? _driverId;
 
     public ReportsView(FleetApiClient api)
     {
@@ -45,8 +45,8 @@ public partial class ReportsView : UserControl
             throw new FormatException("A data inicial deve ser anterior à final.");
         return FleetApiClient.Query(
             ("search", SearchBox.Text.Trim()),
-            ("vehicleId", _vehicleId?.ToString(CultureInfo.InvariantCulture)),
-            ("driverId", _driverId?.ToString(CultureInfo.InvariantCulture)),
+            ("vehicleId", _vehicleId?.ToString("D")),
+            ("driverId", _driverId?.ToString("D")),
             ("active", activeFilter ? StateValue() : null),
             ("isOpen", openFilter ? StateValue() : null),
             ("status", reservation ? ReservationStatus() : null),
