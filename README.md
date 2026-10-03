@@ -59,7 +59,7 @@ No topo da janela principal, **Aparência** oferece **Automático**, **Claro** e
 | Painel | Indicadores e pendências com navegação para o recurso correspondente |
 | Relatórios | Sete modelos operacionais herdados do WinForms, mais três consultas; visualização paginada, impressão e exportação CSV |
 
-Os sete modelos de relatório do WinForms (motoristas, veículos, situações, movimentações, manutenções, abastecimentos e multas) foram recriados na tela WPF com seus títulos, colunas e totais aplicáveis. A impressão usa o sistema operacional; o CSV continua sendo gerado pela API, com os mesmos filtros e limite de 10.000 linhas. Os cadastros são editados dentro da janela principal. A seleção de veículo e motorista usa busca paginada, sem carregar o cadastro inteiro ao abrir uma tela.
+Os sete modelos de relatório do WinForms (motoristas, veículos, situações, movimentações, manutenções, abastecimentos e multas) foram recriados na tela WPF com seus títulos, colunas e totais aplicáveis. A impressão usa o sistema operacional; o CSV continua sendo gerado pela API, com os mesmos filtros e limite de 10.000 linhas. Os cadastros e a seleção de veículo ou motorista ficam dentro da janela principal. A seleção usa busca paginada e preserva os dados já digitados no formulário.
 
 Datas digitadas no WPF usam `dd/MM/aaaa`; horários usam `dd/MM/aaaa HH:mm` e são enviados à API em UTC. Horários recebidos da API são exibidos no fuso local do Windows.
 

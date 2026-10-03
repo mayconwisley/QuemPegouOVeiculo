@@ -185,20 +185,38 @@ public partial class ReportsView : UserControl
 
     private void Vehicle_Click(object sender, RoutedEventArgs e)
     {
-        var picker = new LookupDialog(_api, vehicles: true)
-        { Owner = Window.GetWindow(this) };
-        if (picker.ShowDialog() != true) return;
-        _vehicleId = picker.SelectedId;
-        VehicleButton.Content = picker.SelectedLabel;
+        ShowLookup(vehicles: true, selection =>
+        {
+            _vehicleId = selection.Id;
+            VehicleButton.Content = selection.Label;
+        });
     }
 
     private void Driver_Click(object sender, RoutedEventArgs e)
     {
-        var picker = new LookupDialog(_api, vehicles: false)
-        { Owner = Window.GetWindow(this) };
-        if (picker.ShowDialog() != true) return;
-        _driverId = picker.SelectedId;
-        DriverButton.Content = picker.SelectedLabel;
+        ShowLookup(vehicles: false, selection =>
+        {
+            _driverId = selection.Id;
+            DriverButton.Content = selection.Label;
+        });
+    }
+
+    private void ShowLookup(bool vehicles, Action<LookupView.LookupRow> select)
+    {
+        LookupHost.Content = new LookupView(_api, vehicles, selection =>
+        {
+            select(selection);
+            CloseLookup();
+        }, CloseLookup);
+        ReportContent.Visibility = Visibility.Collapsed;
+        LookupHost.Visibility = Visibility.Visible;
+    }
+
+    private void CloseLookup()
+    {
+        LookupHost.Content = null;
+        LookupHost.Visibility = Visibility.Collapsed;
+        ReportContent.Visibility = Visibility.Visible;
     }
 
     private async void Clear_Click(object sender, RoutedEventArgs e)

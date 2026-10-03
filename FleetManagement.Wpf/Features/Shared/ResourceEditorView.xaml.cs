@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text.Json.Nodes;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows;
 using FleetManagement.Wpf.Infrastructure.Api;
 
 namespace FleetManagement.Wpf.Features.Shared;
@@ -88,17 +88,28 @@ public partial class ResourceEditorView : UserControl
             Tag = int.TryParse(raw, out var selectedId) ? selectedId : null,
             HorizontalContentAlignment = HorizontalAlignment.Left
         };
-        button.Click += async (_, _) =>
+        button.Click += (_, _) =>
         {
-            var picker = new LookupDialog(_api, field.Kind == FieldKind.Vehicle)
-            { Owner = Window.GetWindow(this) };
-            if (picker.ShowDialog() != true) return;
-            button.Tag = picker.SelectedId;
-            button.Content = picker.SelectedLabel;
-            if (field.Kind == FieldKind.Vehicle)
-                await PrefillMileageAsync(picker.SelectedId);
+            LookupHost.Content = new LookupView(_api, field.Kind == FieldKind.Vehicle,
+                async selection =>
+                {
+                    button.Tag = selection.Id;
+                    button.Content = selection.Label;
+                    CloseLookup();
+                    if (field.Kind == FieldKind.Vehicle)
+                        await PrefillMileageAsync(selection.Id);
+                }, CloseLookup);
+            EditorContent.Visibility = Visibility.Collapsed;
+            LookupHost.Visibility = Visibility.Visible;
         };
         return button;
+    }
+
+    private void CloseLookup()
+    {
+        LookupHost.Content = null;
+        LookupHost.Visibility = Visibility.Collapsed;
+        EditorContent.Visibility = Visibility.Visible;
     }
 
     private async Task PrefillMileageAsync(int vehicleId)
